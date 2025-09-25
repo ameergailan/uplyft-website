@@ -82,6 +82,15 @@ const GetStartedPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
+          <motion.div
+            className="bg-green-600 text-black px-6 py-3 rounded-lg inline-block mb-8 font-bold text-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            FREE: Get the exact UpLyft Growth System™ that scaled agencies to $100k+/Mo
+          </motion.div>
+
           <motion.h1 
             className="text-5xl lg:text-7xl font-bold mb-8 leading-tight text-white"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -92,7 +101,7 @@ const GetStartedPage = () => {
             <span className="text-white">
               $50K–$250K in New MRR
             </span><br />
-            <span className="text-3xl lg:text-5xl text-gray-400">in 90 Days — Without Paid Ads</span>
+            <span className="text-3xl lg:text-5xl text-gray-400">in 90 Days</span>
           </motion.h1>
           
           <motion.p 
@@ -104,29 +113,32 @@ const GetStartedPage = () => {
             Plug Into a Proven Growth System Trusted by 100+ Agencies
           </motion.p>
 
-          {/* YouTube Video Section */}
+          {/* YouTube Video Section - Much Larger */}
           <motion.div
-            className="mb-16"
+            className="mb-20"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-gray-900 rounded-2xl p-8 border border-gray-700">
-                <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                  See How We Scale Agencies
+            <div className="max-w-6xl mx-auto">
+              <div className="bg-gray-900 rounded-3xl p-12 border border-gray-700 shadow-2xl">
+                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-8 text-center">
+                  Watch: How We Scale Agencies to 6 Figures
                 </h3>
-                <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-600">
+                <div className="aspect-video bg-gray-800 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-600 min-h-[400px] lg:min-h-[500px]">
                   <div className="text-center">
-                    <div className="text-6xl mb-4">▶️</div>
-                    <p className="text-gray-400 text-lg">
-                      YouTube Video Placeholder
+                    <div className="text-8xl mb-6">▶️</div>
+                    <p className="text-gray-300 text-2xl font-semibold mb-2">
+                      YouTube Video Coming Soon
                     </p>
-                    <p className="text-gray-500 text-sm mt-2">
-                      Video will be embedded here
+                    <p className="text-gray-500 text-lg">
+                      Case study and growth demonstration
                     </p>
                   </div>
                 </div>
+                <p className="text-center text-gray-400 mt-6 text-lg">
+                  See real results from agencies we've scaled
+                </p>
               </div>
             </div>
           </motion.div>
