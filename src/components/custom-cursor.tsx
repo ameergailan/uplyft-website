@@ -36,6 +36,9 @@ const CustomCursor = () => {
         
         if (isOnLegalPage) {
           setIsOverInteractive(true) // Always hide on legal pages
+          // Ensure normal cursor is visible
+          document.body.classList.remove('custom-cursor-active')
+          document.body.style.cursor = 'default'
           return
         }
         

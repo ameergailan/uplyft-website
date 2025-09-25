@@ -5,11 +5,24 @@
 
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Shield, Eye, Lock, Database, Users, Globe } from 'lucide-react'
 
 const PrivacyPolicyPage = () => {
+  // Ensure normal cursor on legal pages
+  useEffect(() => {
+    document.body.classList.remove('custom-cursor-active')
+    document.body.style.cursor = 'default'
+    
+    return () => {
+      // Restore when leaving page
+      document.body.classList.add('custom-cursor-active')
+      document.body.style.cursor = 'none'
+    }
+  }, [])
+
   const sections = [
     {
       icon: Shield,
@@ -75,7 +88,7 @@ const PrivacyPolicyPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white" data-page="legal">
       {/* Header */}
       <motion.header 
         className="bg-white shadow-sm border-b"
