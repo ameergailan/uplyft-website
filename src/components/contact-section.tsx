@@ -10,7 +10,8 @@ import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Send, CheckCircle, AlertCircle } from 'lucide-react'
+import { Send, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import type { ContactFormData } from '@/types'
 
 // Form validation schema
@@ -77,21 +78,30 @@ const ContactSection = () => {
             className="text-center mb-16"
           >
             <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-4">
-              Contact
+              Ready to Scale?
             </h2>
-            <h3 className="text-3xl lg:text-4xl font-bold mb-6">
-              Ready to scale your agency?
-            </h3>
-            <p className="text-xl text-gray-300 mb-8">
-              Let's unlock your growth potential
+            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+              Scale Your Agency to 6- & 7-Figures<br />
+              <span className="text-blue-400">Without Hiring a Huge Team</span>
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+              We partner with growth-focused agencies to install predictable lead generation, 
+              sales systems, and automations that scale revenue fast.
             </p>
-            <button
-              onClick={handleCollaborateClick}
-              className="bg-white text-black px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-300 inline-flex items-center gap-2"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex justify-center mb-16"
             >
-              Click to collaborate
-              <Send size={18} />
-            </button>
+              <Link
+                href="/get-started"
+                className="inline-flex items-center space-x-3 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl hover:scale-105"
+              >
+                <span>Get Started Now</span>
+                <ArrowRight size={20} />
+              </Link>
+            </motion.div>
           </motion.div>
 
           {/* Contact Form */}
