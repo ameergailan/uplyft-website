@@ -108,30 +108,30 @@ const GetStartedPage = () => {
             Plug Into a Proven Growth System Trusted by 100+ Agencies
           </motion.p>
 
-          {/* YouTube Video Section - Much Larger */}
+          {/* YouTube Video Section - HUGE */}
           <motion.div
-            className="mb-20"
+            className="mb-24"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="max-w-6xl mx-auto">
-              <div className="bg-gray-900 rounded-3xl p-12 border border-gray-700 shadow-2xl">
-                <h3 className="text-3xl lg:text-4xl font-bold text-white mb-8 text-center">
+            <div className="max-w-7xl mx-auto">
+              <div className="bg-gray-900 rounded-3xl p-16 border border-gray-700 shadow-2xl">
+                <h3 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center">
                   Watch: How We Scale Agencies to 6 Figures
                 </h3>
-                <div className="aspect-video bg-gray-800 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-600 min-h-[400px] lg:min-h-[500px]">
+                <div className="aspect-video bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600 min-h-[500px] lg:min-h-[700px]">
                   <div className="text-center">
-                    <div className="text-8xl mb-6">▶️</div>
-                    <p className="text-gray-300 text-2xl font-semibold mb-2">
+                    <div className="text-9xl mb-8">▶️</div>
+                    <p className="text-gray-300 text-3xl font-bold mb-4">
                       YouTube Video Coming Soon
                     </p>
-                    <p className="text-gray-500 text-lg">
+                    <p className="text-gray-500 text-xl">
                       Case study and growth demonstration
                     </p>
                   </div>
                 </div>
-                <p className="text-center text-gray-400 mt-6 text-lg">
+                <p className="text-center text-gray-400 mt-8 text-xl">
                   See real results from agencies we've scaled
                 </p>
               </div>
