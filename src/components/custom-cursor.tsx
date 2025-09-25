@@ -30,16 +30,27 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // Hide cursor on solutions section and footer section - more aggressive detection
+        // More aggressive detection - check multiple elements
         const x = e.clientX
         const y = e.clientY
         const elementAtPoint = document.elementFromPoint(x, y)
+        const target = e.target as Element
         
-        const isOverSolutions = elementAtPoint?.closest('.solutions-section') !== null
-        const isOverFooter = elementAtPoint?.closest('.footer-section') !== null
-        const isOverContact = elementAtPoint?.closest('#contact') !== null
+        // Check for any interactive sections
+        const isOverSolutions = elementAtPoint?.closest('.solutions-section') !== null || 
+                               target?.closest('.solutions-section') !== null
+        const isOverFooter = elementAtPoint?.closest('.footer-section') !== null || 
+                            target?.closest('.footer-section') !== null ||
+                            elementAtPoint?.closest('footer') !== null ||
+                            target?.closest('footer') !== null
+        const isOverContact = elementAtPoint?.closest('#contact') !== null || 
+                             target?.closest('#contact') !== null
+        const isOverLink = elementAtPoint?.tagName === 'A' || 
+                          target?.tagName === 'A' ||
+                          elementAtPoint?.closest('a') !== null ||
+                          target?.closest('a') !== null
         
-        setIsOverInteractive(isOverSolutions || isOverFooter || isOverContact)
+        setIsOverInteractive(isOverSolutions || isOverFooter || isOverContact || isOverLink)
       }
     }
 
