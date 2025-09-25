@@ -66,7 +66,7 @@ const GetStartedPage = () => {
               <span className="font-medium">Back to UpLyft</span>
             </Link>
             <div className="text-xl font-bold text-white">
-              UpLyft
+              <img src="/UPLYFTLOGO.png" alt="UpLyft" className="h-8" />
             </div>
           </div>
         </div>
@@ -117,10 +117,7 @@ const GetStartedPage = () => {
           >
             <div className="w-full px-4">
               <div className="bg-gray-900 rounded-3xl p-8 lg:p-16 border border-gray-700 shadow-2xl max-w-none">
-                <h3 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center">
-                  Watch: How We Scale Agencies to 6 Figures
-                </h3>
-                <div className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600" style={{ height: '70vh' }}>
+                <div className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600 aspect-video" style={{ minHeight: '60vh' }}>
                   <div className="text-center">
                     <div className="text-9xl mb-8">▶️</div>
                     <p className="text-gray-300 text-3xl font-bold mb-4">

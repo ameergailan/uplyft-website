@@ -43,9 +43,15 @@ const Header = () => {
                            window.location.pathname.includes('/terms-of-service')
       const isOnGetStartedPage = window.location.pathname.includes('/get-started')
       
-      if (isOnLegalPage || isOnGetStartedPage) {
-        // White background pages, use black text
+      if (isOnLegalPage) {
+        // Legal pages have white background, use black text
         setIsDarkMode(false)
+        return
+      }
+      
+      if (isOnGetStartedPage) {
+        // Get started page has black background, use white text
+        setIsDarkMode(true)
         return
       }
       
