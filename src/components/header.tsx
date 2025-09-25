@@ -38,6 +38,15 @@ const Header = () => {
       const scrollY = window.scrollY
       const windowHeight = window.innerHeight
       
+      // Check if we're on a legal page (white background)
+      const isOnLegalPage = window.location.pathname.includes('/privacy-policy') || 
+                           window.location.pathname.includes('/terms-of-service')
+      
+      if (isOnLegalPage) {
+        // Legal pages have white background, use black text
+        setIsDarkMode(false)
+        return
+      }
       
       // Check if we're in the contact section (dark background)
       const contactSection = document.getElementById('contact')
