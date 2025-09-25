@@ -13,20 +13,29 @@ const SolutionsSplitSection = () => {
   const [hoveredSide, setHoveredSide] = useState<'time' | 'money' | null>(null)
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [animatedValue, setAnimatedValue] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
+  
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
   
   const handleTimeHover = (e: React.MouseEvent) => {
     e.stopPropagation()
     console.log('TIME HOVERED - PRODUCTION')
     setHoveredSide('time')
     // Force update for production
-    document.body.setAttribute('data-hover-section', 'time')
+    if (typeof document !== 'undefined') {
+      document.body.setAttribute('data-hover-section', 'time')
+    }
   }
   
   const handleTimeLeave = (e: React.MouseEvent) => {
     e.stopPropagation()
     console.log('TIME LEFT - PRODUCTION')
     setHoveredSide(null)
-    document.body.removeAttribute('data-hover-section')
+    if (typeof document !== 'undefined') {
+      document.body.removeAttribute('data-hover-section')
+    }
   }
   
   const handleMoneyHover = (e: React.MouseEvent) => {
@@ -34,14 +43,18 @@ const SolutionsSplitSection = () => {
     console.log('MONEY HOVERED - PRODUCTION')
     setHoveredSide('money')
     // Force update for production
-    document.body.setAttribute('data-hover-section', 'money')
+    if (typeof document !== 'undefined') {
+      document.body.setAttribute('data-hover-section', 'money')
+    }
   }
   
   const handleMoneyLeave = (e: React.MouseEvent) => {
     e.stopPropagation()
     console.log('MONEY LEFT - PRODUCTION')
     setHoveredSide(null)
-    document.body.removeAttribute('data-hover-section')
+    if (typeof document !== 'undefined') {
+      document.body.removeAttribute('data-hover-section')
+    }
   }
 
   // Animated counter effect
@@ -119,10 +132,6 @@ const SolutionsSplitSection = () => {
 
   return (
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden solutions-section" data-interactive="true">
-      {/* Production debug */}
-      <div className="absolute top-4 left-4 bg-red-500 text-white p-2 text-sm z-50">
-        Hover: {hoveredSide || 'none'} | Body: {typeof document !== 'undefined' ? document.body.getAttribute('data-hover-section') || 'none' : 'none'}
-      </div>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
