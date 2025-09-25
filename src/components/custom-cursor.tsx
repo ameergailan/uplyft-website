@@ -30,7 +30,16 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // Hide cursor when scrolled to bottom of website
+        // Hide cursor on legal pages and specific sections
+        const isOnLegalPage = window.location.pathname.includes('/privacy-policy') || 
+                             window.location.pathname.includes('/terms-of-service')
+        
+        if (isOnLegalPage) {
+          setIsOverInteractive(true) // Always hide on legal pages
+          return
+        }
+        
+        // Hide cursor when scrolled to bottom of main website
         const scrollY = window.scrollY
         const windowHeight = window.innerHeight
         const documentHeight = document.documentElement.scrollHeight
