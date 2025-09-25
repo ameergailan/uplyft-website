@@ -254,13 +254,11 @@ const SolutionsSplitSection = () => {
                         boxShadow: { duration: 0.2 },
                         backgroundColor: { duration: 0.2 }
                       }}
-                      onMouseEnter={(e) => {
-                        e.stopPropagation()
+                      onMouseEnter={() => {
                         console.log('TIME CARD HOVERED:', index)
                         setHoveredCard(index)
                       }}
-                      onMouseLeave={(e) => {
-                        e.stopPropagation()
+                      onMouseLeave={() => {
                         console.log('TIME CARD LEFT:', index)
                         setHoveredCard(null)
                       }}
@@ -504,8 +502,14 @@ const SolutionsSplitSection = () => {
                         boxShadow: { duration: 0.2 },
                         backgroundColor: { duration: 0.2 }
                       }}
-                      onMouseEnter={() => setHoveredCard(index + 3)} // Offset by 3 for money cards
-                      onMouseLeave={() => setHoveredCard(null)}
+                      onMouseEnter={() => {
+                        console.log('MONEY CARD HOVERED:', index + 3)
+                        setHoveredCard(index + 3)
+                      }}
+                      onMouseLeave={() => {
+                        console.log('MONEY CARD LEFT:', index + 3)
+                        setHoveredCard(null)
+                      }}
                     >
                     <detail.icon size={24} className="text-green-400 mt-1 flex-shrink-0" />
                     <div>
