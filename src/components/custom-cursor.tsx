@@ -112,7 +112,7 @@ const CustomCursor = () => {
     return null
   }
 
-  // Don't render cursor at all when over interactive sections
+  // Show cursor everywhere except solutions section
   if (isOverInteractive) {
     return null
   }
