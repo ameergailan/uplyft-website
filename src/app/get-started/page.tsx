@@ -108,19 +108,19 @@ const GetStartedPage = () => {
             Plug Into a Proven Growth System Trusted by 100+ Agencies
           </motion.p>
 
-          {/* YouTube Video Section - HUGE */}
+          {/* YouTube Video Section - MASSIVE */}
           <motion.div
             className="mb-24"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="max-w-7xl mx-auto">
-              <div className="bg-gray-900 rounded-3xl p-16 border border-gray-700 shadow-2xl">
+            <div className="w-full px-4">
+              <div className="bg-gray-900 rounded-3xl p-8 lg:p-16 border border-gray-700 shadow-2xl max-w-none">
                 <h3 className="text-4xl lg:text-5xl font-bold text-white mb-12 text-center">
                   Watch: How We Scale Agencies to 6 Figures
                 </h3>
-                <div className="aspect-video bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600 min-h-[500px] lg:min-h-[700px]">
+                <div className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600" style={{ height: '70vh' }}>
                   <div className="text-center">
                     <div className="text-9xl mb-8">▶️</div>
                     <p className="text-gray-300 text-3xl font-bold mb-4">
