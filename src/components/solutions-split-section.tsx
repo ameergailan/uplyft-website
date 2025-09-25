@@ -191,10 +191,6 @@ const SolutionsSplitSection = () => {
 
   return (
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden solutions-section" data-interactive="true">
-      {/* Debug panel */}
-      <div className="absolute top-4 right-4 bg-red-500 text-white p-2 text-sm z-50">
-        Side: {hoveredSide || 'none'} | Card: {hoveredCard !== null ? hoveredCard : 'none'}
-      </div>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
