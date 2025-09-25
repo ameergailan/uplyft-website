@@ -294,27 +294,17 @@ div::-webkit-scrollbar {
 section[data-interactive="true"] .custom-cursor,
 .solutions-section .custom-cursor,
 .footer-section .custom-cursor,
-#contact .custom-cursor,
-footer .custom-cursor,
-a .custom-cursor {
+#contact .custom-cursor {
   display: none !important;
   pointer-events: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
 }
 
-/* Hide cursor when over any clickable element */
-a:hover ~ .custom-cursor,
-button:hover ~ .custom-cursor {
-  display: none !important;
-}
-
 section[data-interactive="true"],
 .solutions-section,
 .footer-section,
-#contact,
-footer,
-a {
+#contact {
   cursor: default !important;
 }
 

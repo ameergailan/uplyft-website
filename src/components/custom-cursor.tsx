@@ -30,27 +30,19 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // More aggressive detection - check multiple elements
-        const x = e.clientX
-        const y = e.clientY
-        const elementAtPoint = document.elementFromPoint(x, y)
+        // Hide cursor when scrolled to bottom of website
+        const scrollY = window.scrollY
+        const windowHeight = window.innerHeight
+        const documentHeight = document.documentElement.scrollHeight
+        
+        // Check if user is near the bottom (within 200px of footer)
+        const isNearBottom = scrollY + windowHeight >= documentHeight - 200
+        
+        // Also hide on solutions section
         const target = e.target as Element
+        const isOverSolutions = target?.closest('.solutions-section') !== null
         
-        // Check for any interactive sections
-        const isOverSolutions = elementAtPoint?.closest('.solutions-section') !== null || 
-                               target?.closest('.solutions-section') !== null
-        const isOverFooter = elementAtPoint?.closest('.footer-section') !== null || 
-                            target?.closest('.footer-section') !== null ||
-                            elementAtPoint?.closest('footer') !== null ||
-                            target?.closest('footer') !== null
-        const isOverContact = elementAtPoint?.closest('#contact') !== null || 
-                             target?.closest('#contact') !== null
-        const isOverLink = elementAtPoint?.tagName === 'A' || 
-                          target?.tagName === 'A' ||
-                          elementAtPoint?.closest('a') !== null ||
-                          target?.closest('a') !== null
-        
-        setIsOverInteractive(isOverSolutions || isOverFooter || isOverContact || isOverLink)
+        setIsOverInteractive(isNearBottom || isOverSolutions)
       }
     }
 
