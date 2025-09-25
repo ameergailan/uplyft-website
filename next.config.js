@@ -2,6 +2,7 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  distDir: 'out',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -10,7 +11,6 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    formats: ['image/webp', 'image/avif'],
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],

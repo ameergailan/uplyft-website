@@ -30,11 +30,16 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // Hide cursor on solutions section and footer section
-        const target = e.target as Element
-        const isOverSolutions = target?.closest('.solutions-section') !== null
-        const isOverFooter = target?.closest('.footer-section') !== null
-        setIsOverInteractive(isOverSolutions || isOverFooter)
+        // Hide cursor on solutions section and footer section - more aggressive detection
+        const x = e.clientX
+        const y = e.clientY
+        const elementAtPoint = document.elementFromPoint(x, y)
+        
+        const isOverSolutions = elementAtPoint?.closest('.solutions-section') !== null
+        const isOverFooter = elementAtPoint?.closest('.footer-section') !== null
+        const isOverContact = elementAtPoint?.closest('#contact') !== null
+        
+        setIsOverInteractive(isOverSolutions || isOverFooter || isOverContact)
       }
     }
 
