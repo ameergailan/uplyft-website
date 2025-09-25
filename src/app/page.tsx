@@ -8,6 +8,7 @@ import HeroSection from '@/components/hero-section'
 import EfficiencySection from '@/components/efficiency-section'
 import MetricsSection from '@/components/metrics-section'
 import SolutionsSplitSection from '@/components/solutions-split-section'
+import CTAOverlaySection from '@/components/cta-overlay-section'
 import CaseStudySection from '@/components/case-study-section'
 import ContactSection from '@/components/contact-section'
 import Footer from '@/components/footer'
@@ -31,7 +32,7 @@ export default function HomePage() {
         <MetricsSection />
         <SolutionsSplitSection />
         <CaseStudySection />
-        <ContactSection />
+        <CTAOverlaySection />
         <Footer />
       </SlideOverEffect>
       

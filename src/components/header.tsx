@@ -38,14 +38,29 @@ const Header = () => {
       const scrollY = window.scrollY
       const windowHeight = window.innerHeight
       
-      // Check if we're on a legal page (white background)
+      // Check if we're on any white background page
       const isOnLegalPage = window.location.pathname.includes('/privacy-policy') || 
                            window.location.pathname.includes('/terms-of-service')
+      const isOnGetStartedPage = window.location.pathname.includes('/get-started')
       
-      if (isOnLegalPage) {
-        // Legal pages have white background, use black text
+      if (isOnLegalPage || isOnGetStartedPage) {
+        // White background pages, use black text
         setIsDarkMode(false)
         return
+      }
+      
+      
+      // Check for white sections on main page
+      const whiteSections = document.querySelectorAll('section.bg-white, section.bg-gray-50, [data-slide-over="why-three"]')
+      for (const section of whiteSections) {
+        const rect = section.getBoundingClientRect()
+        const isVisible = rect.top <= 100 && rect.bottom >= 100
+        
+        if (isVisible) {
+          // White section visible, use black text
+          setIsDarkMode(false)
+          return
+        }
       }
       
       // Check if we're in the contact section (dark background)

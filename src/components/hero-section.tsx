@@ -10,6 +10,22 @@ import { useState, useEffect } from 'react'
 
 const HeroSection = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
+  
+  // Direct click handler for hero section
+  const handleHeroClick = () => {
+    console.log('HERO CLICKED - GOING TO CTA WITH FIXED POSITION')
+    
+    // Use hardcoded scroll position that works with slide-over system
+    // Based on typical section heights: Hero + Services + Why3 + Metrics + Solutions + Cases = ~6 viewports
+    const targetScroll = window.innerHeight * 5.5 // 5.5 viewports down should hit CTA
+    
+    window.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    })
+    
+    console.log('Scrolling to fixed position:', targetScroll)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +45,12 @@ const HeroSection = () => {
   }, [])
 
   return (
-    <section className="h-screen flex items-center justify-center pt-20 bg-black text-white fixed inset-0 overflow-hidden" id="hero">
+    <section 
+      className="h-screen flex items-center justify-center pt-20 bg-black text-white fixed inset-0 overflow-hidden hero-section" 
+      id="hero"
+      onClick={handleHeroClick}
+      style={{ cursor: 'none' }}
+    >
       {/* Multi-layer throbbing gradients - never resets */}
       <div className="absolute inset-0 throb-layer-1" />
       <div className="absolute inset-0 throb-layer-2" />

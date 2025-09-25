@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Clock, DollarSign, Zap, Target, TrendingUp, Users } from 'lucide-react'
 
@@ -15,6 +15,8 @@ const SolutionsSplitSection = () => {
   const [animatedValue, setAnimatedValue] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     setIsMounted(true)
@@ -79,6 +81,26 @@ const SolutionsSplitSection = () => {
       window.removeEventListener('mousemove', handleMouseMove)
     }
   }, [isMounted, hoveredSide])
+  
+  // Check if being overlaid by CTA section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return
+      
+      // Check if the next section (CTA) is sliding over us
+      const ctaSection = document.querySelector('section[class*="z-30"]')
+      if (ctaSection) {
+        const rect = ctaSection.getBoundingClientRect()
+        const shadowProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight))
+        setIsBeingShadowed(shadowProgress > 0.1)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
   
   const handleTimeHover = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -190,7 +212,16 @@ const SolutionsSplitSection = () => {
   ]
 
   return (
-    <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden solutions-section" data-interactive="true">
+    <section 
+      ref={sectionRef}
+      className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden solutions-section" 
+      data-interactive="true"
+      style={{
+        filter: isBeingShadowed ? 'brightness(0.7) contrast(0.8)' : 'brightness(1) contrast(1)',
+        transform: isBeingShadowed ? 'scale(0.95)' : 'scale(1)',
+        transition: 'filter 0.3s ease-out, transform 0.3s ease-out'
+      }}
+    >
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{

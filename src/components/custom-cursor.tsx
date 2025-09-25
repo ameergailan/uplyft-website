@@ -42,19 +42,27 @@ const CustomCursor = () => {
           return
         }
         
-        // Hide cursor when scrolled to bottom of main website
+        // Get target element
+        const target = e.target as Element
+        
+        // Always show cursor on hero section
+        const isOnHero = target?.closest('.hero-section') !== null
+        if (isOnHero) {
+          setIsOverInteractive(false) // Always show on hero
+          return
+        }
+        
+        // Hide cursor in specific sections
+        const isOverSolutions = target?.closest('.solutions-section') !== null
+        const isOverCTA = target?.closest('#cta-section') !== null
+        
+        // Check scroll position for footer
         const scrollY = window.scrollY
         const windowHeight = window.innerHeight
         const documentHeight = document.documentElement.scrollHeight
-        
-        // Check if user is near the bottom (within 200px of footer)
         const isNearBottom = scrollY + windowHeight >= documentHeight - 200
         
-        // Also hide on solutions section
-        const target = e.target as Element
-        const isOverSolutions = target?.closest('.solutions-section') !== null
-        
-        setIsOverInteractive(isNearBottom || isOverSolutions)
+        setIsOverInteractive(isOverSolutions || isOverCTA || isNearBottom)
       }
     }
 
@@ -96,20 +104,19 @@ const CustomCursor = () => {
     setTimeout(() => {
       setIsClicked(false)
       
-      // Navigate to contact section with slide-over compensation
+      // Navigate to CTA using same fixed position as hero
       if (typeof window !== 'undefined') {
-        const contactSection = document.getElementById('contact')
-        if (contactSection) {
-          // Account for the slide-over effect - need to scroll more to reach contact
-          const slideOverOffset = window.innerHeight // Full viewport height for slide effect
-          const contactOffset = contactSection.offsetTop
-          const totalScroll = slideOverOffset + contactOffset - 100 // Small buffer
-          
-          window.scrollTo({
-            top: totalScroll,
-            behavior: 'smooth'
-          })
-        }
+        console.log('CUSTOM CURSOR CLICKED - GOING TO CTA')
+        
+        // Use same hardcoded position as hero click
+        const targetScroll = window.innerHeight * 5.5 // 5.5 viewports down
+        
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth'
+        })
+        
+        console.log('Scrolling to fixed CTA position:', targetScroll)
       }
       
       // Disable custom cursor and restore normal cursor

@@ -384,3 +384,12 @@ section[data-interactive="true"],
   background: rgba(16, 185, 129, 0.9);
   transform: translateY(-50%) scale(1.05);
 }
+
+/* Ensure CTA page covers everything completely without horizontal scroll */
+#cta-section {
+  width: 100% !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}

@@ -55,7 +55,7 @@ const ContactSection = () => {
               Ready to Scale?
             </h2>
             <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Scale Your Agency to 6- & 7-Figures<br />
+              Scale Your Agency to 6 FIGURES<br />
               <span className="text-white">Without Hiring a Huge Team</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">

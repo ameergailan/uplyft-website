@@ -26,11 +26,11 @@ const SimpleQuestionMarks = () => {
     const initTimer = setTimeout(() => {
       setIsActive(true)
       
-      // Generate 12 question marks
+      // Generate 6 question marks for better performance
       const newMarks = []
-      for (let i = 0; i < 12; i++) {
-        const angle = (i / 12) * Math.PI * 2
-        const radius = 120 + (i % 5) * 40 // Much further spread: 120-280px
+      for (let i = 0; i < 6; i++) {
+        const angle = (i / 6) * Math.PI * 2
+        const radius = 150 + (i % 2) * 50 // Simplified: 150px or 200px
         const x = mousePos.x + Math.cos(angle) * radius
         const y = mousePos.y + Math.sin(angle) * radius
         
@@ -40,9 +40,9 @@ const SimpleQuestionMarks = () => {
           y,
           targetX: x,
           targetY: y,
-          size: 40 + Math.random() * 20, // 40-60px
-          opacity: 0.6 + Math.random() * 0.3,
-          lerpSpeed: 0.01 + Math.random() * 0.03 // Individual speeds: 0.01-0.04
+          size: 50, // Fixed size for consistency
+          opacity: 0.7, // Fixed opacity for consistency
+          lerpSpeed: 0.02 + (i % 2) * 0.01 // 0.02 or 0.03 only
         })
       }
       setMarks(newMarks)
@@ -61,7 +61,7 @@ const SimpleQuestionMarks = () => {
       
       // Update target positions
       setMarks(prevMarks => prevMarks.map((mark, index) => {
-        const angle = (index / 12) * Math.PI * 2
+        const angle = (index / 6) * Math.PI * 2
           const radius = 120 + (index % 5) * 40 // Much further spread for organic feel
         return {
           ...mark,

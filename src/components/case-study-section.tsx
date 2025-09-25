@@ -6,10 +6,33 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
 import { ArrowRight, ExternalLink } from 'lucide-react'
 import type { CaseStudyProject } from '@/types'
 
 const CaseStudySection = () => {
+  const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  
+  // Check if being overlaid by CTA section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return
+      
+      // Check if the next section (CTA) is sliding over us
+      const ctaSection = document.querySelector('section[class*="z-30"]')
+      if (ctaSection) {
+        const rect = ctaSection.getBoundingClientRect()
+        const shadowProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight))
+        setIsBeingShadowed(shadowProgress > 0.1)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
   const project: CaseStudyProject = {
     title: 'GrowthFlow Agency',
     description: 'A creative agency that scaled from $500K to $2.8M ARR in 18 months using our proven systems and methodologies',
@@ -35,7 +58,10 @@ const CaseStudySection = () => {
   }
 
   return (
-    <section className="section-padding bg-gray-50">
+    <section 
+      ref={sectionRef}
+      className="section-padding bg-gray-50"
+    >
       <div className="container-custom">
         {/* Section Header */}
         <motion.div
@@ -44,6 +70,11 @@ const CaseStudySection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
+          style={{
+            transform: isBeingShadowed ? 'scale(0.9)' : 'scale(1)',
+            filter: isBeingShadowed ? 'drop-shadow(0 10px 25px rgba(0,0,0,0.3))' : 'drop-shadow(0 0 0px rgba(0,0,0,0))',
+            transition: 'transform 0.4s ease-out, filter 0.4s ease-out'
+          }}
         >
           <h2 className="text-sm uppercase tracking-wider text-gray-500 mb-4">
             Cases
@@ -61,7 +92,14 @@ const CaseStudySection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-gray-100">
+          <div 
+            className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-gray-100"
+            style={{
+              transform: isBeingShadowed ? 'scale(0.85)' : 'scale(1)',
+              filter: isBeingShadowed ? 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))' : 'drop-shadow(0 5px 15px rgba(0,0,0,0.1))',
+              transition: 'transform 0.5s ease-out, filter 0.5s ease-out'
+            }}
+          >
             {/* Project Header */}
             <div className="flex items-start justify-between mb-8">
               <div className="flex-1">
