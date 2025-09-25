@@ -102,7 +102,7 @@ const GetStartedPage = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12"
+            className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -112,7 +112,7 @@ const GetStartedPage = () => {
 
           {/* YouTube Video Section - MASSIVE */}
           <motion.div
-            className="mb-24"
+            className="mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
