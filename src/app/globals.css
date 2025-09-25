@@ -292,7 +292,8 @@ div::-webkit-scrollbar {
 
 /* Force hide custom cursor over interactive sections */
 section[data-interactive="true"] .custom-cursor,
-.solutions-section .custom-cursor {
+.solutions-section .custom-cursor,
+.footer-section .custom-cursor {
   display: none !important;
   pointer-events: none !important;
   visibility: hidden !important;
@@ -300,7 +301,8 @@ section[data-interactive="true"] .custom-cursor,
 }
 
 section[data-interactive="true"],
-.solutions-section {
+.solutions-section,
+.footer-section {
   cursor: default !important;
 }
 

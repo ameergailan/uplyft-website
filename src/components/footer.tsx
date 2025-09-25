@@ -19,7 +19,7 @@ const Footer = () => {
   }
 
   return (
-    <footer className="section-padding bg-white border-t border-gray-100">
+    <footer className="section-padding bg-white border-t border-gray-100 footer-section">
       <div className="container-custom">
 
         {/* Footer Bottom */}

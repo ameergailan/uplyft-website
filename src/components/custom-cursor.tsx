@@ -30,10 +30,11 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // Simple detection - only hide on solutions section
+        // Hide cursor on solutions section and footer section
         const target = e.target as Element
         const isOverSolutions = target?.closest('.solutions-section') !== null
-        setIsOverInteractive(isOverSolutions)
+        const isOverFooter = target?.closest('.footer-section') !== null
+        setIsOverInteractive(isOverSolutions || isOverFooter)
       }
     }
 
