@@ -221,7 +221,7 @@ const SolutionsSplitSection = () => {
             
             <div className="relative z-10">
                <div
-                 className="mb-8"
+                 className="mb-8 time-content"
                  style={{
                    filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)',
                    transition: 'filter 0.4s ease-out'
@@ -256,7 +256,7 @@ const SolutionsSplitSection = () => {
               </div>
 
                <div
-                 className="space-y-6"
+                 className="space-y-6 time-content"
                  style={{
                    filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)',
                    transition: 'filter 0.4s ease-out 0.1s'
@@ -333,7 +333,7 @@ const SolutionsSplitSection = () => {
             
             <div className="relative z-10">
                <div
-                 className="mb-8 text-right"
+                 className="mb-8 text-right money-content"
                  style={{
                    filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)',
                    transition: 'filter 0.4s ease-out'
@@ -497,7 +497,7 @@ const SolutionsSplitSection = () => {
               </div>
 
                <div
-                 className="space-y-6"
+                 className="space-y-6 money-content"
                  style={{
                    filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)',
                    transition: 'filter 0.4s ease-out 0.1s'
