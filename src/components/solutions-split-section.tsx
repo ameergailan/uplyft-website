@@ -265,10 +265,10 @@ const SolutionsSplitSection = () => {
                       data-card-index={index}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-                        backgroundColor: 'rgba(255,255,255,0.95)'
+                      animate={{
+                        scale: hoveredCard === index ? 1.05 : 1,
+                        boxShadow: hoveredCard === index ? '0 10px 25px rgba(0,0,0,0.2)' : '0 0 0px rgba(0,0,0,0)',
+                        backgroundColor: hoveredCard === index ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)'
                       }}
                       transition={{ 
                         opacity: { duration: 0.6, delay: index * 0.1 },
@@ -506,10 +506,10 @@ const SolutionsSplitSection = () => {
                       data-card-index={index + 3}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-                        backgroundColor: 'rgba(255,255,255,0.95)'
+                      animate={{
+                        scale: hoveredCard === index + 3 ? 1.05 : 1,
+                        boxShadow: hoveredCard === index + 3 ? '0 10px 25px rgba(0,0,0,0.2)' : '0 0 0px rgba(0,0,0,0)',
+                        backgroundColor: hoveredCard === index + 3 ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)'
                       }}
                       transition={{ 
                         opacity: { duration: 0.6, delay: index * 0.1 },

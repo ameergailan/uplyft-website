@@ -30,11 +30,9 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // Check if cursor is over interactive elements - be more aggressive
+        // Simple detection - only hide on solutions section
         const target = e.target as Element
-        const isOverSolutions = target?.closest('section.bg-black') !== null ||
-                               target?.closest('[data-interactive="true"]') !== null ||
-                               document.elementFromPoint(e.clientX, e.clientY)?.closest('section.bg-black') !== null
+        const isOverSolutions = target?.closest('.solutions-section') !== null
         setIsOverInteractive(isOverSolutions)
       }
     }
