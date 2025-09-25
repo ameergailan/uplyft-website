@@ -14,10 +14,50 @@ const SolutionsSplitSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const [animatedValue, setAnimatedValue] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   
   useEffect(() => {
     setIsMounted(true)
   }, [])
+  
+  // Mouse position tracking for reliable hover detection
+  useEffect(() => {
+    if (!isMounted) return
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY })
+      
+      // Get the solutions section
+      const solutionsSection = document.querySelector('.solutions-section')
+      if (!solutionsSection) return
+      
+      const rect = solutionsSection.getBoundingClientRect()
+      const isInSection = e.clientX >= rect.left && e.clientX <= rect.right && 
+                         e.clientY >= rect.top && e.clientY <= rect.bottom
+      
+      if (isInSection) {
+        // Determine which side based on mouse position
+        const middleX = rect.left + rect.width / 2
+        const newSide = e.clientX < middleX ? 'time' : 'money'
+        
+        if (newSide !== hoveredSide) {
+          console.log('MOUSE TRACKING - SWITCHED TO:', newSide)
+          setHoveredSide(newSide)
+        }
+      } else {
+        if (hoveredSide !== null) {
+          console.log('MOUSE TRACKING - LEFT SECTION')
+          setHoveredSide(null)
+        }
+      }
+    }
+    
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [isMounted, hoveredSide])
   
   const handleTimeHover = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -143,9 +183,7 @@ const SolutionsSplitSection = () => {
           
           {/* LEFT SIDE - TIME */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 cursor-pointer"
-            onMouseEnter={handleTimeHover}
-            onMouseLeave={handleTimeLeave}
+            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 cursor-pointer time-section"
           >
              {/* Blur overlay */}
              <div
@@ -266,9 +304,7 @@ const SolutionsSplitSection = () => {
 
           {/* RIGHT SIDE - MONEY */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center cursor-pointer"
-            onMouseEnter={handleMoneyHover}
-            onMouseLeave={handleMoneyLeave}
+            className="relative p-8 lg:p-16 flex flex-col justify-center cursor-pointer money-section"
           >
              {/* Blur overlay */}
              <div
