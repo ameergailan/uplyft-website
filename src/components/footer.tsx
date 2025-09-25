@@ -6,6 +6,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -45,6 +46,20 @@ const Footer = () => {
               <p className="text-gray-700 font-medium mb-2">
                 Agency Growth Solutions
               </p>
+              <div className="flex justify-center lg:justify-end space-x-6 mb-2">
+                <Link
+                  href="/privacy-policy"
+                  className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300"
+                >
+                  Privacy Policy
+                </Link>
+                <Link
+                  href="/terms-of-service"
+                  className="text-sm text-gray-500 hover:text-gray-700 transition-colors duration-300"
+                >
+                  Terms of Service
+                </Link>
+              </div>
               <p className="text-sm text-gray-500">
                 © {currentYear} UpLyft. All rights reserved.
               </p>
