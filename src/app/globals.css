@@ -311,6 +311,16 @@ section[data-interactive="true"],
   pointer-events: none !important;
 }
 
+/* Make hover detection more sensitive */
+.hover-sensitive {
+  pointer-events: auto !important;
+  user-select: none;
+}
+
+.hover-sensitive:hover {
+  z-index: 100;
+}
+
 
 .curtain-slide {
   box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
