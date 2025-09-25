@@ -21,40 +21,38 @@ const SolutionsSplitSection = () => {
   
   const handleTimeHover = (e: React.MouseEvent) => {
     e.stopPropagation()
+    e.preventDefault()
     console.log('TIME HOVERED - PRODUCTION')
     setHoveredSide('time')
-    // Force update for production
-    if (typeof document !== 'undefined') {
-      document.body.setAttribute('data-hover-section', 'time')
-    }
+    // Hide any custom cursor
+    document.body.style.cursor = 'default'
+    const cursor = document.querySelector('.custom-cursor') as HTMLElement
+    if (cursor) cursor.style.display = 'none'
   }
   
   const handleTimeLeave = (e: React.MouseEvent) => {
     e.stopPropagation()
+    e.preventDefault()
     console.log('TIME LEFT - PRODUCTION')
     setHoveredSide(null)
-    if (typeof document !== 'undefined') {
-      document.body.removeAttribute('data-hover-section')
-    }
   }
   
   const handleMoneyHover = (e: React.MouseEvent) => {
     e.stopPropagation()
+    e.preventDefault()
     console.log('MONEY HOVERED - PRODUCTION')
     setHoveredSide('money')
-    // Force update for production
-    if (typeof document !== 'undefined') {
-      document.body.setAttribute('data-hover-section', 'money')
-    }
+    // Hide any custom cursor
+    document.body.style.cursor = 'default'
+    const cursor = document.querySelector('.custom-cursor') as HTMLElement
+    if (cursor) cursor.style.display = 'none'
   }
   
   const handleMoneyLeave = (e: React.MouseEvent) => {
     e.stopPropagation()
+    e.preventDefault()
     console.log('MONEY LEFT - PRODUCTION')
     setHoveredSide(null)
-    if (typeof document !== 'undefined') {
-      document.body.removeAttribute('data-hover-section')
-    }
   }
 
   // Animated counter effect
