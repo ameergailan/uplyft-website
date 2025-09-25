@@ -104,19 +104,12 @@ const CustomCursor = () => {
     setTimeout(() => {
       setIsClicked(false)
       
-      // Navigate to CTA using EXACT position
+      // Navigate to get-started page
       if (typeof window !== 'undefined') {
-        console.log('CUSTOM CURSOR CLICKED - GOING TO CTA')
+        console.log('CUSTOM CURSOR CLICKED - GOING TO GET STARTED PAGE')
         
-        // EXACT SCROLL POSITION - manually measured
-        const exactCTAPosition = 8516 // Exact pixel position of CTA page
-        
-        window.scrollTo({
-          top: exactCTAPosition,
-          behavior: 'smooth'
-        })
-        
-        console.log('Scrolling to EXACT CTA position:', exactCTAPosition)
+        // Direct page navigation - much more reliable
+        window.location.href = '/get-started'
       }
       
       // Disable custom cursor and restore normal cursor

@@ -13,18 +13,10 @@ const HeroSection = () => {
   
   // Direct click handler for hero section
   const handleHeroClick = () => {
-    console.log('HERO CLICKED - GOING TO CTA')
+    console.log('HERO CLICKED - GOING TO GET STARTED PAGE')
     
-    // EXACT SCROLL POSITION - manually measured
-    const exactCTAPosition = 8516 // Exact pixel position of CTA page
-    
-    window.scrollTo({
-      top: exactCTAPosition,
-      behavior: 'smooth'
-    })
-    
-    console.log('Scrolling to EXACT CTA position:', exactCTAPosition)
-    console.log('Current scroll position:', window.scrollY)
+    // Navigate directly to get-started page
+    window.location.href = '/get-started'
   }
 
   useEffect(() => {
