@@ -78,6 +78,19 @@ const Header = () => {
         }
       }
       
+      // Check for white slide-over page (Why 3 different services)
+      const slideOverElement = document.querySelector('[data-slide-over="why-three"]')
+      if (slideOverElement) {
+        const slideRect = slideOverElement.getBoundingClientRect()
+        const slideProgress = Math.max(0, Math.min(1, (window.innerHeight - slideRect.top) / window.innerHeight))
+        
+        if (slideProgress >= 0.9) {
+          // On white "Why 3" page, use black text
+          setIsDarkMode(false)
+          return
+        }
+      }
+      
       // Switch to light mode when in white sections
       if (scrollY > windowHeight * 0.9) {
         setIsDarkMode(false)
@@ -174,9 +187,6 @@ const Header = () => {
               <span className="text-gray-300 font-medium px-4">
                 Agency Growth Solutions
               </span>
-              <p className="text-sm text-gray-400 px-4 sm:hidden">
-                Scaling Agencies Worldwide
-              </p>
             </div>
           </div>
         )}
