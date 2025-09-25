@@ -16,26 +16,32 @@ const SolutionsSplitSection = () => {
   
   const handleTimeHover = (e: React.MouseEvent) => {
     e.stopPropagation()
-    console.log('TIME HOVERED')
+    console.log('TIME HOVERED - PRODUCTION')
     setHoveredSide('time')
+    // Force update for production
+    document.body.setAttribute('data-hover-section', 'time')
   }
   
   const handleTimeLeave = (e: React.MouseEvent) => {
     e.stopPropagation()
-    console.log('TIME LEFT')
+    console.log('TIME LEFT - PRODUCTION')
     setHoveredSide(null)
+    document.body.removeAttribute('data-hover-section')
   }
   
   const handleMoneyHover = (e: React.MouseEvent) => {
     e.stopPropagation()
-    console.log('MONEY HOVERED')
+    console.log('MONEY HOVERED - PRODUCTION')
     setHoveredSide('money')
+    // Force update for production
+    document.body.setAttribute('data-hover-section', 'money')
   }
   
   const handleMoneyLeave = (e: React.MouseEvent) => {
     e.stopPropagation()
-    console.log('MONEY LEFT')
+    console.log('MONEY LEFT - PRODUCTION')
     setHoveredSide(null)
+    document.body.removeAttribute('data-hover-section')
   }
 
   // Animated counter effect
@@ -113,6 +119,10 @@ const SolutionsSplitSection = () => {
 
   return (
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden solutions-section" data-interactive="true">
+      {/* Production debug */}
+      <div className="absolute top-4 left-4 bg-red-500 text-white p-2 text-sm z-50">
+        Hover: {hoveredSide || 'none'} | Body: {typeof document !== 'undefined' ? document.body.getAttribute('data-hover-section') || 'none' : 'none'}
+      </div>
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -132,17 +142,21 @@ const SolutionsSplitSection = () => {
           >
              {/* Blur overlay */}
              <div
-               className={`absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay transition-opacity duration-400 ease-out ${
-                 hoveredSide === 'time' ? 'opacity-0' : 'opacity-90'
-               }`}
+               className="absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay"
+               style={{
+                 opacity: hoveredSide === 'time' ? 0 : 0.9,
+                 transition: 'opacity 0.4s ease-out'
+               }}
              />
             
             <div className="relative z-10">
-              <div
-                className={`mb-8 transition-all duration-400 ${
-                  hoveredSide === 'time' ? 'blur-none' : 'blur-sm'
-                }`}
-              >
+               <div
+                 className="mb-8"
+                 style={{
+                   filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)',
+                   transition: 'filter 0.4s ease-out'
+                 }}
+               >
                 <motion.div
                   animate={{
                     scale: hoveredSide === 'time' ? 1.4 : 1,
@@ -171,11 +185,13 @@ const SolutionsSplitSection = () => {
                 </p>
               </div>
 
-              <div
-                className={`space-y-6 transition-all duration-400 delay-100 ${
-                  hoveredSide === 'time' ? 'blur-none' : 'blur-sm'
-                }`}
-              >
+               <div
+                 className="space-y-6"
+                 style={{
+                   filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)',
+                   transition: 'filter 0.4s ease-out 0.1s'
+                 }}
+               >
                 {timeDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
@@ -249,17 +265,21 @@ const SolutionsSplitSection = () => {
           >
              {/* Blur overlay */}
              <div
-               className={`absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay transition-opacity duration-400 ease-out ${
-                 hoveredSide === 'money' ? 'opacity-0' : 'opacity-90'
-               }`}
+               className="absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay"
+               style={{
+                 opacity: hoveredSide === 'money' ? 0 : 0.9,
+                 transition: 'opacity 0.4s ease-out'
+               }}
              />
             
             <div className="relative z-10">
-              <div
-                className={`mb-8 text-right transition-all duration-400 ${
-                  hoveredSide === 'money' ? 'blur-none' : 'blur-sm'
-                }`}
-              >
+               <div
+                 className="mb-8 text-right"
+                 style={{
+                   filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)',
+                   transition: 'filter 0.4s ease-out'
+                 }}
+               >
                 <div className="flex justify-end mb-6 relative h-20 w-full">
                   {/* Main dollar sign - expanded like clock */}
                   <motion.div
@@ -417,11 +437,13 @@ const SolutionsSplitSection = () => {
                 </p>
               </div>
 
-              <div
-                className={`space-y-6 transition-all duration-400 delay-100 ${
-                  hoveredSide === 'money' ? 'blur-none' : 'blur-sm'
-                }`}
-              >
+               <div
+                 className="space-y-6"
+                 style={{
+                   filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)',
+                   transition: 'filter 0.4s ease-out 0.1s'
+                 }}
+               >
                 {moneyDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
