@@ -44,10 +44,31 @@ const SolutionsSplitSection = () => {
           console.log('MOUSE TRACKING - SWITCHED TO:', newSide)
           setHoveredSide(newSide)
         }
+        
+        // Check which card is being hovered
+        const cards = document.querySelectorAll('.time-section .card-hover, .money-section .card-hover')
+        let foundCard = null
+        
+        cards.forEach((card, cardIndex) => {
+          const cardRect = card.getBoundingClientRect()
+          const isOverCard = e.clientX >= cardRect.left && e.clientX <= cardRect.right && 
+                            e.clientY >= cardRect.top && e.clientY <= cardRect.bottom
+          
+          if (isOverCard) {
+            const actualIndex = card.getAttribute('data-card-index')
+            foundCard = actualIndex ? parseInt(actualIndex) : null
+          }
+        })
+        
+        if (foundCard !== hoveredCard) {
+          console.log('CARD TRACKING - SWITCHED TO:', foundCard)
+          setHoveredCard(foundCard)
+        }
       } else {
         if (hoveredSide !== null) {
           console.log('MOUSE TRACKING - LEFT SECTION')
           setHoveredSide(null)
+          setHoveredCard(null)
         }
       }
     }
@@ -240,7 +261,8 @@ const SolutionsSplitSection = () => {
                 {timeDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative"
+                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative card-hover"
+                      data-card-index={index}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       whileHover={{ 
@@ -253,14 +275,6 @@ const SolutionsSplitSection = () => {
                         scale: { duration: 0.2, ease: "easeOut" },
                         boxShadow: { duration: 0.2 },
                         backgroundColor: { duration: 0.2 }
-                      }}
-                      onMouseEnter={() => {
-                        console.log('TIME CARD HOVERED:', index)
-                        setHoveredCard(index)
-                      }}
-                      onMouseLeave={() => {
-                        console.log('TIME CARD LEFT:', index)
-                        setHoveredCard(null)
                       }}
                     >
                     <detail.icon size={24} className="text-blue-400 mt-1 flex-shrink-0" />
@@ -488,7 +502,8 @@ const SolutionsSplitSection = () => {
                 {moneyDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative"
+                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative card-hover"
+                      data-card-index={index + 3}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       whileHover={{ 
@@ -501,14 +516,6 @@ const SolutionsSplitSection = () => {
                         scale: { duration: 0.2, ease: "easeOut" },
                         boxShadow: { duration: 0.2 },
                         backgroundColor: { duration: 0.2 }
-                      }}
-                      onMouseEnter={() => {
-                        console.log('MONEY CARD HOVERED:', index + 3)
-                        setHoveredCard(index + 3)
-                      }}
-                      onMouseLeave={() => {
-                        console.log('MONEY CARD LEFT:', index + 3)
-                        setHoveredCard(null)
                       }}
                     >
                     <detail.icon size={24} className="text-green-400 mt-1 flex-shrink-0" />
