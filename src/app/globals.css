@@ -295,10 +295,21 @@ section[data-interactive="true"] .custom-cursor,
 .solutions-section .custom-cursor {
   display: none !important;
   pointer-events: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 
 section[data-interactive="true"],
 .solutions-section {
+  cursor: default !important;
+}
+
+/* Completely disable custom cursor on solutions section */
+.solutions-section {
+  cursor: default !important;
+}
+
+.solutions-section * {
   cursor: default !important;
 }
 

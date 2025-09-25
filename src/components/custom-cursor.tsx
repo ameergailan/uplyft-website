@@ -114,14 +114,17 @@ const CustomCursor = () => {
     return null
   }
 
+  // Don't render cursor at all when over interactive sections
+  if (isOverInteractive) {
+    return null
+  }
+
   return (
     <div
       className={`custom-cursor ${isClicked ? 'cursor-clicked' : ''}`}
       style={{
         left: mousePosition.x + 10,
         top: mousePosition.y,
-        pointerEvents: isOverInteractive ? 'none' : 'auto',
-        display: isOverInteractive ? 'none' : 'block'
       }}
       onClick={handleCursorClick}
     >
