@@ -88,9 +88,11 @@ const GetStartedPage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <span className="bg-green-600 text-black px-6 py-3 rounded-lg inline-block mb-6 text-2xl lg:text-3xl font-bold shadow-lg" style={{ boxShadow: '0 0 30px rgba(34, 197, 94, 0.6), 0 0 60px rgba(34, 197, 94, 0.3)' }}>
-              FREE: Get the exact UpLyft Growth System™
-            </span><br />
+            <div className="free-banner-container mb-6">
+              <span className="free-banner text-white px-6 py-3 rounded-lg inline-block text-2xl lg:text-3xl font-bold">
+                FREE: Get the exact UpLyft Growth System™
+              </span>
+            </div><br />
             <span className="text-5xl lg:text-7xl">
               that scaled agencies to
             </span><br />
@@ -115,9 +117,9 @@ const GetStartedPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="w-full px-2">
-              <div className="bg-gray-900 rounded-3xl p-4 lg:p-8 border border-gray-700 shadow-2xl max-w-none">
-                <div className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600" style={{ width: '100%', height: '50vh', aspectRatio: '21/9' }}>
+            <div className="w-full px-1">
+              <div className="bg-gray-900 rounded-3xl p-2 lg:p-4 border border-gray-700 shadow-2xl max-w-none">
+                <div className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600" style={{ width: '100%', height: '55vh', aspectRatio: '2.5/1' }}>
                   <div className="text-center">
                     <div className="text-9xl mb-8">▶️</div>
                     <p className="text-gray-300 text-3xl font-bold mb-4">

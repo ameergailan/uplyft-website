@@ -393,3 +393,39 @@ section[data-interactive="true"],
   padding: 0 !important;
   box-sizing: border-box !important;
 }
+
+/* Glistening glow effect behind FREE banner */
+@keyframes backGlow {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+.free-banner-container {
+  position: relative;
+  display: inline-block;
+}
+
+.free-banner-container::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(ellipse, rgba(34, 197, 94, 0.6) 0%, rgba(34, 197, 94, 0.3) 50%, transparent 80%);
+  border-radius: 12px;
+  animation: backGlow 2s ease-in-out infinite;
+  z-index: -1;
+}
+
+.free-banner {
+  background: #16a34a;
+  position: relative;
+  z-index: 1;
+}
