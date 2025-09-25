@@ -142,11 +142,6 @@ const Header = () => {
                   priority
                 />
               </button>
-              <div className="ml-4 flex flex-col">
-                <p className={`text-sm hidden sm:block transition-colors duration-300 ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Scaling Agencies Worldwide
-                </p>
-              </div>
             </div>
           </div>
 

@@ -38,11 +38,6 @@ const PageSpecificQuestionMarks = () => {
 
   return (
     <div className="fixed inset-0 z-30 pointer-events-none">
-      {/* Debug indicator */}
-      <div className="fixed top-4 left-4 bg-green-500 text-white p-2 text-sm z-50">
-        Beliefs Page: {showQuestionMarks ? 'YES' : 'NO'}
-      </div>
-      
       {/* Question marks only when on beliefs page */}
       {showQuestionMarks && <SimpleQuestionMarks />}
     </div>
