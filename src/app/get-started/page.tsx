@@ -48,10 +48,10 @@ const GetStartedPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white" data-page="landing">
+    <div className="min-h-screen bg-black text-white" data-page="landing">
       {/* Header */}
       <motion.header 
-        className="bg-black/20 backdrop-blur-md border-b border-white/10"
+        className="bg-black border-b border-gray-800"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -60,12 +60,12 @@ const GetStartedPage = () => {
           <div className="flex items-center justify-between">
             <Link 
               href="/"
-              className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300"
+              className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"
             >
               <ArrowLeft size={20} />
               <span className="font-medium">Back to UpLyft</span>
             </Link>
-            <div className="text-xl font-bold">
+            <div className="text-xl font-bold text-white">
               UpLyft
             </div>
           </div>
@@ -83,16 +83,16 @@ const GetStartedPage = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <motion.h1 
-            className="text-5xl lg:text-7xl font-bold mb-8 leading-tight"
+            className="text-5xl lg:text-7xl font-bold mb-8 leading-tight text-white"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
             We Help Agencies Add<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+            <span className="text-white">
               $50K–$250K in New MRR
             </span><br />
-            <span className="text-3xl lg:text-5xl text-gray-300">in 90 Days — Without Paid Ads</span>
+            <span className="text-3xl lg:text-5xl text-gray-400">in 90 Days — Without Paid Ads</span>
           </motion.h1>
           
           <motion.p 
@@ -103,6 +103,33 @@ const GetStartedPage = () => {
           >
             Plug Into a Proven Growth System Trusted by 100+ Agencies
           </motion.p>
+
+          {/* YouTube Video Section */}
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-gray-900 rounded-2xl p-8 border border-gray-700">
+                <h3 className="text-2xl font-bold text-white mb-6 text-center">
+                  See How We Scale Agencies
+                </h3>
+                <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-600">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">▶️</div>
+                    <p className="text-gray-400 text-lg">
+                      YouTube Video Placeholder
+                    </p>
+                    <p className="text-gray-500 text-sm mt-2">
+                      Video will be embedded here
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Social Proof */}
           <motion.div
@@ -125,21 +152,21 @@ const GetStartedPage = () => {
           className="grid md:grid-cols-3 gap-8 mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
         >
           {benefits.map((benefit, index) => (
             <motion.div
               key={index}
-              className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
+              className="bg-gray-900 rounded-2xl p-8 border border-gray-700"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.15)' }}
+              transition={{ duration: 0.6, delay: 1.6 + index * 0.1 }}
+              whileHover={{ scale: 1.05, backgroundColor: 'rgb(31, 41, 55)' }}
             >
-              <div className="p-3 bg-blue-500/20 rounded-lg w-fit mb-4">
-                <benefit.icon className="text-blue-400" size={32} />
+              <div className="p-3 bg-gray-800 rounded-lg w-fit mb-4">
+                <benefit.icon className="text-white" size={32} />
               </div>
-              <h3 className="text-xl font-bold mb-3">
+              <h3 className="text-xl font-bold mb-3 text-white">
                 {benefit.title}
               </h3>
               <p className="text-gray-300 leading-relaxed">
@@ -154,9 +181,9 @@ const GetStartedPage = () => {
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
+          transition={{ duration: 0.8, delay: 1.9 }}
         >
-          <div className="bg-white/5 backdrop-blur-md rounded-3xl p-12 border border-white/20">
+          <div className="bg-gray-900 rounded-3xl p-12 border border-gray-700">
             <h2 className="text-3xl lg:text-4xl font-bold mb-6">
               Ready to Transform Your Agency?
             </h2>
@@ -166,7 +193,7 @@ const GetStartedPage = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.button
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-all duration-300 font-semibold text-lg shadow-lg flex items-center justify-center space-x-2"
+                className="bg-white text-black px-8 py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold text-lg shadow-lg flex items-center justify-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -175,7 +202,7 @@ const GetStartedPage = () => {
               </motion.button>
               
               <motion.button
-                className="bg-white/10 text-white px-8 py-4 rounded-lg hover:bg-white/20 transition-all duration-300 font-semibold text-lg border border-white/30 flex items-center justify-center space-x-2"
+                className="bg-gray-800 text-white px-8 py-4 rounded-lg hover:bg-gray-700 transition-all duration-300 font-semibold text-lg border border-gray-600 flex items-center justify-center space-x-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
