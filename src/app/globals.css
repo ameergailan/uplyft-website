@@ -291,13 +291,24 @@ div::-webkit-scrollbar {
 }
 
 /* Force hide custom cursor over interactive sections */
-section[data-interactive="true"] .custom-cursor {
+section[data-interactive="true"] .custom-cursor,
+.solutions-section .custom-cursor {
   display: none !important;
   pointer-events: none !important;
 }
 
-section[data-interactive="true"] {
+section[data-interactive="true"],
+.solutions-section {
   cursor: default !important;
+}
+
+/* Ensure hover works on production */
+.solutions-section * {
+  pointer-events: auto !important;
+}
+
+.solutions-section .blur-overlay {
+  pointer-events: none !important;
 }
 
 

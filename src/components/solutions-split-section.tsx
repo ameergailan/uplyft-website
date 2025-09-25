@@ -112,7 +112,7 @@ const SolutionsSplitSection = () => {
   ]
 
   return (
-    <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden" data-interactive="true">
+    <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden solutions-section" data-interactive="true">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -130,12 +130,12 @@ const SolutionsSplitSection = () => {
             onMouseEnter={handleTimeHover}
             onMouseLeave={handleTimeLeave}
           >
-            {/* Blur overlay */}
-            <div
-              className={`absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none transition-opacity duration-400 ease-out ${
-                hoveredSide === 'time' ? 'opacity-0' : 'opacity-90'
-              }`}
-            />
+             {/* Blur overlay */}
+             <div
+               className={`absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay transition-opacity duration-400 ease-out ${
+                 hoveredSide === 'time' ? 'opacity-0' : 'opacity-90'
+               }`}
+             />
             
             <div className="relative z-10">
               <div
@@ -247,12 +247,12 @@ const SolutionsSplitSection = () => {
             onMouseEnter={handleMoneyHover}
             onMouseLeave={handleMoneyLeave}
           >
-            {/* Blur overlay */}
-            <div
-              className={`absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none transition-opacity duration-400 ease-out ${
-                hoveredSide === 'money' ? 'opacity-0' : 'opacity-90'
-              }`}
-            />
+             {/* Blur overlay */}
+             <div
+               className={`absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay transition-opacity duration-400 ease-out ${
+                 hoveredSide === 'money' ? 'opacity-0' : 'opacity-90'
+               }`}
+             />
             
             <div className="relative z-10">
               <div
