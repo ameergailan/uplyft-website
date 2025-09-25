@@ -13,18 +13,18 @@ const HeroSection = () => {
   
   // Direct click handler for hero section
   const handleHeroClick = () => {
-    console.log('HERO CLICKED - GOING TO CTA WITH FIXED POSITION')
+    console.log('HERO CLICKED - GOING TO CTA')
     
-    // Use hardcoded scroll position that works with slide-over system
-    // Based on typical section heights: Hero + Services + Why3 + Metrics + Solutions + Cases = ~6 viewports
-    const targetScroll = window.innerHeight * 5.5 // 5.5 viewports down should hit CTA
+    // EXACT SCROLL POSITION - manually measured
+    const exactCTAPosition = 8516 // Exact pixel position of CTA page
     
     window.scrollTo({
-      top: targetScroll,
+      top: exactCTAPosition,
       behavior: 'smooth'
     })
     
-    console.log('Scrolling to fixed position:', targetScroll)
+    console.log('Scrolling to EXACT CTA position:', exactCTAPosition)
+    console.log('Current scroll position:', window.scrollY)
   }
 
   useEffect(() => {

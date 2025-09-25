@@ -104,19 +104,19 @@ const CustomCursor = () => {
     setTimeout(() => {
       setIsClicked(false)
       
-      // Navigate to CTA using same fixed position as hero
+      // Navigate to CTA using EXACT position
       if (typeof window !== 'undefined') {
         console.log('CUSTOM CURSOR CLICKED - GOING TO CTA')
         
-        // Use same hardcoded position as hero click
-        const targetScroll = window.innerHeight * 5.5 // 5.5 viewports down
+        // EXACT SCROLL POSITION - manually measured
+        const exactCTAPosition = 8516 // Exact pixel position of CTA page
         
         window.scrollTo({
-          top: targetScroll,
+          top: exactCTAPosition,
           behavior: 'smooth'
         })
         
-        console.log('Scrolling to fixed CTA position:', targetScroll)
+        console.log('Scrolling to EXACT CTA position:', exactCTAPosition)
       }
       
       // Disable custom cursor and restore normal cursor
