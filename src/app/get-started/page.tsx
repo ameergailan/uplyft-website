@@ -82,26 +82,21 @@ const GetStartedPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <motion.div
-            className="bg-green-600 text-black px-6 py-3 rounded-lg inline-block mb-8 font-bold text-lg"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            FREE: Get the exact UpLyft Growth System™ that scaled agencies to $100k+/Mo
-          </motion.div>
-
           <motion.h1 
-            className="text-5xl lg:text-7xl font-bold mb-8 leading-tight text-white"
+            className="text-4xl lg:text-6xl font-bold mb-8 leading-tight text-white"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            We Help Agencies Add<br />
-            <span className="text-white">
-              $50K–$250K in New MRR
+            <span className="bg-green-600 text-black px-6 py-3 rounded-lg inline-block mb-6 text-2xl lg:text-3xl">
+              FREE: Get the exact UpLyft Growth System™
             </span><br />
-            <span className="text-3xl lg:text-5xl text-gray-400">in 90 Days</span>
+            <span className="text-5xl lg:text-7xl">
+              that scaled agencies to
+            </span><br />
+            <span className="text-6xl lg:text-8xl text-white">
+              $100k+/Mo
+            </span>
           </motion.h1>
           
           <motion.p 
