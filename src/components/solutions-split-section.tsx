@@ -126,10 +126,9 @@ const SolutionsSplitSection = () => {
           
           {/* LEFT SIDE - TIME */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 cursor-pointer hover-sensitive"
+            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 cursor-pointer"
             onMouseEnter={handleTimeHover}
             onMouseLeave={handleTimeLeave}
-            onMouseMove={handleTimeHover}
           >
              {/* Blur overlay */}
              <div
@@ -244,10 +243,9 @@ const SolutionsSplitSection = () => {
 
           {/* RIGHT SIDE - MONEY */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center cursor-pointer hover-sensitive"
+            className="relative p-8 lg:p-16 flex flex-col justify-center cursor-pointer"
             onMouseEnter={handleMoneyHover}
             onMouseLeave={handleMoneyLeave}
-            onMouseMove={handleMoneyHover}
           >
              {/* Blur overlay */}
              <div

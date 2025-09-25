@@ -313,23 +313,9 @@ section[data-interactive="true"],
   cursor: default !important;
 }
 
-/* Ensure hover works on production */
-.solutions-section * {
-  pointer-events: auto !important;
-}
-
+/* Ensure hover works perfectly */
 .solutions-section .blur-overlay {
   pointer-events: none !important;
-}
-
-/* Make hover detection more sensitive */
-.hover-sensitive {
-  pointer-events: auto !important;
-  user-select: none;
-}
-
-.hover-sensitive:hover {
-  z-index: 100;
 }
 
 
