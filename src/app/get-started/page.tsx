@@ -6,11 +6,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Zap, Target, TrendingUp, CheckCircle, Calendar, Users } from 'lucide-react'
+import { ArrowLeft, Zap, Target, TrendingUp, CheckCircle, Calendar, Users, X, Play } from 'lucide-react'
 
 const GetStartedPage = () => {
+  const [showVideoModal, setShowVideoModal] = useState(false)
+  const [showVideo, setShowVideo] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: ''
+  })
+
   // Ensure normal cursor on this page
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
@@ -22,6 +31,25 @@ const GetStartedPage = () => {
       document.body.style.cursor = 'none'
     }
   }, [])
+
+  const handlePlayClick = () => {
+    setShowVideoModal(true)
+  }
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Here you would normally submit the form data
+    console.log('Form submitted:', formData)
+    setShowVideoModal(false)
+    setShowVideo(true)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+  }
 
   const benefits = [
     {
@@ -119,16 +147,31 @@ const GetStartedPage = () => {
           >
             <div className="w-full px-1">
               <div className="bg-gray-900 rounded-3xl p-2 lg:p-4 border border-gray-700 shadow-2xl max-w-none">
-                <div className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600" style={{ width: '100%', height: '55vh', aspectRatio: '2.5/1' }}>
-                  <div className="text-center">
-                    <div className="text-9xl mb-8">▶️</div>
-                    <p className="text-gray-300 text-3xl font-bold mb-4">
-                      YouTube Video Coming Soon
-                    </p>
-                    <p className="text-gray-500 text-xl">
-                      Case study and growth demonstration
-                    </p>
-                  </div>
+                <div 
+                  className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors duration-300 group" 
+                  style={{ width: '100%', height: '55vh', aspectRatio: '2.5/1' }}
+                  onClick={handlePlayClick}
+                >
+                  {showVideo ? (
+                    <div className="w-full h-full bg-black rounded-2xl flex items-center justify-center">
+                      <p className="text-white text-2xl">Video Player Would Go Here</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <motion.div 
+                        className="text-9xl mb-8 group-hover:scale-110 transition-transform duration-300"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <Play className="text-white w-24 h-24 mx-auto" />
+                      </motion.div>
+                      <p className="text-gray-300 text-3xl font-bold mb-4">
+                        Watch: How We Scale Agencies
+                      </p>
+                      <p className="text-gray-500 text-xl">
+                        Case study and growth demonstration
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <p className="text-center text-gray-400 mt-8 text-xl">
                   See real results from agencies we've scaled
@@ -238,6 +281,141 @@ const GetStartedPage = () => {
           </p>
         </motion.div>
       </main>
+
+      {/* Video Access Modal */}
+      <AnimatePresence>
+        {showVideoModal && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowVideoModal(false)
+            }}
+          >
+            <motion.div
+              className="bg-white rounded-2xl max-w-lg w-full p-8 relative"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setShowVideoModal(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                <X size={24} />
+              </button>
+
+              {/* Form Header */}
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-black mb-2">
+                  Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
+                </h3>
+                <p className="text-gray-600 text-lg">
+                  We'll <span className="font-semibold">SMS</span> You Access 📱
+                </p>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleFormSubmit} className="space-y-6">
+                {/* First Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    First Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="First Name"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
+                  />
+                </div>
+
+                {/* Last Name */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Last Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Last Name"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Email"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="Phone"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <motion.button
+                  type="submit"
+                  className="w-full bg-black text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-800 transition-colors duration-200"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Submit
+                </motion.button>
+
+                {/* Terms Checkbox */}
+                <div className="flex items-start space-x-3 text-sm">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    required
+                    className="mt-1 h-4 w-4 text-black focus:ring-black border-gray-300 rounded"
+                  />
+                  <label htmlFor="terms" className="text-gray-600 leading-relaxed">
+                    I agree to{' '}
+                    <Link href="/terms-of-service" className="text-black underline hover:text-gray-700">
+                      terms & conditions
+                    </Link>{' '}
+                    provided by the company. By providing my phone number, I agree to receive text messages from the business.
+                  </label>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
