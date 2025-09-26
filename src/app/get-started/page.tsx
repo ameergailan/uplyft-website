@@ -401,14 +401,20 @@ const GetStartedPage = () => {
                     type="checkbox"
                     id="terms"
                     required
-                    className="mt-1 h-4 w-4 text-black focus:ring-black border-gray-300 rounded"
+                    className="mt-1 h-4 w-4 text-black focus:ring-black border-gray-300 rounded flex-shrink-0"
                   />
                   <label htmlFor="terms" className="text-gray-600 leading-relaxed">
-                    I agree to{' '}
-                    <Link href="/terms-of-service" className="text-black underline hover:text-gray-700">
+                    I agree to the{' '}
+                    <Link href="/privacy-policy" className="text-blue-600 underline hover:text-blue-700">
+                      privacy policy
+                    </Link>{' '}
+                    &{' '}
+                    <Link href="/terms-of-service" className="text-blue-600 underline hover:text-blue-700">
                       terms & conditions
                     </Link>{' '}
-                    provided by the company. By providing my phone number, I agree to receive text messages from the business.
+                    provided by the company. By providing my phone number, I agree to receive text messages from the business. Text{' '}
+                    <span className="font-semibold">HELP</span> to +1 415-993-5456 for assistance. You can reply{' '}
+                    <span className="font-semibold">STOP</span> to unsubscribe at any time.
                   </label>
                 </div>
               </form>
