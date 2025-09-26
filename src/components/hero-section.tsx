@@ -108,7 +108,7 @@ const HeroSection = () => {
             From client acquisition to team management, we help agencies achieve sustainable scale and operational excellence.
           </motion.p>
 
-          {/* Collaborate Button */}
+          {/* Scroll to explore text */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -119,17 +119,18 @@ const HeroSection = () => {
               opacity: 1 - scrollProgress * 0.6
             }}
           >
-            <button
-              onClick={() => {
-                const contactSection = document.getElementById('contact')
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' })
-                }
-              }}
-              className="bg-gray-800 hover:bg-gray-700 text-white px-12 py-4 rounded-lg font-medium transition-colors duration-300 border border-gray-600 hover:border-gray-500"
-            >
-              Collaborate
-            </button>
+            <p className="text-white text-lg lg:text-xl font-medium tracking-wide">
+              Scroll to explore
+            </p>
+            <div className="flex justify-center mt-4">
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="text-white text-2xl"
+              >
+                ↓
+              </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </div>
