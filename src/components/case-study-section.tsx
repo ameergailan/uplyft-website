@@ -12,34 +12,12 @@ import type { CaseStudyProject, CaseStudyMetric } from '@/types'
 
 const CaseStudySection = () => {
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
-  const [slideProgress, setSlideProgress] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   
+  // Check if being overlaid by CTA section
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return
-      
-      const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
-      
-      // Calculate when to start sliding over - right after Time vs Money
-      // Sweet spot: after Time vs Money, before black problems page
-      const triggerPoint = windowHeight * 3.8
-      const endPoint = windowHeight * 4.8
-      
-      // Calculate slide progress (0 = hidden below, 1 = fully visible)
-      const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
-      setSlideProgress(progress)
-      
-      // Debug logging - only when visible
-      if (progress > 0) {
-        console.log('Case Study VISIBLE:', {
-          scrollY,
-          progress,
-          transform: `translateY(${Math.max(0, (1 - progress) * 100)}vh)`,
-          opacity: progress >= 1 ? 1 : 0.8
-        })
-      }
       
       // Check if the next section (CTA) is sliding over us
       const ctaSection = document.querySelector('section[class*="z-30"]')
@@ -122,14 +100,7 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section"
-      style={{
-        zIndex: 50,
-        transform: `translateY(${Math.max(0, (1 - slideProgress) * 100)}vh)`,
-        opacity: slideProgress >= 1 ? 1 : 0.8,
-        pointerEvents: slideProgress > 0.1 ? 'auto' : 'none',
-        backgroundColor: 'black'
-      }}
+      className="section-padding bg-black text-white relative overflow-hidden case-study-section"
     >
       {/* Multi-layer throbbing gradients - same as hero */}
       <div className="absolute inset-0 throb-layer-1" />
