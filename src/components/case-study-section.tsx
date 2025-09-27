@@ -23,13 +23,22 @@ const CaseStudySection = () => {
       const windowHeight = window.innerHeight
       
       // Calculate when to start sliding over the Time vs Money section
-      // Time vs Money is roughly at 3-4 viewport heights, so start sliding at 3.2vh
-      const triggerPoint = windowHeight * 3.2
-      const endPoint = windowHeight * 4.2
+      // Start sliding earlier to ensure it appears
+      const triggerPoint = windowHeight * 2.5
+      const endPoint = windowHeight * 3.5
       
       // Calculate slide progress (0 = hidden below, 1 = fully visible)
       const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
       setSlideProgress(progress)
+      
+      // Debug logging
+      console.log('Case Study Debug:', {
+        scrollY,
+        triggerPoint,
+        endPoint,
+        progress,
+        slideProgress: progress
+      })
       
       // Check if the next section (CTA) is sliding over us
       const ctaSection = document.querySelector('section[class*="z-30"]')
@@ -114,9 +123,9 @@ const CaseStudySection = () => {
       ref={sectionRef}
       className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section z-25"
       style={{
-        transform: `translateY(${(1 - slideProgress) * 100}vh)`,
-        opacity: slideProgress,
-        pointerEvents: slideProgress > 0.5 ? 'auto' : 'none'
+        transform: `translateY(${Math.max(0, (1 - slideProgress) * 100)}vh)`,
+        opacity: Math.max(0.1, slideProgress),
+        pointerEvents: slideProgress > 0.1 ? 'auto' : 'none'
       }}
     >
       {/* Multi-layer throbbing gradients - same as hero */}
