@@ -22,10 +22,10 @@ const CaseStudySection = () => {
       const scrollY = window.scrollY
       const windowHeight = window.innerHeight
       
-      // Calculate when to start sliding over - after all previous sections
-      // Push it much later to appear after the black problems page
-      const triggerPoint = windowHeight * 6.5
-      const endPoint = windowHeight * 7.5
+      // Calculate when to start sliding over - right after Time vs Money
+      // Sweet spot: after Time vs Money, before black problems page
+      const triggerPoint = windowHeight * 3.8
+      const endPoint = windowHeight * 4.8
       
       // Calculate slide progress (0 = hidden below, 1 = fully visible)
       const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
