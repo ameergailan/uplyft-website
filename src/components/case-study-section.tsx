@@ -31,14 +31,15 @@ const CaseStudySection = () => {
       const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
       setSlideProgress(progress)
       
-      // Debug logging
-      console.log('Case Study Debug:', {
-        scrollY,
-        triggerPoint,
-        endPoint,
-        progress,
-        slideProgress: progress
-      })
+      // Debug logging - only when visible
+      if (progress > 0) {
+        console.log('Case Study VISIBLE:', {
+          scrollY,
+          progress,
+          transform: `translateY(${Math.max(0, (1 - progress) * 100)}vh)`,
+          opacity: progress >= 1 ? 1 : 0.8
+        })
+      }
       
       // Check if the next section (CTA) is sliding over us
       const ctaSection = document.querySelector('section[class*="z-30"]')
@@ -121,11 +122,13 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section z-25"
+      className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section"
       style={{
+        zIndex: 50,
         transform: `translateY(${Math.max(0, (1 - slideProgress) * 100)}vh)`,
-        opacity: Math.max(0.1, slideProgress),
-        pointerEvents: slideProgress > 0.1 ? 'auto' : 'none'
+        opacity: slideProgress >= 1 ? 1 : 0.8,
+        pointerEvents: slideProgress > 0.1 ? 'auto' : 'none',
+        backgroundColor: 'black'
       }}
     >
       {/* Multi-layer throbbing gradients - same as hero */}
