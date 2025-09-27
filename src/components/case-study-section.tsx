@@ -23,9 +23,9 @@ const CaseStudySection = () => {
       const windowHeight = window.innerHeight
       
       // Calculate when to start sliding over the Time vs Money section
-      // Start sliding earlier to ensure it appears
-      const triggerPoint = windowHeight * 2.5
-      const endPoint = windowHeight * 3.5
+      // Start after Time vs Money section is fully visible
+      const triggerPoint = windowHeight * 4.5
+      const endPoint = windowHeight * 5.5
       
       // Calculate slide progress (0 = hidden below, 1 = fully visible)
       const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
