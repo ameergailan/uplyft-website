@@ -31,10 +31,15 @@ export default function HomePage() {
         <ServicesCardsSection />
         <MetricsSection />
         <SolutionsSplitSection />
-        <CaseStudySection />
         <CTAOverlaySection />
         <Footer />
       </SlideOverEffect>
+      
+      {/* Spacer for case study slide-over trigger */}
+      <div className="h-screen" />
+      
+      {/* Case study section with independent slide-over */}
+      <CaseStudySection />
       
       {/* Global question marks that detect correct page */}
       <PageSpecificQuestionMarks />

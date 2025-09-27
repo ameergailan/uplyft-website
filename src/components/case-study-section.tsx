@@ -12,12 +12,24 @@ import type { CaseStudyProject, CaseStudyMetric } from '@/types'
 
 const CaseStudySection = () => {
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const [slideProgress, setSlideProgress] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   
-  // Check if being overlaid by CTA section
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return
+      
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      
+      // Case studies should start sliding when we're past the solutions section
+      // Solutions section is roughly at 2-3 viewport heights, so start at 2.5vh
+      const triggerPoint = windowHeight * 2.5
+      const endPoint = windowHeight * 3.5
+      
+      // Calculate slide progress (0 = hidden below, 1 = fully visible)
+      const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
+      setSlideProgress(progress)
       
       // Check if the next section (CTA) is sliding over us
       const ctaSection = document.querySelector('section[class*="z-30"]')
@@ -100,7 +112,12 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-black text-white relative overflow-hidden case-study-section"
+      className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section z-25"
+      style={{
+        transform: `translateY(${(1 - slideProgress) * 100}vh)`,
+        opacity: slideProgress,
+        pointerEvents: slideProgress > 0.5 ? 'auto' : 'none'
+      }}
     >
       {/* Multi-layer throbbing gradients - same as hero */}
       <div className="absolute inset-0 throb-layer-1" />
