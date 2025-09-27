@@ -35,10 +35,7 @@ export default function HomePage() {
         <Footer />
       </SlideOverEffect>
       
-      {/* Spacer for case study slide-over trigger */}
-      <div className="h-screen" />
-      
-      {/* Case study section with independent slide-over */}
+      {/* Case Study Section - Independent slide-over */}
       <CaseStudySection />
       
       {/* Global question marks that detect correct page */}

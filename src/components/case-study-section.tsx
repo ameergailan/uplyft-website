@@ -22,10 +22,10 @@ const CaseStudySection = () => {
       const scrollY = window.scrollY
       const windowHeight = window.innerHeight
       
-      // Case studies should start sliding when we're past the solutions section
-      // Solutions section is roughly at 2-3 viewport heights, so start at 2.5vh
-      const triggerPoint = windowHeight * 2.5
-      const endPoint = windowHeight * 3.5
+      // Calculate when to start sliding over the Time vs Money section
+      // Time vs Money is roughly at 3-4 viewport heights, so start sliding at 3.2vh
+      const triggerPoint = windowHeight * 3.2
+      const endPoint = windowHeight * 4.2
       
       // Calculate slide progress (0 = hidden below, 1 = fully visible)
       const progress = Math.max(0, Math.min(1, (scrollY - triggerPoint) / (endPoint - triggerPoint)))
