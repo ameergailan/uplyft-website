@@ -153,11 +153,23 @@ const CaseStudySection = () => {
                     </p>
                   </div>
                   
-                  {/* Logo */}
-                  <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">
-                      {project.logo}
-                    </span>
+                  {/* Profile Picture */}
+                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-200">
+                    <img 
+                      src={`/${project.client.toLowerCase()}-profile.jpg`}
+                      alt={`${project.client} profile`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // Fallback to initials if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.className = 'w-12 h-12 bg-black rounded-xl flex items-center justify-center';
+                          parent.innerHTML = `<span class="text-white font-bold text-sm">${project.logo}</span>`;
+                        }
+                      }}
+                    />
                   </div>
                 </div>
 
