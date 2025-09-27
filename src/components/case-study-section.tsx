@@ -12,12 +12,24 @@ import type { CaseStudyProject, CaseStudyMetric } from '@/types'
 
 const CaseStudySection = () => {
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const [slideProgress, setSlideProgress] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   
-  // Check if being overlaid by CTA section
+  // Handle slide-over effect and CTA shadowing
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return
+      
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      
+      // Calculate slide progress - case studies should appear after solutions section
+      // Assuming solutions section is around 3 viewport heights in
+      const startSlide = windowHeight * 3.5 // Start sliding after solutions
+      const endSlide = windowHeight * 4.5   // Fully slid by this point
+      
+      const progress = Math.max(0, Math.min(1, (scrollY - startSlide) / (endSlide - startSlide)))
+      setSlideProgress(progress)
       
       // Check if the next section (CTA) is sliding over us
       const ctaSection = document.querySelector('section[class*="z-30"]')
@@ -100,7 +112,12 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-black text-white relative overflow-hidden case-study-section"
+      className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section z-25"
+      style={{
+        transform: `translateY(${(1 - slideProgress) * 100}vh)`,
+        opacity: slideProgress > 0 ? 1 : 0,
+        pointerEvents: slideProgress > 0.5 ? 'auto' : 'none'
+      }}
     >
       {/* Multi-layer throbbing gradients - same as hero */}
       <div className="absolute inset-0 throb-layer-1" />
@@ -140,8 +157,12 @@ const CaseStudySection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="hover-sensitive"
+              whileHover={{ 
+                scale: 1.15,
+                zIndex: 50,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
+              className="hover-sensitive relative"
             >
               <div 
                 className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10"

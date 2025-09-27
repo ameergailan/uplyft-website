@@ -304,7 +304,8 @@ section[data-interactive="true"] .custom-cursor,
 section[data-interactive="true"],
 .solutions-section,
 .footer-section,
-#contact {
+#contact,
+.case-study-section {
   cursor: default !important;
 }
 
@@ -320,6 +321,17 @@ section[data-interactive="true"],
 /* Ensure hover works perfectly */
 .solutions-section .blur-overlay {
   pointer-events: none !important;
+}
+
+/* Case study hover effects */
+.case-study-section:hover .hover-sensitive:not(:hover) {
+  filter: blur(3px) brightness(0.7);
+  transition: filter 0.3s ease-out;
+}
+
+.case-study-section .hover-sensitive:hover {
+  filter: blur(0px) brightness(1) drop-shadow(0 25px 50px rgba(0,0,0,0.8));
+  transition: filter 0.3s ease-out;
 }
 
 
