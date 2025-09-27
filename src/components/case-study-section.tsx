@@ -100,7 +100,7 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-black text-white relative overflow-hidden"
+      className="section-padding bg-black text-white relative overflow-hidden case-study-section"
     >
       {/* Multi-layer throbbing gradients - same as hero */}
       <div className="absolute inset-0 throb-layer-1" />
@@ -140,6 +140,8 @@ const CaseStudySection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              className="hover-sensitive"
             >
               <div 
                 className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10"

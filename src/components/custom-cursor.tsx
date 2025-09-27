@@ -56,6 +56,7 @@ const CustomCursor = () => {
         // Hide cursor in specific sections
         const isOverSolutions = target?.closest('.solutions-section') !== null
         const isOverCTA = target?.closest('#cta-section') !== null
+        const isOverCaseStudy = target?.closest('.case-study-section') !== null
         
         // Check scroll position for footer
         const scrollY = window.scrollY
@@ -63,7 +64,7 @@ const CustomCursor = () => {
         const documentHeight = document.documentElement.scrollHeight
         const isNearBottom = scrollY + windowHeight >= documentHeight - 200
         
-        setIsOverInteractive(isOverSolutions || isOverCTA || isNearBottom)
+        setIsOverInteractive(isOverSolutions || isOverCTA || isOverCaseStudy || isNearBottom)
       }
     }
 
