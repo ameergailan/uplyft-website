@@ -100,8 +100,15 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-gray-50"
+      className="section-padding bg-black text-white relative overflow-hidden"
     >
+      {/* Multi-layer throbbing gradients - same as hero */}
+      <div className="absolute inset-0 throb-layer-1" />
+      <div className="absolute inset-0 throb-layer-2" />
+      <div className="absolute inset-0 throb-layer-3" />
+      
+      {/* Breathing overlay */}
+      <div className="absolute inset-0 throb-overlay" />
       <div className="container-custom">
         {/* Section Header */}
         <motion.div
@@ -116,10 +123,10 @@ const CaseStudySection = () => {
             transition: 'transform 0.4s ease-out, filter 0.4s ease-out'
           }}
         >
-          <h2 className="text-sm uppercase tracking-wider text-gray-500 mb-4">
+          <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-4">
             Cases
           </h2>
-          <h3 className="text-3xl lg:text-4xl font-bold text-black mb-8">
+          <h3 className="text-3xl lg:text-4xl font-bold text-white mb-8">
             Latest projects
           </h3>
         </motion.div>
@@ -135,10 +142,10 @@ const CaseStudySection = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <div 
-                className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-100 h-full flex flex-col"
+                className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10"
                 style={{
                   transform: isBeingShadowed ? 'scale(0.9)' : 'scale(1)',
-                  filter: isBeingShadowed ? 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' : 'drop-shadow(0 5px 15px rgba(0,0,0,0.1))',
+                  filter: isBeingShadowed ? 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' : 'drop-shadow(0 10px 25px rgba(0,0,0,0.3))',
                   transition: 'transform 0.5s ease-out, filter 0.5s ease-out'
                 }}
               >
@@ -154,7 +161,7 @@ const CaseStudySection = () => {
                   </div>
                   
                   {/* Profile Picture */}
-                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-200">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-200">
                     <img 
                       src={`/${project.client.toLowerCase()}-profile.png`}
                       alt={`${project.client} profile`}
@@ -165,8 +172,8 @@ const CaseStudySection = () => {
                         target.style.display = 'none';
                         const parent = target.parentElement;
                         if (parent) {
-                          parent.className = 'w-12 h-12 bg-black rounded-xl flex items-center justify-center';
-                          parent.innerHTML = `<span class="text-white font-bold text-sm">${project.logo}</span>`;
+                          parent.className = 'w-20 h-20 bg-black rounded-xl flex items-center justify-center';
+                          parent.innerHTML = `<span class="text-white font-bold text-lg">${project.logo}</span>`;
                         }
                       }}
                     />
@@ -235,10 +242,10 @@ const CaseStudySection = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="text-center mt-16"
         >
-          <h3 className="text-2xl lg:text-3xl font-bold text-black mb-4">
+          <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
             More than just
             <br />
-            <span className="text-gray-700">agency consulting</span>
+            <span className="text-gray-300">agency consulting</span>
           </h3>
         </motion.div>
       </div>
