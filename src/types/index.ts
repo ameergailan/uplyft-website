@@ -39,13 +39,25 @@ export interface ServiceTag {
 }
 
 /**
+ * Metric item for case studies
+ */
+export interface CaseStudyMetric {
+  label: string
+  value: string
+  growth?: string
+}
+
+/**
  * Case study project data
  */
 export interface CaseStudyProject {
   title: string
+  client: string
+  industry: string
   description: string
-  features: string[]
+  metrics: CaseStudyMetric[]
   services: ServiceTag[]
+  logo: string
   link?: string
 }
 

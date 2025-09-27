@@ -8,7 +8,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import { ArrowRight, ExternalLink } from 'lucide-react'
-import type { CaseStudyProject } from '@/types'
+import type { CaseStudyProject, CaseStudyMetric } from '@/types'
 
 const CaseStudySection = () => {
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
@@ -33,19 +33,59 @@ const CaseStudySection = () => {
     
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-  const project: CaseStudyProject = {
-    title: 'GrowthFlow Agency',
-    description: 'A creative agency that scaled from $500K to $2.8M ARR in 18 months using our proven systems and methodologies',
-    features: [
-      'Strategic. Systematic. Scalable.',
-      'Custom workflows, automated processes, and data-driven optimization'
-    ],
-    services: [
-      { label: 'Operations Optimization', variant: 'primary' },
-      { label: 'Revenue Systems', variant: 'primary' },
-      { label: 'Team Scaling', variant: 'primary' }
-    ]
-  }
+  const projects: CaseStudyProject[] = [
+    {
+      title: 'Amplify Sound Agency',
+      client: 'Olu',
+      industry: 'Music Production',
+      description: 'Music production agency that generated 220 qualified leads and $102K revenue in August 2025',
+      metrics: [
+        { label: 'Monthly Revenue', value: '$102,000', growth: '+18%' },
+        { label: 'Total Leads', value: '220', growth: '+21%' },
+        { label: 'Website Visits', value: '34,892', growth: '+21%' }
+      ],
+      services: [
+        { label: 'Lead Generation', variant: 'primary' },
+        { label: 'Sales Systems', variant: 'primary' },
+        { label: 'Paid Advertising', variant: 'primary' }
+      ],
+      logo: 'ASA'
+    },
+    {
+      title: 'Zealous Granite & Tile',
+      client: 'Hashim',
+      industry: 'Kitchen Remodeling',
+      description: 'Kitchen remodeling business that booked 185 consultations and generated $95K revenue in August 2025',
+      metrics: [
+        { label: 'Monthly Revenue', value: '$95,000', growth: '+18%' },
+        { label: 'Consultations', value: '185', growth: '+21%' },
+        { label: 'Landing Page CVR', value: '5.9%', growth: '+3.6%' }
+      ],
+      services: [
+        { label: 'Lead Generation', variant: 'primary' },
+        { label: 'Sales Funnels', variant: 'primary' },
+        { label: 'Conversion Optimization', variant: 'primary' }
+      ],
+      logo: 'ZEA'
+    },
+    {
+      title: 'Vault Mastery Mentorship',
+      client: 'Abdullah',
+      industry: 'ATM Business Coaching',
+      description: 'ATM mentorship program that achieved 110 strategy calls and $42.2K MRR in September 2025',
+      metrics: [
+        { label: 'Monthly Revenue', value: '$42,200', growth: '+24%' },
+        { label: 'Strategy Calls', value: '110', growth: '+26%' },
+        { label: 'New Students', value: '34', growth: '+38.6%' }
+      ],
+      services: [
+        { label: 'Lead Generation', variant: 'primary' },
+        { label: 'Sales Systems', variant: 'primary' },
+        { label: 'Backend Automations', variant: 'primary' }
+      ],
+      logo: 'VM'
+    }
+  ]
 
   const handleMoreAboutClick = () => {
     // Placeholder for project details navigation
@@ -84,88 +124,96 @@ const CaseStudySection = () => {
           </h3>
         </motion.div>
 
-        {/* Case Study Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div 
-            className="bg-white rounded-3xl p-8 lg:p-12 shadow-sm border border-gray-100"
-            style={{
-              transform: isBeingShadowed ? 'scale(0.85)' : 'scale(1)',
-              filter: isBeingShadowed ? 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))' : 'drop-shadow(0 5px 15px rgba(0,0,0,0.1))',
-              transition: 'transform 0.5s ease-out, filter 0.5s ease-out'
-            }}
-          >
-            {/* Project Header */}
-            <div className="flex items-start justify-between mb-8">
-              <div className="flex-1">
-                <h4 className="text-2xl lg:text-3xl font-bold text-black mb-4">
+        {/* Case Study Cards Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.client}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <div 
+                className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-100 h-full flex flex-col"
+                style={{
+                  transform: isBeingShadowed ? 'scale(0.9)' : 'scale(1)',
+                  filter: isBeingShadowed ? 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' : 'drop-shadow(0 5px 15px rgba(0,0,0,0.1))',
+                  transition: 'transform 0.5s ease-out, filter 0.5s ease-out'
+                }}
+              >
+                {/* Client Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h4 className="text-lg font-bold text-black mb-1">
+                      {project.client}
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      {project.industry}
+                    </p>
+                  </div>
+                  
+                  {/* Logo */}
+                  <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center">
+                    <span className="text-white font-bold text-sm">
+                      {project.logo}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Business Name */}
+                <h5 className="text-xl font-bold text-black mb-4">
                   {project.title}
-                </h4>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                </h5>
+
+                {/* Description */}
+                <p className="text-gray-700 leading-relaxed mb-6 flex-grow">
                   {project.description}
                 </p>
-                
-                {/* Features */}
-                <div className="space-y-2 mb-8">
-                  {project.features.map((feature, index) => (
-                    <p key={index} className="text-gray-600 leading-relaxed">
-                      {feature}
-                    </p>
+
+                {/* Key Metrics */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  {project.metrics.map((metric, metricIndex) => (
+                    <div key={metricIndex} className="text-center">
+                      <div className="text-lg lg:text-xl font-bold text-black">
+                        {metric.value}
+                      </div>
+                      <div className="text-xs text-gray-600 mb-1">
+                        {metric.label}
+                      </div>
+                      {metric.growth && (
+                        <div className="text-xs text-green-600 font-medium">
+                          {metric.growth}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
 
                 {/* Services Tags */}
-                <div className="flex flex-wrap gap-3 mb-8">
-                  {project.services.map((service, index) => (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.services.map((service, serviceIndex) => (
                     <span
-                      key={index}
-                      className="px-4 py-2 bg-black text-white text-sm font-medium rounded-full"
+                      key={serviceIndex}
+                      className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full"
                     >
                       {service.label}
                     </span>
                   ))}
                 </div>
-              </div>
 
-              {/* Project Logo/Icon */}
-              <div className="ml-8 hidden lg:block">
-                <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center">
-                  <div className="text-white font-bold text-xl">
-                    {project.title.split('').map((letter, index) => (
-                      <span key={index} className={index < 3 ? 'block text-xs leading-none' : 'hidden'}>
-                        {letter}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                {/* View Details Button */}
+                <button
+                  onClick={() => console.log(`View details for ${project.client}`)}
+                  className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-900 transition-colors duration-300 group flex items-center justify-center gap-2"
+                >
+                  View Case Study
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
+                </button>
               </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={handleMoreAboutClick}
-                className="flex items-center justify-center gap-2 bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-900 transition-colors duration-300 group"
-              >
-                More about {project.title}
-                <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform duration-200" />
-              </button>
-              
-              <button
-                onClick={handleMoreCasesClick}
-                className="flex items-center justify-center gap-2 border border-black text-black px-6 py-3 rounded-lg font-medium hover:bg-black hover:text-white transition-colors duration-300 group"
-              >
-                More cases
-                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-200" />
-              </button>
-            </div>
-          </div>
-        </motion.div>
+            </motion.div>
+          ))}
+        </div>
 
         {/* Bottom Section */}
         <motion.div
