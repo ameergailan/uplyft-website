@@ -324,6 +324,11 @@ section[data-interactive="true"],
 }
 
 /* Case study hover effects */
+.case-study-section .hover-sensitive {
+  filter: blur(0px) brightness(1);
+  transition: filter 0.3s ease-out;
+}
+
 .case-study-section:hover .hover-sensitive:not(:hover) {
   filter: blur(3px) brightness(0.7);
   transition: filter 0.3s ease-out;

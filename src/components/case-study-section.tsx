@@ -12,24 +12,12 @@ import type { CaseStudyProject, CaseStudyMetric } from '@/types'
 
 const CaseStudySection = () => {
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
-  const [slideProgress, setSlideProgress] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   
-  // Handle slide-over effect and CTA shadowing
+  // Check if being overlaid by CTA section
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return
-      
-      const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
-      
-      // Calculate slide progress - case studies should appear after solutions section
-      // Assuming solutions section is around 3 viewport heights in
-      const startSlide = windowHeight * 3.5 // Start sliding after solutions
-      const endSlide = windowHeight * 4.5   // Fully slid by this point
-      
-      const progress = Math.max(0, Math.min(1, (scrollY - startSlide) / (endSlide - startSlide)))
-      setSlideProgress(progress)
       
       // Check if the next section (CTA) is sliding over us
       const ctaSection = document.querySelector('section[class*="z-30"]')
@@ -112,12 +100,7 @@ const CaseStudySection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="section-padding bg-black text-white fixed inset-0 overflow-hidden case-study-section z-25"
-      style={{
-        transform: `translateY(${(1 - slideProgress) * 100}vh)`,
-        opacity: slideProgress > 0 ? 1 : 0,
-        pointerEvents: slideProgress > 0.5 ? 'auto' : 'none'
-      }}
+      className="section-padding bg-black text-white relative overflow-hidden case-study-section"
     >
       {/* Multi-layer throbbing gradients - same as hero */}
       <div className="absolute inset-0 throb-layer-1" />
