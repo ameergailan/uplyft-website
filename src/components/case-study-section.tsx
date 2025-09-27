@@ -156,7 +156,7 @@ const CaseStudySection = () => {
                   {/* Profile Picture */}
                   <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-200">
                     <img 
-                      src={`/${project.client.toLowerCase()}-profile.jpg`}
+                      src={`/${project.client.toLowerCase()}-profile.png`}
                       alt={`${project.client} profile`}
                       className="w-full h-full object-cover"
                       onError={(e) => {
