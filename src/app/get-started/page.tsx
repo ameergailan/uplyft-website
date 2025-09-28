@@ -167,53 +167,24 @@ const GetStartedPage = () => {
                 >
                   {showVideo ? (
                     <div className="w-full bg-black rounded-3xl overflow-hidden">
-                      {/* Try multiple video sources and fallbacks */}
-                      <video
-                        className="w-full rounded-3xl"
-                        controls
-                        autoPlay
-                        muted
-                        playsInline
-                        preload="auto"
-                        onError={(e) => {
-                          console.error('Video failed to load:', e);
-                          // Try to reload or show error
-                          const video = e.target as HTMLVideoElement;
-                          setTimeout(() => {
-                            video.load();
-                          }, 1000);
-                        }}
-                        onLoadStart={() => console.log('Video loading...')}
-                        onCanPlay={() => console.log('Video ready to play')}
-                        onLoadedData={() => console.log('Video data loaded')}
-                        style={{ minHeight: '400px', backgroundColor: '#000' }}
-                      >
-                        {/* Multiple source attempts */}
-                        <source src="/agency-growth-video.mp4" type="video/mp4" />
-                        <source src="./agency-growth-video.mp4" type="video/mp4" />
-                        
-                        {/* Fallback content if video fails */}
-                        <div className="w-full h-96 bg-gray-900 rounded-3xl flex items-center justify-center p-8">
-                          <div className="text-center text-white">
-                            <h3 className="text-2xl font-bold mb-4">Video Loading...</h3>
-                            <p className="text-gray-300 mb-6">
-                              If the video doesn't load, please refresh the page or contact us.
-                            </p>
-                            <button
-                              onClick={() => window.location.reload()}
-                              className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold mr-4"
-                            >
-                              Refresh Page
-                            </button>
-                            <a 
-                              href="mailto:hello@uplyft.com?subject=Video%20Access%20Issue"
-                              className="bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold"
-                            >
-                              Contact Support
-                            </a>
-                          </div>
-                        </div>
-                      </video>
+                      {/* TEMPORARY: Replace with your YouTube/Vimeo embed */}
+                      <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
+                        <iframe
+                          className="absolute top-0 left-0 w-full h-full rounded-3xl"
+                          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
+                          title="Agency Growth Video"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                      
+                      {/* Instructions for you to replace */}
+                      <div className="p-4 bg-yellow-900/20 mt-4 rounded-lg">
+                        <p className="text-yellow-200 text-sm">
+                          <strong>TO FIX:</strong> Upload your video to YouTube (unlisted) or Vimeo, then replace the URL above with your video ID.
+                        </p>
+                      </div>
                     </div>
                   ) : (
                     <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
@@ -228,15 +199,18 @@ const GetStartedPage = () => {
                           pointerEvents: 'none'
                         }}
                         onLoadedData={(e) => {
-                          console.log('Thumbnail loaded');
+                          console.log('Thumbnail loaded successfully');
                           const video = e.target as HTMLVideoElement;
                           video.currentTime = 2; // Seek to 2 seconds for better frame
                           setThumbnailLoaded(true);
                         }}
                         onError={(e) => {
-                          console.log('Thumbnail failed, using fallback');
+                          console.error('Thumbnail failed to load:', e);
+                          console.log('Video file not found or not accessible');
                           setThumbnailLoaded(false);
                         }}
+                        onCanPlay={() => console.log('Thumbnail video ready')}
+                        onLoadStart={() => console.log('Thumbnail loading started')}
                       >
                         <source src="/agency-growth-video.mp4" type="video/mp4" />
                       </video>
