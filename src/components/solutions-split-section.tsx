@@ -248,9 +248,9 @@ const SolutionsSplitSection = () => {
             
             <div className="relative z-10">
                <div
-                 className="mb-8 time-content"
+                 className="mb-8 time-content lg:blur-effect"
                  style={{
-                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
+                   filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(0px)',
                    transition: 'filter 0.4s ease-out'
                  }}
                >
@@ -283,9 +283,9 @@ const SolutionsSplitSection = () => {
               </div>
 
                <div
-                 className="space-y-6 time-content"
+                 className="space-y-6 time-content lg:blur-effect"
                  style={{
-                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
+                   filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(0px)',
                    transition: 'filter 0.4s ease-out 0.1s'
                  }}
                >
@@ -360,9 +360,9 @@ const SolutionsSplitSection = () => {
             
             <div className="relative z-10">
                <div
-                 className="mb-8 text-right money-content"
+                 className="mb-8 text-right money-content lg:blur-effect"
                  style={{
-                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
+                   filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(0px)',
                    transition: 'filter 0.4s ease-out'
                  }}
                >
@@ -524,9 +524,9 @@ const SolutionsSplitSection = () => {
               </div>
 
                <div
-                 className="space-y-6 money-content"
+                 className="space-y-6 money-content lg:blur-effect"
                  style={{
-                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
+                   filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(0px)',
                    transition: 'filter 0.4s ease-out 0.1s'
                  }}
                >

@@ -339,6 +339,17 @@ section[data-interactive="true"],
   transition: filter 0.3s ease-out;
 }
 
+/* Desktop-only blur effects for solutions section */
+@media (min-width: 1024px) {
+  .lg\:blur-effect[data-hovered="false"] {
+    filter: blur(4px) !important;
+  }
+  
+  .lg\:blur-effect[data-hovered="true"] {
+    filter: blur(0px) !important;
+  }
+}
+
 
 .curtain-slide {
   box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
