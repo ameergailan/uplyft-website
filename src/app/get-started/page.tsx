@@ -265,7 +265,7 @@ const GetStartedPage = () => {
             >
               <div className="text-center">
                 <div className="text-xl font-bold">I Want To Scale Faster!</div>
-                <div className="text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ Derek</div>
+                <div className="text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
               </div>
             </motion.button>
           </motion.div>
