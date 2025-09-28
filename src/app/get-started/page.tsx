@@ -205,16 +205,42 @@ const GetStartedPage = () => {
                     </div>
                   ) : (
                     <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
-                      {/* Static Background with Gradient */}
+                      {/* Video Thumbnail - Blurred Preview */}
+                      <video 
+                        className="absolute inset-0 w-full h-full object-cover rounded-3xl"
+                        muted
+                        playsInline
+                        preload="metadata"
+                        poster=""
+                        style={{ 
+                          filter: 'blur(6px) brightness(0.7)',
+                          pointerEvents: 'none'
+                        }}
+                        onLoadedData={(e) => {
+                          // Seek to 1 second to get a good frame
+                          const video = e.target as HTMLVideoElement;
+                          video.currentTime = 1;
+                        }}
+                        onError={(e) => {
+                          console.log('Thumbnail video failed, using fallback');
+                          // Hide the video element and show gradient fallback
+                          (e.target as HTMLVideoElement).style.display = 'none';
+                        }}
+                      >
+                        <source src="/agency-growth-video.mp4" type="video/mp4" />
+                      </video>
+                      
+                      {/* Fallback gradient background (shows if video fails) */}
                       <div 
                         className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
                         style={{ 
                           backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.8) 100%)',
+                          zIndex: -1
                         }}
                       />
                       
                       {/* Additional Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 rounded-3xl" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 rounded-3xl" />
                       
                       {/* Play Button - Center Only */}
                       <div className="absolute inset-0 flex items-center justify-center">
