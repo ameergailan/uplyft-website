@@ -142,7 +142,7 @@ const GetStartedPage = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <p className="text-2xl lg:text-3xl font-bold text-white">
-              👑 Agency Owners 👑
+              👇 Agency Owners 👇
             </p>
           </motion.div>
 
@@ -152,14 +152,14 @@ const GetStartedPage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <span className="text-4xl lg:text-5xl text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6)' }}>Free:</span>{' '}
+            <span className="text-4xl lg:text-5xl text-sky-400">Free:</span>{' '}
             <span className="text-white">Get the exact </span>
-            <span className="text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6)' }}>UpLyft Growth System™</span>
+            <span className="text-sky-400">UpLyft Growth System™</span>
             <br />
             <span className="text-white text-4xl lg:text-5xl">
               that scaled agencies to{' '}
             </span>
-            <span className="text-5xl lg:text-6xl text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6)' }}>
+            <span className="text-5xl lg:text-6xl text-sky-400">
               $100k+/Mo
             </span>
           </motion.h1>
