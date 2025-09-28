@@ -101,75 +101,111 @@ const GetStartedPage = () => {
       </motion.header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-6 py-16 max-w-5xl">
+      <main className="container mx-auto px-6 py-8 max-w-6xl">
         
         {/* Main Headline */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
+          {/* Top Badge */}
+          <motion.div 
+            className="mb-8"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <p className="text-2xl lg:text-3xl font-bold text-white">
+              👑 Agency Owners 👑
+            </p>
+          </motion.div>
+
           <motion.h1 
-            className="text-4xl lg:text-6xl font-bold mb-8 leading-tight text-white"
+            className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <div className="free-banner-container mb-6">
-              <span className="free-banner text-white px-6 py-3 rounded-lg inline-block text-2xl lg:text-3xl font-bold">
-                FREE: Get the exact UpLyft Growth System™
-              </span>
-            </div><br />
-            <span className="text-5xl lg:text-7xl">
-              that scaled agencies to
-            </span><br />
-            <span className="text-6xl lg:text-8xl text-white">
+            <span className="text-red-500 text-4xl lg:text-5xl">Free:</span>{' '}
+            <span className="text-white">Get the exact </span>
+            <span className="text-red-500">UpLyft Growth System™</span>
+            <br />
+            <span className="text-white text-4xl lg:text-5xl">
+              that scaled agencies to{' '}
+            </span>
+            <span className="text-red-500 text-5xl lg:text-6xl">
               $100k+/Mo
             </span>
           </motion.h1>
           
           <motion.p 
-            className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8"
+            className="text-xl lg:text-2xl text-white font-medium max-w-4xl mx-auto leading-relaxed mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Plug Into a Proven Growth System Trusted by 100+ Agencies
+            While Removing Yourself From Operations and Keeping A 70% Profit Margin*
           </motion.p>
 
-          {/* YouTube Video Section - MASSIVE */}
+          {/* Video Section - MASSIVE */}
           <motion.div
-            className="mb-16"
+            className="mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <div className="w-full px-1">
-              <div className="bg-gray-900 rounded-3xl p-2 lg:p-4 border border-gray-700 shadow-2xl max-w-none">
+            <div className="w-full">
+              <div className="relative w-full">
                 <div 
-                  className="w-full bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-dashed border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors duration-300 group" 
-                  style={{ width: '100%', height: '55vh', aspectRatio: '2.5/1' }}
+                  className="w-full relative cursor-pointer group overflow-hidden rounded-3xl" 
+                  style={{ width: '100%' }}
                   onClick={handlePlayClick}
                 >
                   {showVideo ? (
-                    <div className="w-full h-full bg-black rounded-2xl flex items-center justify-center">
-                      <p className="text-white text-2xl">Video Player Would Go Here</p>
+                    <div className="w-full bg-black rounded-3xl overflow-hidden">
+                      <video
+                        className="w-full rounded-3xl"
+                        controls
+                        autoPlay
+                        muted
+                        playsInline
+                        preload="metadata"
+                      >
+                        <source src="/agency-growth-video.mp4" type="video/mp4" />
+                        <p className="text-white text-xl p-8">
+                          Your browser does not support the video tag. Please update your browser or try a different one.
+                        </p>
+                      </video>
                     </div>
                   ) : (
-                    <div className="text-center">
-                      <motion.div 
-                        className="text-9xl mb-8 group-hover:scale-110 transition-transform duration-300"
-                        whileHover={{ scale: 1.1 }}
+                    <div className="relative w-full h-full">
+                      {/* Video Thumbnail Background */}
+                      <video 
+                        className="w-full rounded-3xl"
+                        muted
+                        playsInline
+                        preload="metadata"
+                        style={{ filter: 'blur(4px) brightness(0.6)' }}
                       >
-                        <Play className="text-white w-24 h-24 mx-auto" />
-                      </motion.div>
-                      <p className="text-gray-300 text-3xl font-bold mb-4">
-                        Watch: How We Scale Agencies
-                      </p>
-                      <p className="text-gray-500 text-xl">
-                        Case study and growth demonstration
-                      </p>
+                        <source src="/agency-growth-video.mp4#t=0.1" type="video/mp4" />
+                      </video>
+                      
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 rounded-3xl" />
+                      
+                      {/* Play Button - Center Only */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <motion.div 
+                          className="group-hover:scale-110 transition-transform duration-300 z-10"
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          <div className="bg-white/25 backdrop-blur-sm rounded-full w-20 h-20 flex items-center justify-center hover:bg-white/35 transition-all duration-300 shadow-2xl">
+                            <Play className="text-white w-8 h-8 ml-1" fill="white" />
+                          </div>
+                        </motion.div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -182,7 +218,7 @@ const GetStartedPage = () => {
 
           {/* Social Proof */}
           <motion.div
-            className="flex flex-wrap justify-center gap-8 mb-12"
+            className="flex flex-wrap justify-center gap-6 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
@@ -198,7 +234,7 @@ const GetStartedPage = () => {
 
         {/* Benefits Grid */}
         <motion.div
-          className="grid md:grid-cols-3 gap-8 mb-16"
+          className="grid md:grid-cols-3 gap-6 mb-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.4 }}

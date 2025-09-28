@@ -105,3 +105,5 @@ const FreshBeliefsPage = () => {
 }
 
 export default FreshBeliefsPage
+
+

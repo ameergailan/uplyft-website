@@ -62,3 +62,5 @@ const StaticDots = () => {
 }
 
 export default StaticDots
+
+

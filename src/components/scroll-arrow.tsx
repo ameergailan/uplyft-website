@@ -37,3 +37,5 @@ const ScrollArrow = ({ scrollProgress }: { scrollProgress: number }) => {
 }
 
 export default ScrollArrow
+
+
