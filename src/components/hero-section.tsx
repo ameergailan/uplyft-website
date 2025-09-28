@@ -15,8 +15,10 @@ const HeroSection = () => {
   const handleHeroClick = () => {
     console.log('HERO CLICKED - GOING TO GET STARTED PAGE')
     
-    // Navigate directly to get-started page
-    window.location.href = '/get-started'
+    // Use Next.js router for better navigation
+    if (typeof window !== 'undefined') {
+      window.location.href = '/get-started/'
+    }
   }
 
   useEffect(() => {

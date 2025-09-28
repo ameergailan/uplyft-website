@@ -203,46 +203,34 @@ const GetStartedPage = () => {
                     </div>
                   ) : (
                     <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
-                      {/* Real Video Thumbnail - Blurred */}
-                      <video 
-                        className="absolute inset-0 w-full h-full object-cover rounded-3xl"
-                        muted
-                        playsInline
-                        preload="metadata"
+                      {/* Professional Video Thumbnail - Always Shows */}
+                      <div 
+                        className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
                         style={{ 
-                          filter: 'blur(4px) brightness(0.6)',
-                          pointerEvents: 'none'
+                          backgroundImage: `
+                            linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%),
+                            radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                            radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)
+                          `,
+                          filter: 'blur(2px)'
                         }}
-                        onLoadedData={(e) => {
-                          console.log('Thumbnail loaded successfully');
-                          const video = e.target as HTMLVideoElement;
-                          video.currentTime = 2; // Seek to 2 seconds for better frame
-                          setThumbnailLoaded(true);
-                        }}
-                        onError={(e) => {
-                          console.error('Thumbnail failed to load:', e);
-                          console.log('Video file not found or not accessible');
-                          setThumbnailLoaded(false);
-                        }}
-                        onCanPlay={() => console.log('Thumbnail video ready')}
-                        onLoadStart={() => console.log('Thumbnail loading started')}
-                      >
-                        <source src="/agency-growth-video.mp4" type="video/mp4" />
-                      </video>
+                      />
                       
-                      {/* Fallback gradient (shows if video fails to load) */}
-                      {!thumbnailLoaded && (
-                        <div 
-                          className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
-                          style={{ 
-                            backgroundImage: `
-                              linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%),
-                              radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                              radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)
-                            `
-                          }}
-                        />
-                      )}
+                      {/* Simulated Video Content */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-full h-full relative overflow-hidden rounded-3xl">
+                          <div 
+                            className="absolute inset-0 opacity-40"
+                            style={{
+                              background: `
+                                linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%),
+                                linear-gradient(-45deg, rgba(0,0,0,0.3) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.3) 100%)
+                              `,
+                              filter: 'blur(6px)'
+                            }}
+                          />
+                        </div>
+                      </div>
                       
                       {/* Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 rounded-3xl" />
