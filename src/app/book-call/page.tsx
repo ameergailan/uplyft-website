@@ -92,7 +92,7 @@ const BookCallPage = () => {
 
         {/* Right Side - Booking Calendar */}
         <div className="w-1/2 bg-black">
-          <div className="h-full p-6">
+          <div className="h-full pl-2 pr-8 py-6">
             <iframe
               src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
               className="w-full h-full border-0 rounded-lg"
