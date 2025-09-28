@@ -456,6 +456,32 @@ const ServicesCardsSection = () => {
           </div>
         </div>
         
+        {/* MOBILE: Simple "Why 3" Section */}
+        <div className="lg:hidden mt-16 bg-white py-16 px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-sm uppercase tracking-wider text-gray-500 mb-4">
+              Strategy
+            </h2>
+            <h1 className="text-3xl sm:text-4xl font-bold text-black mb-6 leading-tight">
+              Why 3 different<br />services?
+            </h1>
+            <p className="text-lg text-gray-600 mb-8">
+              just focus on one?
+            </p>
+            <div className="bg-black text-white rounded-2xl p-8 max-w-md mx-auto">
+              <h3 className="text-xl font-bold mb-4">Here's why:</h3>
+              <p className="text-gray-300 leading-relaxed">
+                Agencies need all three systems working together to scale effectively. Lead generation without sales optimization fails. Sales without automation burns you out. Each system amplifies the others.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+        
         {/* Third page slide-over effect - DESKTOP ONLY */}
         <div 
           className="hidden lg:block absolute inset-0 bg-white z-40"
