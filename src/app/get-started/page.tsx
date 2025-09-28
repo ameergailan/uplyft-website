@@ -322,21 +322,8 @@ const GetStartedPage = () => {
                   Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
                 </h3>
                 <p className="text-gray-600 text-lg">
-                  After submitting the form, click the "Watch Video" button below
+                  The video will automatically start after you submit the form
                 </p>
-              </div>
-
-              {/* Watch Video Button */}
-              <div className="text-center px-8 pb-4">
-                <button
-                  onClick={() => {
-                    setShowVideoModal(false);
-                    setShowVideo(true);
-                  }}
-                  className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 font-bold text-lg shadow-lg"
-                >
-                  ✅ I Submitted - Watch Video Now
-                </button>
               </div>
 
               {/* LeadConnector Form Embed */}
@@ -347,22 +334,95 @@ const GetStartedPage = () => {
                   style={{ height: '500px' }}
                   title="Lead Capture Form"
                   onLoad={() => {
-                    // Simple postMessage listener (keep it minimal)
+                    let initialHeight = 0;
+                    let hasSubmitted = false;
+                    let checkCount = 0;
+                    const maxChecks = 180; // 3 minutes
+                    
+                    // Get initial iframe height
+                    setTimeout(() => {
+                      const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
+                      if (iframe) {
+                        initialHeight = iframe.offsetHeight;
+                        console.log('Initial iframe height:', initialHeight);
+                      }
+                    }, 1000);
+                    
+                    // Enhanced postMessage listener
                     const handleMessage = (event: MessageEvent) => {
                       console.log('Received message:', event.data);
-                      if (event.data && (
-                        event.data.type === 'form_submitted' || 
-                        event.data.action === 'submit' ||
-                        (typeof event.data === 'string' && event.data.includes('submit'))
-                      )) {
-                        console.log('Auto-showing video');
-                        setShowVideoModal(false);
-                        setShowVideo(true);
+                      
+                      if (hasSubmitted) return;
+                      
+                      // Check for any form-related messages
+                      if (event.data) {
+                        const dataStr = JSON.stringify(event.data).toLowerCase();
+                        if (dataStr.includes('submit') || 
+                            dataStr.includes('success') || 
+                            dataStr.includes('thank') ||
+                            dataStr.includes('complete') ||
+                            event.data.type === 'form_submitted' ||
+                            event.data.action === 'submit' ||
+                            event.data.event === 'submit') {
+                          console.log('Form submitted via postMessage!');
+                          hasSubmitted = true;
+                          setTimeout(() => {
+                            setShowVideoModal(false);
+                            setShowVideo(true);
+                          }, 1500); // 1.5 second delay to show success
+                        }
+                      }
+                    };
+                    
+                    // Monitor iframe changes
+                    const monitorChanges = () => {
+                      if (hasSubmitted) return;
+                      
+                      const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
+                      if (iframe) {
+                        const currentHeight = iframe.offsetHeight;
+                        
+                        // If height changed significantly, likely a success message appeared
+                        if (initialHeight > 0 && Math.abs(currentHeight - initialHeight) > 50) {
+                          console.log('Iframe height changed significantly, assuming form submitted');
+                          hasSubmitted = true;
+                          setTimeout(() => {
+                            setShowVideoModal(false);
+                            setShowVideo(true);
+                          }, 2000); // 2 second delay
+                          return;
+                        }
+                        
+                        // Try to detect URL changes in iframe (if accessible)
+                        try {
+                          if (iframe.contentWindow && iframe.contentWindow.location.href.includes('thank')) {
+                            console.log('Thank you page detected!');
+                            hasSubmitted = true;
+                            setTimeout(() => {
+                              setShowVideoModal(false);
+                              setShowVideo(true);
+                            }, 1500);
+                            return;
+                          }
+                        } catch (e) {
+                          // CORS blocked, continue
+                        }
+                      }
+                      
+                      checkCount++;
+                      if (checkCount < maxChecks && !hasSubmitted) {
+                        setTimeout(monitorChanges, 1000);
                       }
                     };
                     
                     window.addEventListener('message', handleMessage);
-                    return () => window.removeEventListener('message', handleMessage);
+                    
+                    // Start monitoring after iframe loads
+                    setTimeout(monitorChanges, 3000);
+                    
+                    return () => {
+                      window.removeEventListener('message', handleMessage);
+                    };
                   }}
                 />
               </div>
