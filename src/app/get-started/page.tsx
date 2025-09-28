@@ -167,16 +167,23 @@ const GetStartedPage = () => {
                 >
                   {showVideo ? (
                     <div className="w-full bg-black rounded-3xl overflow-hidden">
-                      {/* Your Agency Growth Video */}
+                      {/* Your Agency Growth Video with Custom Overlay */}
                       <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
                           className="absolute top-0 left-0 w-full h-full rounded-3xl"
-                          src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&mute=1&rel=0&modestbranding=1&showinfo=0&controls=1&iv_load_policy=3"
+                          src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&mute=1&rel=0&modestbranding=1&controls=1&disablekb=1&fs=1&playsinline=1"
                           title="UpLyft Agency Growth System Video"
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />
+                        
+                        {/* Custom overlay to hide YouTube branding */}
+                        <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-black/80 to-transparent pointer-events-none rounded-t-3xl" />
+                        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/60 to-transparent pointer-events-none rounded-b-3xl" />
+                        
+                        {/* Hide top-right YouTube info */}
+                        <div className="absolute top-2 right-2 w-20 h-8 bg-black/90 pointer-events-none rounded" />
                       </div>
                     </div>
                   ) : (
