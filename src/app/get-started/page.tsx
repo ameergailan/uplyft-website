@@ -239,9 +239,6 @@ const GetStartedPage = () => {
                     </div>
                   )}
                 </div>
-                <p className="text-center text-gray-400 mt-8 text-xl">
-                  See real results from agencies we've scaled
-                </p>
               </div>
             </div>
           </motion.div>
@@ -254,11 +251,14 @@ const GetStartedPage = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <motion.button
-              className="bg-white text-black px-12 py-5 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-xl shadow-lg"
+              className="bg-red-600 text-white px-8 py-4 rounded-lg hover:bg-red-700 transition-all duration-300 font-bold text-lg shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              I want to scale faster, book me on a call with the UpLyft Team
+              <div className="text-center">
+                <div className="text-xl font-bold">I Want To Scale Faster!</div>
+                <div className="text-sm font-medium mt-1">Apply For 1 on 1 Mentorship w/ Derek</div>
+              </div>
             </motion.button>
           </motion.div>
         </motion.div>
