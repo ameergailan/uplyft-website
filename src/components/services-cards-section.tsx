@@ -183,8 +183,46 @@ const ServicesCardsSection = () => {
             </p>
           </motion.div>
 
-           {/* Cards container with navigation arrows */}
-           <div className="relative h-[400px] sm:h-[550px] flex items-center justify-center">
+           {/* Cards container - Mobile: Vertical Stack, Desktop: Horizontal */}
+           <div className="relative lg:h-[550px] flex items-center justify-center">
+            
+            {/* MOBILE: Vertical Stack of Cards */}
+            <div className="lg:hidden w-full space-y-6 px-4">
+              {cards.map((card, index) => (
+                <motion.div
+                  key={card.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 text-white shadow-lg"
+                >
+                  <div className="mb-4">
+                    <div className="text-xs uppercase tracking-wider opacity-80 mb-2">
+                      {card.subtitle}
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">
+                      {card.title}
+                    </h3>
+                    <p className="text-white/90 leading-relaxed mb-4 text-sm">
+                      {card.description}
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    {card.features.map((feature, idx) => (
+                      <div key={idx} className="flex items-center text-sm">
+                        <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* DESKTOP: Original Horizontal Cards with Effects */}
+            <div className="hidden lg:block relative h-[550px] w-full flex items-center justify-center">
             
             {/* Navigation Arrows - HIDDEN ON MOBILE */}
             <AnimatePresence>
@@ -290,12 +328,12 @@ const ServicesCardsSection = () => {
                     z: -100
                   }}
                    animate={{ 
-                     opacity: 1 - slideOverProgress * 0.6, // Fade as third page slides over
-                     scale: (activeCard === index ? 1 : 0.9) * (1 - slideOverProgress * 0.3), // Shrink as third page approaches
+                     opacity: 1 - slideOverProgress * 0.6, 
+                     scale: (activeCard === index ? 1 : 0.9) * (1 - slideOverProgress * 0.3), 
                      rotateY: activeCard === index ? 0 : -3,
                      z: activeCard === index ? 0 : -20,
-                     x: 0, // All cards centered
-                     y: (index - activeCard) * 20 + slideOverProgress * 50 // Stack + slide down effect
+                     x: 0, 
+                     y: (index - activeCard) * 20 + slideOverProgress * 50 
                    }}
                   transition={{ 
                     duration: 0.8, 
@@ -303,7 +341,7 @@ const ServicesCardsSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                   className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
+                   className={`absolute w-[1000px] xl:w-[1500px] h-[500px] rounded-3xl p-16 text-white shadow-2xl relative overflow-hidden`}
                    style={{
                      transform: `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
                      filter: activeCard === index 
@@ -371,10 +409,10 @@ const ServicesCardsSection = () => {
                       <div className="text-sm uppercase tracking-wider opacity-80 mb-2">
                         {card.subtitle}
                       </div>
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
+                      <h3 className="text-3xl font-bold mb-4">
                         {card.title}
                       </h3>
-                      <p className="text-white/90 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">
+                      <p className="text-white/90 leading-relaxed mb-6">
                         {card.description}
                       </p>
                     </div>
@@ -393,28 +431,24 @@ const ServicesCardsSection = () => {
                 </motion.div>
               ))}
             </AnimatePresence>
+            </div>
           </div>
 
-          {/* Mobile Navigation Dots */}
-          <div className="flex justify-center mt-8 space-x-3">
+          {/* Desktop Navigation Dots */}
+          <div className="hidden lg:flex justify-center mt-12 space-x-3">
             {cards.map((_, index) => (
-              <button
+              <div
                 key={index}
-                onClick={() => setActiveCard(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-500 lg:pointer-events-none ${
-                  activeCard === index ? 'bg-black scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                className={`w-3 h-3 rounded-full transition-all duration-500 ${
+                  activeCard === index ? 'bg-black scale-125' : 'bg-gray-300'
                 }`}
-                aria-label={`View service ${index + 1}`}
               />
             ))}
           </div>
 
-          {/* Mobile Swipe Hint / Desktop Scroll Hint */}
-          <div className="text-center mt-6">
-            <p className="text-gray-500 text-sm animate-pulse lg:hidden">
-              Tap dots above to explore services
-            </p>
-            <p className="text-gray-500 text-sm animate-pulse hidden lg:block">
+          {/* Desktop Scroll Hint */}
+          <div className="text-center mt-8 hidden lg:block">
+            <p className="text-gray-500 text-sm animate-pulse">
               Scroll to explore services
             </p>
           </div>
