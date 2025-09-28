@@ -31,59 +31,67 @@ const BookingSuccessPage = () => {
   return (
     <div className="min-h-screen bg-black text-white" data-page="booking-success">
       {/* Main Content */}
-      <main className="container mx-auto px-4 sm:px-6 py-12 max-w-4xl">
+      <main className="container mx-auto px-4 sm:px-6 py-8 max-w-4xl">
         
         {/* STOP DON'T LEAVE THIS PAGE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center mb-4"
         >
-          <p className="text-red-500 text-lg sm:text-xl font-bold uppercase">
-            STOP DON'T LEAVE THIS PAGE
+          <p className="text-sky-400 text-lg sm:text-xl font-bold uppercase">
+            🛑 STOP DON'T LEAVE THIS PAGE
           </p>
         </motion.div>
 
         {/* YOUR CALL IS BOOKED! */}
         <motion.h1 
-          className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 text-white text-center"
+          className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-3 text-white text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          YOUR CALL IS BOOKED!
+          🎉 YOUR CALL IS BOOKED! 🎉
         </motion.h1>
 
         {/* FOLLOW THE NEXT 2 STEPS */}
         <motion.h2 
-          className="text-2xl sm:text-4xl lg:text-5xl font-bold mb-2 text-white text-center"
+          className="text-2xl sm:text-4xl lg:text-5xl font-bold mb-1 text-white text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          FOLLOW THE NEXT 2 STEPS
+          📋 FOLLOW THE NEXT 2 STEPS
         </motion.h2>
 
         {/* Follow the steps or your call will be cancelled */}
         <motion.p 
-          className="text-lg sm:text-xl text-gray-300 mb-12 text-center"
+          className="text-lg sm:text-xl text-gray-300 mb-8 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          (follow the steps or your call will be cancelled)
+          ⚠️ (follow the steps or your call will be cancelled)
         </motion.p>
+
+        {/* Dividing Line */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="w-full h-px bg-gradient-to-r from-transparent via-sky-400 to-transparent mb-8"
+        />
 
         {/* Step 1: CONFIRM YOUR CALL */}
         <motion.div
-          className="mb-16"
+          className="mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
-            1. CONFIRM YOUR CALL
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 text-center">
+            ✅ 1. CONFIRM YOUR CALL
           </h3>
           
           {/* Booking Success Image */}
@@ -96,15 +104,23 @@ const BookingSuccessPage = () => {
           </div>
         </motion.div>
 
+        {/* Dividing Line */}
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="w-full h-px bg-gradient-to-r from-transparent via-sky-400 to-transparent mb-8"
+        />
+
         {/* Step 2: LEARN MORE ABOUT THE UPLYFT SYSTEM */}
         <motion.div
-          className="mb-16"
+          className="mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0 }}
         >
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
-            2. LEARN MORE ABOUT THE UPLYFT SYSTEM
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 text-center">
+            🎥 2. LEARN MORE ABOUT THE UPLYFT SYSTEM
           </h3>
           
           {/* Video Section */}
