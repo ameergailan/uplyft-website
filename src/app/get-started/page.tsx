@@ -171,7 +171,7 @@ const GetStartedPage = () => {
                       <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
                           className="absolute top-0 left-0 w-full h-full rounded-3xl"
-                          src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&mute=1&rel=0&modestbranding=1"
+                          src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&mute=1&rel=0&modestbranding=1&showinfo=0&controls=1&iv_load_policy=3"
                           title="UpLyft Agency Growth System Video"
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
