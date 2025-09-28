@@ -99,6 +99,24 @@ const BookCallPage = () => {
                 className="w-full h-full border-0 lg:rounded-lg"
                 title="Book a Call with David - UpLyft Team"
                 allow="camera; microphone; geolocation"
+                onLoad={() => {
+                  // Listen for booking completion messages
+                  const handleMessage = (event: MessageEvent) => {
+                    console.log('Booking widget message:', event.data);
+                    if (event.data && (
+                      event.data.type === 'booking_complete' ||
+                      event.data.type === 'booking_confirmed' ||
+                      event.data.action === 'booked' ||
+                      (typeof event.data === 'string' && event.data.includes('book'))
+                    )) {
+                      console.log('Booking detected, redirecting to success page');
+                      window.location.href = '/booking-success/';
+                    }
+                  };
+                  
+                  window.addEventListener('message', handleMessage);
+                  return () => window.removeEventListener('message', handleMessage);
+                }}
               />
             </div>
           </div>
