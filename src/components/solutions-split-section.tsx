@@ -231,15 +231,15 @@ const SolutionsSplitSection = () => {
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-0 min-h-[80vh]">
+        <div className="grid lg:grid-cols-2 gap-0 min-h-[80vh]">
           
           {/* LEFT SIDE - TIME */}
           <div
-            className="relative p-6 lg:p-8 xl:p-16 flex flex-col justify-center lg:border-r border-gray-700 cursor-pointer time-section min-h-[50vh] lg:min-h-auto"
+            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 cursor-pointer time-section"
           >
-             {/* Blur overlay - DISABLED ON MOBILE */}
+             {/* Blur overlay - DESKTOP ONLY */}
              <div
-               className="hidden lg:block absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay"
+               className="absolute inset-0 bg-black/70 lg:backdrop-blur-md pointer-events-none blur-overlay"
                style={{
                  opacity: hoveredSide === 'time' ? 0 : 0.9,
                  transition: 'opacity 0.4s ease-out'
@@ -248,7 +248,11 @@ const SolutionsSplitSection = () => {
             
             <div className="relative z-10">
                <div
-                 className="mb-6 lg:mb-8 time-content"
+                 className="mb-8 time-content"
+                 style={{
+                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
+                   transition: 'filter 0.4s ease-out'
+                 }}
                >
                 <motion.div
                   animate={{
@@ -264,7 +268,7 @@ const SolutionsSplitSection = () => {
                   <Clock size={80} className="text-blue-400" />
                 </motion.div>
                 <motion.h2 
-                  className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 lg:mb-4"
+                  className="text-4xl lg:text-5xl font-bold text-white mb-4"
                   animate={{
                     scale: hoveredSide === 'time' ? 1.05 : 1,
                     textShadow: hoveredSide === 'time' ? '0 0 20px rgba(96, 165, 250, 0.5)' : '0 0 0px rgba(96, 165, 250, 0)'
@@ -273,7 +277,7 @@ const SolutionsSplitSection = () => {
                 >
                   TIME
                 </motion.h2>
-                <p className="text-base sm:text-xl text-gray-300 mb-6 lg:mb-8">
+                <p className="text-xl text-gray-300 mb-8">
                   Reclaim your most valuable resource
                 </p>
               </div>
@@ -281,7 +285,7 @@ const SolutionsSplitSection = () => {
                <div
                  className="space-y-6 time-content"
                  style={{
-                   filter: hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)',
+                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
                    transition: 'filter 0.4s ease-out 0.1s'
                  }}
                >
@@ -345,9 +349,9 @@ const SolutionsSplitSection = () => {
           <div
             className="relative p-8 lg:p-16 flex flex-col justify-center cursor-pointer money-section"
           >
-             {/* Blur overlay */}
+             {/* Blur overlay - DESKTOP ONLY */}
              <div
-               className="absolute inset-0 bg-black/70 backdrop-blur-md pointer-events-none blur-overlay"
+               className="absolute inset-0 bg-black/70 lg:backdrop-blur-md pointer-events-none blur-overlay"
                style={{
                  opacity: hoveredSide === 'money' ? 0 : 0.9,
                  transition: 'opacity 0.4s ease-out'
@@ -358,7 +362,7 @@ const SolutionsSplitSection = () => {
                <div
                  className="mb-8 text-right money-content"
                  style={{
-                   filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)',
+                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
                    transition: 'filter 0.4s ease-out'
                  }}
                >
@@ -522,7 +526,7 @@ const SolutionsSplitSection = () => {
                <div
                  className="space-y-6 money-content"
                  style={{
-                   filter: hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)',
+                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'money' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
                    transition: 'filter 0.4s ease-out 0.1s'
                  }}
                >

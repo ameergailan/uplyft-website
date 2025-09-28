@@ -339,23 +339,6 @@ section[data-interactive="true"],
   transition: filter 0.3s ease-out;
 }
 
-/* Mobile: Disable blur effects and animations */
-@media (max-width: 1023px) {
-  .time-content,
-  .money-content {
-    filter: blur(0px) !important;
-  }
-  
-  .blur-overlay {
-    display: none !important;
-  }
-  
-  /* Disable hover effects on mobile */
-  .case-study-section:hover .hover-sensitive:not(:hover) {
-    filter: blur(0px) brightness(1) !important;
-  }
-}
-
 
 .curtain-slide {
   box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.6);
