@@ -167,23 +167,16 @@ const GetStartedPage = () => {
                 >
                   {showVideo ? (
                     <div className="w-full bg-black rounded-3xl overflow-hidden">
-                      {/* TEMPORARY: Replace with your YouTube/Vimeo embed */}
+                      {/* Your Agency Growth Video */}
                       <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
                           className="absolute top-0 left-0 w-full h-full rounded-3xl"
-                          src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1"
-                          title="Agency Growth Video"
+                          src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&mute=1&rel=0&modestbranding=1"
+                          title="UpLyft Agency Growth System Video"
                           frameBorder="0"
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                         />
-                      </div>
-                      
-                      {/* Instructions for you to replace */}
-                      <div className="p-4 bg-yellow-900/20 mt-4 rounded-lg">
-                        <p className="text-yellow-200 text-sm">
-                          <strong>TO FIX:</strong> Upload your video to YouTube (unlisted) or Vimeo, then replace the URL above with your video ID.
-                        </p>
                       </div>
                     </div>
                   ) : (
