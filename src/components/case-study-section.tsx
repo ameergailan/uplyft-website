@@ -141,18 +141,19 @@ const CaseStudySection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ 
-                scale: 1.15,
+                scale: 1.05,
+                y: -10,
                 zIndex: 50,
-                transition: { duration: 0.3, ease: "easeOut" }
+                transition: { duration: 0.4, ease: "easeOut" }
               }}
-              className="hover-sensitive relative cursor-pointer"
+              className="hover-sensitive relative cursor-pointer group"
             >
               <div 
-                className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10"
+                className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10 group-hover:shadow-2xl group-hover:border-gray-300 transition-all duration-400 ease-out"
                 style={{
                   transform: isBeingShadowed ? 'scale(0.9)' : 'scale(1)',
                   filter: isBeingShadowed ? 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' : 'drop-shadow(0 10px 25px rgba(0,0,0,0.3))',
-                  transition: 'transform 0.5s ease-out, filter 0.5s ease-out'
+                  transition: 'transform 0.5s ease-out, filter 0.5s ease-out, box-shadow 0.4s ease-out, border-color 0.4s ease-out'
                 }}
               >
                 {/* Client Header */}
@@ -167,18 +168,18 @@ const CaseStudySection = () => {
                   </div>
                   
                   {/* Profile Picture */}
-                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-200">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-200 group-hover:scale-110 transition-transform duration-400 ease-out">
                     <img 
                       src={`/${project.client.toLowerCase()}-profile.png`}
                       alt={`${project.client} profile`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400 ease-out"
                       onError={(e) => {
                         // Fallback to initials if image fails to load
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
                         const parent = target.parentElement;
                         if (parent) {
-                          parent.className = 'w-20 h-20 bg-black rounded-xl flex items-center justify-center';
+                          parent.className = 'w-20 h-20 bg-black rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-400 ease-out';
                           parent.innerHTML = `<span class="text-white font-bold text-lg">${project.logo}</span>`;
                         }
                       }}
@@ -187,27 +188,27 @@ const CaseStudySection = () => {
                 </div>
 
                 {/* Business Name */}
-                <h5 className="text-xl font-bold text-black mb-4">
+                <h5 className="text-xl font-bold text-black mb-4 group-hover:text-gray-800 transition-colors duration-400 ease-out">
                   {project.title}
                 </h5>
 
                 {/* Description */}
-                <p className="text-gray-700 leading-relaxed mb-6 flex-grow">
+                <p className="text-gray-700 leading-relaxed mb-6 flex-grow group-hover:text-gray-600 transition-colors duration-400 ease-out">
                   {project.description}
                 </p>
 
                 {/* Key Metrics */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   {project.metrics.map((metric, metricIndex) => (
-                    <div key={metricIndex} className="text-center">
-                      <div className="text-lg lg:text-xl font-bold text-black">
+                    <div key={metricIndex} className="text-center group-hover:scale-105 transition-transform duration-400 ease-out">
+                      <div className="text-lg lg:text-xl font-bold text-black group-hover:text-gray-800 transition-colors duration-400 ease-out">
                         {metric.value}
                       </div>
-                      <div className="text-xs text-gray-600 mb-1">
+                      <div className="text-xs text-gray-600 mb-1 group-hover:text-gray-500 transition-colors duration-400 ease-out">
                         {metric.label}
                       </div>
                       {metric.growth && (
-                        <div className="text-xs text-green-600 font-medium">
+                        <div className="text-xs text-green-600 font-medium group-hover:text-green-700 transition-colors duration-400 ease-out">
                           {metric.growth}
                         </div>
                       )}
@@ -220,7 +221,7 @@ const CaseStudySection = () => {
                   {project.services.map((service, serviceIndex) => (
                     <span
                       key={serviceIndex}
-                      className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full"
+                      className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full group-hover:bg-gray-200 group-hover:text-gray-900 transition-all duration-400 ease-out"
                     >
                       {service.label}
                     </span>
@@ -230,7 +231,7 @@ const CaseStudySection = () => {
                 {/* View Details Button */}
                 <button
                   onClick={() => console.log(`View details for ${project.client}`)}
-                  className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-900 transition-colors duration-300 group flex items-center justify-center gap-2"
+                  className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-900 group-hover:scale-105 transition-all duration-400 ease-out flex items-center justify-center gap-2"
                 >
                   View Case Study
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
