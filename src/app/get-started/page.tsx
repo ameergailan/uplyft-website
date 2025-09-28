@@ -125,47 +125,47 @@ const GetStartedPage = () => {
       </motion.header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-6 py-8 max-w-6xl">
+      <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
         
         {/* Main Headline */}
         <motion.div 
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           {/* Top Badge */}
           <motion.div 
-            className="mb-8"
+            className="mb-4 sm:mb-8"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <p className="text-2xl lg:text-3xl font-bold text-white">
+            <p className="text-lg sm:text-2xl lg:text-3xl font-bold text-white">
               👇 Business Owners 👇
             </p>
           </motion.div>
 
           <motion.h1 
-            className="text-4xl lg:text-6xl font-bold mb-6 leading-tight text-white"
+            className="text-2xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-white px-2"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <span className="text-4xl lg:text-5xl text-sky-400">Free:</span>{' '}
+            <span className="text-2xl sm:text-4xl lg:text-5xl text-sky-400">Free:</span>{' '}
             <span className="text-white">Get the exact </span>
             <span className="text-sky-400">UpLyft Growth System™</span>
             <br />
-            <span className="text-white text-4xl lg:text-5xl">
+            <span className="text-white text-2xl sm:text-4xl lg:text-5xl">
               that scaled agencies to{' '}
             </span>
-            <span className="text-5xl lg:text-6xl text-sky-400">
+            <span className="text-3xl sm:text-5xl lg:text-6xl text-sky-400">
               $100k+/Mo
             </span>
           </motion.h1>
           
           <motion.p 
-            className="text-xl lg:text-2xl text-white font-medium max-w-4xl mx-auto leading-relaxed mb-8"
+            className="text-base sm:text-xl lg:text-2xl text-white font-medium max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-8 px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -183,8 +183,8 @@ const GetStartedPage = () => {
             <div className="w-full">
               <div className="relative w-full">
                 <div 
-                  className="w-full relative cursor-pointer group overflow-hidden rounded-3xl" 
-                  style={{ width: '100%' }}
+                  className="w-full relative cursor-pointer group overflow-hidden rounded-2xl sm:rounded-3xl" 
+                  style={{ width: '100%', minHeight: '250px', aspectRatio: '16/9' }}
                   onClick={handlePlayClick}
                 >
                   {showVideo ? (
@@ -202,7 +202,7 @@ const GetStartedPage = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
+                    <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '250px' }}>
                       {/* Real Video Thumbnail - Blurred */}
                       <video 
                         className="absolute inset-0 w-full h-full object-cover rounded-3xl"
@@ -267,14 +267,14 @@ const GetStartedPage = () => {
 
           {/* Single CTA Button */}
           <motion.div
-            className="text-center mt-12"
+            className="text-center mt-8 sm:mt-12 px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <Link href="/book-call">
               <motion.button
-                className="bg-white text-black px-8 py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-lg shadow-lg border border-gray-200"
+                className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-base sm:text-lg shadow-lg border border-gray-200 w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 animate={{
@@ -287,8 +287,8 @@ const GetStartedPage = () => {
                 }}
               >
                 <div className="text-center">
-                  <div className="text-xl font-bold">I Want To Scale Faster!</div>
-                  <div className="text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
+                  <div className="text-lg sm:text-xl font-bold">I Want To Scale Faster!</div>
+                  <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
                 </div>
               </motion.button>
             </Link>
@@ -324,7 +324,7 @@ const GetStartedPage = () => {
             }}
           >
             <motion.div
-              className="bg-white rounded-2xl max-w-2xl w-full relative overflow-hidden"
+              className="bg-white rounded-2xl max-w-2xl w-full mx-4 relative overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -339,21 +339,21 @@ const GetStartedPage = () => {
               </button>
 
               {/* Form Header */}
-              <div className="text-center p-6 pb-4">
-                <h3 className="text-2xl font-bold text-black mb-2">
+              <div className="text-center p-4 sm:p-6 pb-2 sm:pb-4">
+                <h3 className="text-lg sm:text-2xl font-bold text-black mb-2">
                   Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
                 </h3>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 text-sm sm:text-lg">
                   The video will automatically start after you submit the form
                 </p>
               </div>
 
               {/* LeadConnector Form Embed */}
-              <div className="px-8 pb-8">
+              <div className="px-4 sm:px-8 pb-4 sm:pb-8">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/XiLsnN6JR8vJ81UozoBN"
                   className="w-full border-0"
-                  style={{ height: '500px' }}
+                  style={{ height: '450px' }}
                   title="Lead Capture Form"
                 />
               </div>

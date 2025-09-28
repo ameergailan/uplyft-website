@@ -43,22 +43,22 @@ const BookCallPage = () => {
       </header>
 
       {/* Booking Page Layout */}
-      <main className="min-h-[calc(100vh-80px)] flex">
+      <main className="min-h-[calc(100vh-80px)] flex flex-col lg:flex-row">
         {/* Left Side - UpLyft Branding & Info */}
-        <div className="w-1/2 bg-black pl-12 pr-6 py-12 flex flex-col justify-center">
-          <div className="max-w-md ml-auto">
+        <div className="w-full lg:w-1/2 bg-black px-6 py-8 lg:pl-12 lg:pr-6 lg:py-12 flex flex-col justify-center">
+          <div className="max-w-md lg:ml-auto mx-auto lg:mx-0">
             {/* Logo */}
             <div className="mb-8">
               <img src="/UPLYFTLOGO.png" alt="UpLyft" className="h-16 mb-6" />
             </div>
             
             {/* Heading */}
-            <h1 className="text-4xl font-bold text-white mb-6">
+            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6 text-center lg:text-left">
               Ready to Scale Your Agency?
             </h1>
             
             {/* Description */}
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed text-center lg:text-left">
               Book your free 1-on-1 strategy session with David and discover how we can scale your agency to new heights.
             </p>
             
@@ -91,9 +91,9 @@ const BookCallPage = () => {
         </div>
 
         {/* Right Side - Booking Calendar */}
-        <div className="w-1/2 bg-black">
-          <div className="h-full pl-6 pr-12 py-6 flex justify-start">
-            <div className="w-full max-w-lg">
+        <div className="w-full lg:w-1/2 bg-black">
+          <div className="h-96 lg:h-full px-4 py-6 lg:pl-6 lg:pr-12 lg:flex lg:justify-start">
+            <div className="w-full lg:max-w-lg">
               <iframe
                 src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
                 className="w-full h-full border-0 rounded-lg"
