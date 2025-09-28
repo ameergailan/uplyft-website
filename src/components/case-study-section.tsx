@@ -145,7 +145,7 @@ const CaseStudySection = () => {
                 zIndex: 50,
                 transition: { duration: 0.3, ease: "easeOut" }
               }}
-              className="hover-sensitive relative"
+              className="hover-sensitive relative cursor-pointer"
             >
               <div 
                 className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10"

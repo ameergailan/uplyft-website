@@ -111,7 +111,7 @@ const CustomCursor = () => {
         console.log('CUSTOM CURSOR CLICKED - GOING TO GET STARTED PAGE')
         
         // Direct page navigation - much more reliable
-        window.location.href = '/get-started'
+        window.location.href = '/get-started/'
       }
       
       // Disable custom cursor and restore normal cursor
