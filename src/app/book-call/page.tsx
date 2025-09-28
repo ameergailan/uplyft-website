@@ -92,13 +92,15 @@ const BookCallPage = () => {
 
         {/* Right Side - Booking Calendar */}
         <div className="w-1/2 bg-black">
-          <div className="h-full pl-6 pr-12 py-6">
-            <iframe
-              src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
-              className="w-full h-full border-0 rounded-lg"
-              title="Book a Call with David - UpLyft Team"
-              allow="camera; microphone; geolocation"
-            />
+          <div className="h-full pl-6 pr-12 py-6 flex justify-start">
+            <div className="w-full max-w-lg">
+              <iframe
+                src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
+                className="w-full h-full border-0 rounded-lg"
+                title="Book a Call with David - UpLyft Team"
+                allow="camera; microphone; geolocation"
+              />
+            </div>
           </div>
         </div>
       </main>
