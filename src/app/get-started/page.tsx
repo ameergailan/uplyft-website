@@ -267,7 +267,7 @@ const GetStartedPage = () => {
 
           {/* Single CTA Button */}
           <motion.div
-            className="text-center mt-8 sm:mt-12 px-4"
+            className="text-center mt-4 sm:mt-12 px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
