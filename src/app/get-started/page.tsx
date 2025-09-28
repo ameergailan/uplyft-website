@@ -302,7 +302,7 @@ const GetStartedPage = () => {
             }}
           >
             <motion.div
-              className="bg-white rounded-2xl max-w-lg w-full relative overflow-hidden"
+              className="bg-white rounded-2xl max-w-2xl w-full relative overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -327,11 +327,11 @@ const GetStartedPage = () => {
               </div>
 
               {/* LeadConnector Form Embed */}
-              <div className="px-6 pb-6">
+              <div className="px-8 pb-8">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/XiLsnN6JR8vJ81UozoBN"
                   className="w-full border-0"
-                  style={{ height: '400px' }}
+                  style={{ height: '500px' }}
                   title="Lead Capture Form"
                   onLoad={() => {
                     // Listen for form submission (you may need to adjust this based on LeadConnector's postMessage events)
