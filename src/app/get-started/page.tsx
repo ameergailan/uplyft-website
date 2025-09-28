@@ -66,6 +66,7 @@ const GetStartedPage = () => {
     console.log('Form submitted:', formData)
     setShowVideoModal(false)
     setShowVideo(true)
+    setIsVideoUnlocked(true) // Unlock the video so the button changes
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -272,8 +273,30 @@ const GetStartedPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <Link href="/book-call">
+            {isVideoUnlocked ? (
+              <Link href="/book-call">
+                <motion.button
+                  className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-base sm:text-lg shadow-lg border border-gray-200 w-full sm:w-auto"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{
+                    y: [0, -8, 0],
+                    transition: {
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }
+                  }}
+                >
+                  <div className="text-center">
+                    <div className="text-lg sm:text-xl font-bold">I Want To Scale Faster!</div>
+                    <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
+                  </div>
+                </motion.button>
+              </Link>
+            ) : (
               <motion.button
+                onClick={() => setShowVideoModal(true)}
                 className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-base sm:text-lg shadow-lg border border-gray-200 w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -287,11 +310,11 @@ const GetStartedPage = () => {
                 }}
               >
                 <div className="text-center">
-                  <div className="text-lg sm:text-xl font-bold">I Want To Scale Faster!</div>
-                  <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
+                  <div className="text-lg sm:text-xl font-bold">CLICK HERE TO GET ACCESS</div>
+                  <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Fill out the form to unlock the video</div>
                 </div>
               </motion.button>
-            </Link>
+            )}
           </motion.div>
         </motion.div>
 
