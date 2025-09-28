@@ -30,24 +30,6 @@ const GetStartedPage = () => {
       console.log('VIDEO UNLOCKED VIA QUERY PARAMETER - SHOWING VIDEO')
       setIsVideoUnlocked(true)
       setShowVideo(true)
-      // Store in localStorage for persistence
-      try {
-        localStorage.setItem('vsl_unlocked', '1')
-      } catch (e) {
-        console.log('LocalStorage not available')
-      }
-    } else {
-      // Check localStorage for previous unlock
-      try {
-        const storedUnlock = localStorage.getItem('vsl_unlocked')
-        if (storedUnlock === '1') {
-          console.log('VIDEO UNLOCKED VIA LOCALSTORAGE - SHOWING VIDEO')
-          setIsVideoUnlocked(true)
-          setShowVideo(true)
-        }
-      } catch (e) {
-        console.log('LocalStorage not available')
-      }
     }
     
     return () => {
