@@ -350,7 +350,7 @@ const GetStartedPage = () => {
                         setTimeout(() => {
                           setShowVideoModal(false);
                           setShowVideo(true);
-                        }, 2000); // 2 second delay
+                        }, 500); // INSTANT - 0.5 second delay only
                       }
                       
                       return response;
@@ -377,22 +377,51 @@ const GetStartedPage = () => {
                           setTimeout(() => {
                             setShowVideoModal(false);
                             setShowVideo(true);
-                          }, 1500);
+                          }, 300); // INSTANT - 0.3 second delay only
                         }
                       }
                     };
                     
-                    // Timer-based fallback - show video after 15 seconds of form being open
+                    // Monitor for "Thank you" text appearing in iframe
+                    const checkForThankYou = () => {
+                      if (hasSubmitted) return;
+                      
+                      try {
+                        const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
+                        if (iframe && iframe.contentDocument) {
+                          const iframeContent = iframe.contentDocument.body.innerText.toLowerCase();
+                          if (iframeContent.includes('thank you') || iframeContent.includes('thanks')) {
+                            console.log('Thank you message detected!');
+                            hasSubmitted = true;
+                            setShowVideoModal(false);
+                            setShowVideo(true);
+                            return;
+                          }
+                        }
+                      } catch (e) {
+                        // CORS blocked
+                      }
+                      
+                      // Check every 100ms for fast detection
+                      if (!hasSubmitted) {
+                        setTimeout(checkForThankYou, 100);
+                      }
+                    };
+                    
+                    // Reduced fallback timer - show video after 3 seconds
                     const fallbackTimer = setTimeout(() => {
                       if (!hasSubmitted) {
-                        console.log('Fallback timer triggered - assuming form was submitted');
+                        console.log('Quick fallback timer triggered');
                         hasSubmitted = true;
                         setShowVideoModal(false);
                         setShowVideo(true);
                       }
-                    }, 15000); // 15 seconds
+                    }, 3000); // 3 seconds only
                     
                     window.addEventListener('message', handleMessage);
+                    
+                    // Start monitoring immediately
+                    setTimeout(checkForThankYou, 500);
                     
                     return () => {
                       window.removeEventListener('message', handleMessage);
