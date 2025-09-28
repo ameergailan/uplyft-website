@@ -66,14 +66,14 @@ const ContactSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex justify-center mb-16"
+              className="flex justify-center mb-8 sm:mb-16"
             >
               <Link
                 href="/get-started"
-                className="get-started-button inline-flex items-center space-x-3 bg-white text-black px-12 py-6 rounded-lg transition-all duration-300 font-bold text-xl shadow-2xl hover:shadow-white/20 hover:scale-105 relative overflow-hidden"
+                className="get-started-button inline-flex items-center space-x-3 bg-white text-black px-8 sm:px-12 py-4 sm:py-6 rounded-lg transition-all duration-300 font-bold text-lg sm:text-xl shadow-2xl hover:shadow-white/20 hover:scale-105 relative overflow-hidden"
               >
                 <span className="relative z-10">Get Started</span>
-                <ArrowRight size={24} className="relative z-10" />
+                <ArrowRight size={20} className="relative z-10 sm:w-6 sm:h-6" />
               </Link>
             </motion.div>
           </motion.div>

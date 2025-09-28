@@ -182,17 +182,17 @@ const CTAOverlaySection = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="mb-12"
+            className="mb-8 sm:mb-12"
           >
             <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-6">
               Ready to Scale?
             </h2>
-             <h1 className="text-5xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+             <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight px-4">
                Scale Your Agency to<br />
-               <span className="text-6xl lg:text-8xl">6 FIGURES</span><br />
-               <span className="text-4xl lg:text-6xl text-gray-300">Without Hiring a Huge Team</span>
+               <span className="text-4xl sm:text-6xl lg:text-8xl">6 FIGURES</span><br />
+               <span className="text-2xl sm:text-4xl lg:text-6xl text-gray-300">Without Hiring a Huge Team</span>
              </h1>
-            <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12">
+            <p className="text-lg sm:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-12 px-4">
               We partner with growth-focused agencies to install predictable lead generation, 
               sales systems, and automations that scale revenue fast.
             </p>
@@ -207,10 +207,10 @@ const CTAOverlaySection = () => {
           >
             <Link
               href="/get-started"
-              className="get-started-button inline-flex items-center space-x-4 bg-white text-black px-16 py-8 rounded-2xl transition-all duration-300 font-bold text-2xl shadow-2xl hover:shadow-white/30 hover:scale-105 relative overflow-hidden"
+              className="get-started-button inline-flex items-center space-x-3 sm:space-x-4 bg-white text-black px-8 sm:px-16 py-4 sm:py-8 rounded-xl sm:rounded-2xl transition-all duration-300 font-bold text-lg sm:text-2xl shadow-2xl hover:shadow-white/30 hover:scale-105 relative overflow-hidden"
             >
               <span className="relative z-10">Get Started</span>
-              <ArrowRight size={28} className="relative z-10" />
+              <ArrowRight size={20} className="relative z-10 sm:w-7 sm:h-7" />
             </Link>
           </motion.div>
         </div>
