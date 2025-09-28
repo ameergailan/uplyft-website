@@ -143,6 +143,7 @@ const CustomCursor = () => {
   return (
     <div
       className={`custom-cursor ${isClicked ? 'cursor-clicked' : ''}`}
+      data-custom-cursor="true"
       style={{
         left: mousePosition.x + 10,
         top: mousePosition.y,

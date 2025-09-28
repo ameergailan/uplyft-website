@@ -19,9 +19,15 @@ const BookingSuccessPage = () => {
     document.body.style.cursor = 'default'
     
     // Hide the custom cursor component if it exists
-    const customCursor = document.querySelector('[data-custom-cursor]')
+    const customCursor = document.querySelector('[data-custom-cursor="true"]')
     if (customCursor) {
       (customCursor as HTMLElement).style.display = 'none'
+    }
+    
+    // Also try to hide by class name as backup
+    const cursorByClass = document.querySelector('.custom-cursor')
+    if (cursorByClass) {
+      (cursorByClass as HTMLElement).style.display = 'none'
     }
     
     return () => {
@@ -32,6 +38,9 @@ const BookingSuccessPage = () => {
       // Show the custom cursor component again
       if (customCursor) {
         (customCursor as HTMLElement).style.display = 'block'
+      }
+      if (cursorByClass) {
+        (cursorByClass as HTMLElement).style.display = 'block'
       }
     }
   }, [])
