@@ -12,36 +12,15 @@ import { Play } from 'lucide-react'
 const BookingSuccessPage = () => {
   const [showVideo, setShowVideo] = useState(false)
 
-  // Completely disable custom cursor on this page
+  // Ensure normal cursor on this page
   useEffect(() => {
-    // Remove custom cursor class and set normal cursor
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
-    
-    // Hide the custom cursor component if it exists
-    const customCursor = document.querySelector('[data-custom-cursor="true"]')
-    if (customCursor) {
-      (customCursor as HTMLElement).style.display = 'none'
-    }
-    
-    // Also try to hide by class name as backup
-    const cursorByClass = document.querySelector('.custom-cursor')
-    if (cursorByClass) {
-      (cursorByClass as HTMLElement).style.display = 'none'
-    }
     
     return () => {
       // Restore when leaving page
       document.body.classList.add('custom-cursor-active')
       document.body.style.cursor = 'none'
-      
-      // Show the custom cursor component again
-      if (customCursor) {
-        (customCursor as HTMLElement).style.display = 'block'
-      }
-      if (cursorByClass) {
-        (cursorByClass as HTMLElement).style.display = 'block'
-      }
     }
   }, [])
 

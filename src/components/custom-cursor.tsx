@@ -14,10 +14,31 @@ const CustomCursor = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [isOverInteractive, setIsOverInteractive] = useState(false)
+  const [currentPath, setCurrentPath] = useState('')
 
   // Only render on client side to prevent hydration issues
   useEffect(() => {
     setIsMounted(true)
+    
+    // Track current path
+    const updatePath = () => {
+      setCurrentPath(window.location.pathname)
+    }
+    
+    updatePath()
+    window.addEventListener('popstate', updatePath)
+    
+    // Listen for Next.js route changes
+    const handleRouteChange = () => {
+      setTimeout(updatePath, 100) // Small delay to ensure path is updated
+    }
+    
+    window.addEventListener('beforeunload', handleRouteChange)
+    
+    return () => {
+      window.removeEventListener('popstate', updatePath)
+      window.removeEventListener('beforeunload', handleRouteChange)
+    }
   }, [])
 
   useEffect(() => {
@@ -135,8 +156,8 @@ const CustomCursor = () => {
     return null
   }
 
-  // Show cursor everywhere except solutions section
-  if (isOverInteractive) {
+  // Don't show cursor on booking success page or when over interactive elements
+  if (currentPath === '/booking-success' || isOverInteractive) {
     return null
   }
 
