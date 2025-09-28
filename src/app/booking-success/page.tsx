@@ -130,23 +130,16 @@ const BookingSuccessPage = () => {
                 className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl cursor-pointer overflow-hidden group"
                 onClick={handlePlayClick}
               >
-                {/* Video Thumbnail */}
-                <video 
+                {/* YouTube Thumbnail */}
+                <img 
+                  src="https://img.youtube.com/vi/HZynJ1uQLYQ/maxresdefault.jpg"
+                  alt="UpLyft Agency Growth System Video"
                   className="absolute inset-0 w-full h-full object-cover rounded-3xl"
-                  muted
-                  playsInline
-                  preload="metadata"
                   style={{ 
                     filter: 'blur(2px) brightness(0.7)',
                     pointerEvents: 'none'
                   }}
-                  onLoadedData={(e) => {
-                    const video = e.target as HTMLVideoElement;
-                    video.currentTime = 2; // Seek to 2 seconds for better frame
-                  }}
-                >
-                  <source src="/agency-growth-video.mp4" type="video/mp4" />
-                </video>
+                />
                 
                 {/* Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -167,15 +160,14 @@ const BookingSuccessPage = () => {
               </div>
             ) : (
               <div className="w-full h-full bg-black rounded-3xl overflow-hidden">
-                <video 
-                  className="w-full h-full object-cover"
-                  controls
-                  autoPlay
-                  playsInline
-                >
-                  <source src="/agency-growth-video.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                <iframe
+                  className="w-full h-full rounded-3xl"
+                  src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&rel=0&modestbranding=1"
+                  title="UpLyft Agency Growth System Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
             )}
           </div>
