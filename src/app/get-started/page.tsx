@@ -336,29 +336,37 @@ const GetStartedPage = () => {
                   onLoad={() => {
                     let hasSubmitted = false;
                     
-                    // SIMPLE AS FUCK - detect ANY click in the iframe after 2 seconds
-                    const detectClick = () => {
+                    // ONLY detect clicks on SUBMIT buttons, not form fields
+                    const detectSubmitClick = () => {
                       try {
                         const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
                         if (iframe && iframe.contentDocument) {
                           iframe.contentDocument.addEventListener('click', (e) => {
-                            if (!hasSubmitted) {
-                              console.log('CLICK DETECTED IN FORM - ASSUMING SUBMIT');
+                            const target = e.target as HTMLElement;
+                            // Only trigger on submit buttons, not input fields
+                            if (!hasSubmitted && target && (
+                              target.type === 'submit' ||
+                              target.tagName === 'BUTTON' ||
+                              target.textContent?.toLowerCase().includes('submit') ||
+                              target.className?.toLowerCase().includes('submit') ||
+                              target.className?.toLowerCase().includes('btn')
+                            )) {
+                              console.log('SUBMIT BUTTON CLICKED - SHOWING VIDEO IN 1.5 SECONDS');
                               hasSubmitted = true;
                               setTimeout(() => {
                                 setShowVideoModal(false);
                                 setShowVideo(true);
-                              }, 1500); // EXACTLY 1.5 SECONDS LIKE YOU ASKED
+                              }, 1500);
                             }
                           });
                         }
                       } catch (e) {
-                        console.log('CORS blocked click detection');
+                        console.log('CORS blocked submit detection');
                       }
                     };
                     
-                    // Try to detect clicks after iframe loads
-                    setTimeout(detectClick, 2000);
+                    // Try to detect SUBMIT clicks after iframe loads
+                    setTimeout(detectSubmitClick, 2000);
                     
                     // Backup method - detect form submission via fetch
                     const originalFetch = window.fetch;
