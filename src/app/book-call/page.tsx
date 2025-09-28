@@ -44,9 +44,9 @@ const BookCallPage = () => {
 
       {/* Booking Widget Container */}
       <main className="container mx-auto px-6 py-8 flex items-center justify-center min-h-[calc(100vh-80px)]">
-        <div className="w-full max-w-4xl">
-          {/* LeadConnector Booking Widget */}
-          <div className="w-full h-screen bg-black rounded-lg overflow-hidden">
+        <div className="w-4/5 max-w-3xl">
+          {/* LeadConnector Booking Widget - 20% smaller */}
+          <div className="w-full bg-black rounded-lg overflow-hidden" style={{ height: '80vh' }}>
             <iframe
               src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
               className="w-full h-full border-0"
