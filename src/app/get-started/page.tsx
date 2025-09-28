@@ -14,6 +14,7 @@ const GetStartedPage = () => {
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
   const [videoError, setVideoError] = useState(false)
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -165,82 +166,97 @@ const GetStartedPage = () => {
                   onClick={handlePlayClick}
                 >
                   {showVideo ? (
-                    <div className="w-full bg-black rounded-3xl overflow-hidden">
-                      {!videoError ? (
-                        <video
-                          className="w-full rounded-3xl"
-                          controls
-                          autoPlay
-                          muted
-                          playsInline
-                          preload="auto"
-                          onError={(e) => {
-                            console.error('Video error:', e);
-                            setVideoError(true);
-                          }}
-                          onLoadStart={() => console.log('Video loading started')}
-                          onCanPlay={() => console.log('Video can play')}
-                        >
-                          <source src="/agency-growth-video.mp4" type="video/mp4" />
-                          <p className="text-white text-xl p-8">
-                            Your browser does not support the video tag or the video file could not be loaded.
+                    <div className="w-full bg-gray-900 rounded-3xl overflow-hidden p-8">
+                      <div className="text-center text-white">
+                        <div className="mb-6">
+                          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle className="w-8 h-8 text-white" />
+                          </div>
+                          <h3 className="text-2xl font-bold mb-4">Access Granted! 🎉</h3>
+                          <p className="text-gray-300 mb-6">
+                            Thank you for your interest! We'll send you the exclusive training video via SMS within the next few minutes.
                           </p>
-                        </video>
-                      ) : (
-                        <div className="w-full h-96 bg-gray-900 rounded-3xl flex items-center justify-center">
-                          <div className="text-center text-white p-8">
-                            <h3 className="text-2xl font-bold mb-4">Video Temporarily Unavailable</h3>
-                            <p className="text-gray-300 mb-6">
-                              We're working on optimizing the video delivery. 
-                            </p>
-                            <a 
-                              href="mailto:hello@uplyft.com?subject=Video%20Access%20Request"
-                              className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
-                            >
-                              Contact Us for Video Access
-                            </a>
+                        </div>
+                        
+                        <div className="bg-black/50 rounded-2xl p-6 mb-6">
+                          <h4 className="text-lg font-semibold mb-3">What happens next:</h4>
+                          <div className="space-y-2 text-left">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                              <span className="text-gray-300">SMS with video link sent to your phone</span>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                              <span className="text-gray-300">Bonus materials included</span>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                              <span className="text-gray-300">Free strategy session invitation</span>
+                            </div>
                           </div>
                         </div>
-                      )}
+                        
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                          <a 
+                            href="mailto:hello@uplyft.com?subject=Video%20Access%20Request"
+                            className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
+                          >
+                            Questions? Email Us
+                          </a>
+                          <button
+                            onClick={() => setShowVideo(false)}
+                            className="bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold"
+                          >
+                            Back to Form
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   ) : (
                     <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
-                      {/* Video Thumbnail - Blurred Preview */}
-                      <video 
-                        className="absolute inset-0 w-full h-full object-cover rounded-3xl"
-                        muted
-                        playsInline
-                        preload="metadata"
-                        poster=""
-                        style={{ 
-                          filter: 'blur(6px) brightness(0.7)',
-                          pointerEvents: 'none'
-                        }}
-                        onLoadedData={(e) => {
-                          // Seek to 1 second to get a good frame
-                          const video = e.target as HTMLVideoElement;
-                          video.currentTime = 1;
-                        }}
-                        onError={(e) => {
-                          console.log('Thumbnail video failed, using fallback');
-                          // Hide the video element and show gradient fallback
-                          (e.target as HTMLVideoElement).style.display = 'none';
-                        }}
-                      >
-                        <source src="/agency-growth-video.mp4" type="video/mp4" />
-                      </video>
-                      
-                      {/* Fallback gradient background (shows if video fails) */}
+                      {/* Professional Video Thumbnail */}
                       <div 
                         className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
                         style={{ 
-                          backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.8) 100%)',
-                          zIndex: -1
+                          backgroundImage: `
+                            linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%),
+                            radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                            radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)
+                          `
                         }}
                       />
                       
+                      {/* Simulated Video Content Preview */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-full h-full relative overflow-hidden rounded-3xl">
+                          {/* Simulated blurred video content */}
+                          <div 
+                            className="absolute inset-0 opacity-60"
+                            style={{
+                              background: `
+                                linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%),
+                                linear-gradient(-45deg, rgba(0,0,0,0.3) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.3) 100%)
+                              `,
+                              filter: 'blur(8px)'
+                            }}
+                          />
+                          
+                          {/* Fake UI elements to simulate video content */}
+                          <div className="absolute top-8 left-8 right-8">
+                            <div className="bg-white/10 h-3 rounded-full mb-3" style={{ width: '60%' }} />
+                            <div className="bg-white/8 h-2 rounded-full mb-2" style={{ width: '80%' }} />
+                            <div className="bg-white/6 h-2 rounded-full" style={{ width: '40%' }} />
+                          </div>
+                          
+                          <div className="absolute bottom-8 left-8 right-8">
+                            <div className="bg-white/8 h-2 rounded-full mb-3" style={{ width: '90%' }} />
+                            <div className="bg-white/10 h-3 rounded-full" style={{ width: '70%' }} />
+                          </div>
+                        </div>
+                      </div>
+                      
                       {/* Additional Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10 rounded-3xl" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 rounded-3xl" />
                       
                       {/* Play Button - Center Only */}
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -252,6 +268,11 @@ const GetStartedPage = () => {
                             <Play className="text-white w-8 h-8 ml-1" fill="white" />
                           </div>
                         </motion.div>
+                      </div>
+                      
+                      {/* "Video Preview" Label */}
+                      <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-white text-sm font-medium">Preview</span>
                       </div>
                     </div>
                   )}
