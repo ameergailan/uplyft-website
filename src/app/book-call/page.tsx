@@ -44,21 +44,21 @@ const BookCallPage = () => {
 
       {/* Booking Page Layout */}
       <main className="min-h-[calc(100vh-80px)] flex flex-col lg:flex-row">
-        {/* Left Side - UpLyft Branding & Info */}
-        <div className="w-full lg:w-1/2 bg-black px-6 py-8 lg:pl-12 lg:pr-6 lg:py-12 flex flex-col justify-center">
-          <div className="max-w-md lg:ml-auto mx-auto lg:mx-0">
+        {/* Left Side - UpLyft Branding & Info - HIDDEN ON MOBILE */}
+        <div className="hidden lg:flex lg:w-1/2 bg-black lg:pl-12 lg:pr-6 lg:py-12 flex-col justify-center">
+          <div className="max-w-md lg:ml-auto">
             {/* Logo */}
             <div className="mb-8">
               <img src="/UPLYFTLOGO.png" alt="UpLyft" className="h-16 mb-6" />
             </div>
             
             {/* Heading */}
-            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6 text-center lg:text-left">
+            <h1 className="text-4xl font-bold text-white mb-6">
               Ready to Scale Your Agency?
             </h1>
             
             {/* Description */}
-            <p className="text-base sm:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed text-center lg:text-left">
+            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
               Book your free 1-on-1 strategy session with David and discover how we can scale your agency to new heights.
             </p>
             
@@ -90,9 +90,9 @@ const BookCallPage = () => {
           </div>
         </div>
 
-        {/* Right Side - Booking Calendar */}
+        {/* Calendar - FULL SCREEN ON MOBILE */}
         <div className="w-full lg:w-1/2 bg-black">
-          <div className="h-96 lg:h-full px-4 py-6 lg:pl-6 lg:pr-12 lg:flex lg:justify-start">
+          <div className="h-[calc(100vh-80px)] lg:h-full px-2 py-2 lg:px-6 lg:py-6 lg:pl-6 lg:pr-12 lg:flex lg:justify-start">
             <div className="w-full lg:max-w-lg">
               <iframe
                 src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
