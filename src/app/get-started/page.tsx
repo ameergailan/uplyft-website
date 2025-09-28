@@ -335,98 +335,69 @@ const GetStartedPage = () => {
                   title="Lead Capture Form"
                   onLoad={() => {
                     let hasSubmitted = false;
+                    let formLoadTime = Date.now();
                     
-                    // Intercept network requests to detect form submission
+                    // Only intercept actual form submissions (not form loads)
                     const originalFetch = window.fetch;
                     window.fetch = async (...args) => {
                       const response = await originalFetch(...args);
                       const url = args[0] as string;
                       
-                      // Check if this is a LeadConnector form submission
-                      if (url && (url.includes('leadconnectorhq.com') || url.includes('gohighlevel')) && 
-                          (url.includes('submit') || url.includes('form')) && !hasSubmitted) {
-                        console.log('Form submission detected via fetch interception!');
+                      // Only trigger if form has been open for at least 5 seconds (user had time to fill it)
+                      const timeOpen = Date.now() - formLoadTime;
+                      
+                      if (url && timeOpen > 5000 && // Form open for 5+ seconds
+                          (url.includes('leadconnectorhq.com') || url.includes('gohighlevel')) && 
+                          url.includes('submit') && !hasSubmitted) {
+                        console.log('Form submission detected via fetch after', timeOpen/1000, 'seconds');
                         hasSubmitted = true;
                         setTimeout(() => {
                           setShowVideoModal(false);
                           setShowVideo(true);
-                        }, 500); // INSTANT - 0.5 second delay only
+                        }, 1000); // 1 second delay to see success message
                       }
                       
                       return response;
                     };
                     
-                    // Enhanced postMessage listener
+                    // Conservative postMessage listener - only specific events
                     const handleMessage = (event: MessageEvent) => {
                       console.log('Received message:', event.data);
                       
                       if (hasSubmitted) return;
                       
-                      // Check for any form-related messages
-                      if (event.data) {
-                        const dataStr = JSON.stringify(event.data).toLowerCase();
-                        if (dataStr.includes('submit') || 
-                            dataStr.includes('success') || 
-                            dataStr.includes('thank') ||
-                            dataStr.includes('complete') ||
-                            event.data.type === 'form_submitted' ||
+                      const timeOpen = Date.now() - formLoadTime;
+                      
+                      // Only trigger if form has been open for at least 3 seconds
+                      if (timeOpen > 3000 && event.data) {
+                        if (event.data.type === 'form_submitted' ||
                             event.data.action === 'submit' ||
-                            event.data.event === 'submit') {
-                          console.log('Form submitted via postMessage!');
+                            (event.data.message && event.data.message.includes('submitted'))) {
+                          console.log('Form submitted via postMessage after', timeOpen/1000, 'seconds');
                           hasSubmitted = true;
                           setTimeout(() => {
                             setShowVideoModal(false);
                             setShowVideo(true);
-                          }, 300); // INSTANT - 0.3 second delay only
+                          }, 1000);
                         }
                       }
                     };
                     
-                    // Monitor for "Thank you" text appearing in iframe
-                    const checkForThankYou = () => {
-                      if (hasSubmitted) return;
-                      
-                      try {
-                        const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
-                        if (iframe && iframe.contentDocument) {
-                          const iframeContent = iframe.contentDocument.body.innerText.toLowerCase();
-                          if (iframeContent.includes('thank you') || iframeContent.includes('thanks')) {
-                            console.log('Thank you message detected!');
-                            hasSubmitted = true;
-                            setShowVideoModal(false);
-                            setShowVideo(true);
-                            return;
-                          }
-                        }
-                      } catch (e) {
-                        // CORS blocked
-                      }
-                      
-                      // Check every 100ms for fast detection
-                      if (!hasSubmitted) {
-                        setTimeout(checkForThankYou, 100);
-                      }
-                    };
-                    
-                    // Reduced fallback timer - show video after 3 seconds
+                    // Reasonable fallback timer - 30 seconds
                     const fallbackTimer = setTimeout(() => {
                       if (!hasSubmitted) {
-                        console.log('Quick fallback timer triggered');
+                        console.log('Fallback timer triggered - user probably submitted');
                         hasSubmitted = true;
                         setShowVideoModal(false);
                         setShowVideo(true);
                       }
-                    }, 3000); // 3 seconds only
+                    }, 30000); // 30 seconds - reasonable time to fill form
                     
                     window.addEventListener('message', handleMessage);
-                    
-                    // Start monitoring immediately
-                    setTimeout(checkForThankYou, 500);
                     
                     return () => {
                       window.removeEventListener('message', handleMessage);
                       clearTimeout(fallbackTimer);
-                      // Restore original fetch
                       window.fetch = originalFetch;
                     };
                   }}
