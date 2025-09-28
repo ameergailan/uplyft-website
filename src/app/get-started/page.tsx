@@ -355,25 +355,6 @@ const GetStartedPage = () => {
                   className="w-full border-0"
                   style={{ height: '450px' }}
                   title="Lead Capture Form"
-                  onLoad={() => {
-                    // Listen for form submission messages
-                    const handleMessage = (event: MessageEvent) => {
-                      console.log('Form widget message:', event.data);
-                      if (event.data && (
-                        event.data.type === 'form_submitted' ||
-                        event.data.type === 'form_complete' ||
-                        event.data.type === 'lead_captured' ||
-                        event.data.action === 'submitted' ||
-                        (typeof event.data === 'string' && event.data.includes('submit'))
-                      )) {
-                        console.log('Form submission detected, redirecting to success page');
-                        window.location.href = '/booking-success/';
-                      }
-                    };
-                    
-                    window.addEventListener('message', handleMessage);
-                    return () => window.removeEventListener('message', handleMessage);
-                  }}
                 />
               </div>
             </motion.div>
