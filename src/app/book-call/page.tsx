@@ -90,13 +90,13 @@ const BookCallPage = () => {
           </div>
         </div>
 
-        {/* Calendar - FULL SCREEN ON MOBILE */}
+        {/* Calendar - FULL VIEWPORT ON MOBILE */}
         <div className="w-full lg:w-1/2 bg-black">
-          <div className="h-[calc(100vh-80px)] lg:h-full px-2 py-2 lg:px-6 lg:py-6 lg:pl-6 lg:pr-12 lg:flex lg:justify-start">
-            <div className="w-full lg:max-w-lg">
+          <div className="h-[calc(100vh-80px)] lg:h-full p-0 lg:px-6 lg:py-6 lg:pl-6 lg:pr-12 lg:flex lg:justify-start">
+            <div className="w-full h-full lg:max-w-lg">
               <iframe
                 src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
-                className="w-full h-full border-0 rounded-lg"
+                className="w-full h-full border-0 lg:rounded-lg"
                 title="Book a Call with David - UpLyft Team"
                 allow="camera; microphone; geolocation"
               />
