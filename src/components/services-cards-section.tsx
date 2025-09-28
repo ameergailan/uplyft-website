@@ -156,14 +156,16 @@ const ServicesCardsSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative bg-gray-50"
-      style={{ height: '400vh', marginBottom: '0' }} // Much more height to accommodate full "Why 3" page
+      className="relative bg-gray-50 lg:h-[400vh] lg:mb-0"
+      style={{ height: 'auto', marginBottom: '0' }}
     >
-      {/* Sticky container that locks in place */}
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-gray-50 relative">
+      {/* Mobile: Simple Section, Desktop: Sticky container */}
+      <div className="lg:sticky lg:top-0 lg:h-screen flex items-center justify-center lg:overflow-hidden bg-gray-50 relative py-16 lg:py-0">
         
-        {/* Individual hover-responsive dots */}
-        <HoverDots />
+        {/* Individual hover-responsive dots - DESKTOP ONLY */}
+        <div className="hidden lg:block">
+          <HoverDots />
+        </div>
         <div className="container-custom relative">
           
           {/* Section title */}
@@ -454,9 +456,9 @@ const ServicesCardsSection = () => {
           </div>
         </div>
         
-        {/* Third page slide-over effect - "Why 3" positioned higher */}
+        {/* Third page slide-over effect - DESKTOP ONLY */}
         <div 
-          className="absolute inset-0 bg-white z-40"
+          className="hidden lg:block absolute inset-0 bg-white z-40"
           style={{ 
             transform: `translateY(${(1 - slideOverProgress) * 100}vh)`,
             transition: 'transform 0.1s ease-out'
@@ -473,8 +475,10 @@ const ServicesCardsSection = () => {
             />
           </div>
 
-          {/* Translucent question marks that follow mouse */}
-          <TranslucentQuestionMarks />
+          {/* Translucent question marks that follow mouse - DESKTOP ONLY */}
+          <div className="hidden lg:block">
+            <TranslucentQuestionMarks />
+          </div>
 
           {/* "Why 3" content */}
           <motion.div 
