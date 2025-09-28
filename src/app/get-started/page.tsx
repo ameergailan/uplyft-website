@@ -166,51 +166,54 @@ const GetStartedPage = () => {
                   onClick={handlePlayClick}
                 >
                   {showVideo ? (
-                    <div className="w-full bg-gray-900 rounded-3xl overflow-hidden p-8">
-                      <div className="text-center text-white">
-                        <div className="mb-6">
-                          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <CheckCircle className="w-8 h-8 text-white" />
-                          </div>
-                          <h3 className="text-2xl font-bold mb-4">Access Granted! 🎉</h3>
-                          <p className="text-gray-300 mb-6">
-                            Thank you for your interest! We'll send you the exclusive training video via SMS within the next few minutes.
-                          </p>
-                        </div>
+                    <div className="w-full bg-black rounded-3xl overflow-hidden">
+                      {/* Try multiple video sources and fallbacks */}
+                      <video
+                        className="w-full rounded-3xl"
+                        controls
+                        autoPlay
+                        muted
+                        playsInline
+                        preload="auto"
+                        onError={(e) => {
+                          console.error('Video failed to load:', e);
+                          // Try to reload or show error
+                          const video = e.target as HTMLVideoElement;
+                          setTimeout(() => {
+                            video.load();
+                          }, 1000);
+                        }}
+                        onLoadStart={() => console.log('Video loading...')}
+                        onCanPlay={() => console.log('Video ready to play')}
+                        onLoadedData={() => console.log('Video data loaded')}
+                        style={{ minHeight: '400px', backgroundColor: '#000' }}
+                      >
+                        {/* Multiple source attempts */}
+                        <source src="/agency-growth-video.mp4" type="video/mp4" />
+                        <source src="./agency-growth-video.mp4" type="video/mp4" />
                         
-                        <div className="bg-black/50 rounded-2xl p-6 mb-6">
-                          <h4 className="text-lg font-semibold mb-3">What happens next:</h4>
-                          <div className="space-y-2 text-left">
-                            <div className="flex items-center space-x-3">
-                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                              <span className="text-gray-300">SMS with video link sent to your phone</span>
-                            </div>
-                            <div className="flex items-center space-x-3">
-                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                              <span className="text-gray-300">Bonus materials included</span>
-                            </div>
-                            <div className="flex items-center space-x-3">
-                              <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                              <span className="text-gray-300">Free strategy session invitation</span>
-                            </div>
+                        {/* Fallback content if video fails */}
+                        <div className="w-full h-96 bg-gray-900 rounded-3xl flex items-center justify-center p-8">
+                          <div className="text-center text-white">
+                            <h3 className="text-2xl font-bold mb-4">Video Loading...</h3>
+                            <p className="text-gray-300 mb-6">
+                              If the video doesn't load, please refresh the page or contact us.
+                            </p>
+                            <button
+                              onClick={() => window.location.reload()}
+                              className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold mr-4"
+                            >
+                              Refresh Page
+                            </button>
+                            <a 
+                              href="mailto:hello@uplyft.com?subject=Video%20Access%20Issue"
+                              className="bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold"
+                            >
+                              Contact Support
+                            </a>
                           </div>
                         </div>
-                        
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                          <a 
-                            href="mailto:hello@uplyft.com?subject=Video%20Access%20Request"
-                            className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
-                          >
-                            Questions? Email Us
-                          </a>
-                          <button
-                            onClick={() => setShowVideo(false)}
-                            className="bg-gray-700 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors font-semibold"
-                          >
-                            Back to Form
-                          </button>
-                        </div>
-                      </div>
+                      </video>
                     </div>
                   ) : (
                     <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
