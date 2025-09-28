@@ -12,15 +12,27 @@ import { Play } from 'lucide-react'
 const BookingSuccessPage = () => {
   const [showVideo, setShowVideo] = useState(false)
 
-  // Ensure normal cursor on this page
+  // Completely disable custom cursor on this page
   useEffect(() => {
+    // Remove custom cursor class and set normal cursor
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Hide the custom cursor component if it exists
+    const customCursor = document.querySelector('[data-custom-cursor]')
+    if (customCursor) {
+      (customCursor as HTMLElement).style.display = 'none'
+    }
     
     return () => {
       // Restore when leaving page
       document.body.classList.add('custom-cursor-active')
       document.body.style.cursor = 'none'
+      
+      // Show the custom cursor component again
+      if (customCursor) {
+        (customCursor as HTMLElement).style.display = 'block'
+      }
     }
   }, [])
 
@@ -62,7 +74,7 @@ const BookingSuccessPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          📋 FOLLOW THE NEXT 2 STEPS
+          FOLLOW THE NEXT 2 STEPS
         </motion.h2>
 
         {/* Follow the steps or your call will be cancelled */}
