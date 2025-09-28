@@ -138,18 +138,25 @@ const SolutionsSplitSection = () => {
     setHoveredSide(null)
   }
 
-  // Animated counter effect
+  // Animated counter effect with easing
   useEffect(() => {
     if (hoveredCard !== null) {
       const targetValue = hoveredCard < 3 ? timeDetails[hoveredCard].metric : moneyDetails[hoveredCard - 3].metric
-      const duration = 1000 // 1 second
+      const duration = 1500 // 1.5 seconds for smoother animation
       const steps = 60 // 60fps
-      const increment = targetValue / steps
       let current = 0
+      let startTime = Date.now()
       
       const timer = setInterval(() => {
-        current += increment
-        if (current >= targetValue) {
+        const elapsed = Date.now() - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        
+        // Easing function: easeOutQuart - slows down as it approaches target
+        const easedProgress = 1 - Math.pow(1 - progress, 4)
+        
+        current = targetValue * easedProgress
+        
+        if (progress >= 1) {
           setAnimatedValue(targetValue)
           clearInterval(timer)
         } else {
@@ -331,10 +338,10 @@ const SolutionsSplitSection = () => {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   >
                     <div className="text-right whitespace-nowrap">
-                      <div className="text-5xl font-bold text-blue-400 leading-none">
+                      <div className="text-7xl font-bold text-blue-400 leading-none">
                         {hoveredCard === index ? (detail.metric % 1 === 0 ? Math.floor(animatedValue) : animatedValue.toFixed(1)) : detail.metric}
                       </div>
-                      <div className="text-base text-blue-300 mt-1 font-medium">
+                      <div className="text-lg text-blue-300 mt-1 font-medium">
                         {detail.metricLabel}
                       </div>
                     </div>
@@ -572,10 +579,10 @@ const SolutionsSplitSection = () => {
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   >
                     <div className="text-left whitespace-nowrap">
-                      <div className="text-5xl font-bold text-green-400 leading-none">
+                      <div className="text-7xl font-bold text-green-400 leading-none">
                         {hoveredCard === index + 3 ? (detail.metric % 1 === 0 ? Math.floor(animatedValue) : animatedValue.toFixed(1)) : detail.metric}
                       </div>
-                      <div className="text-base text-green-300 mt-1 font-medium">
+                      <div className="text-lg text-green-300 mt-1 font-medium">
                         {detail.metricLabel}
                       </div>
                     </div>
