@@ -40,9 +40,9 @@ const CaseStudySection = () => {
       industry: 'Music Production',
       description: 'Music production agency that generated 220 qualified leads and $102K revenue in August 2025',
       metrics: [
-        { label: 'Monthly Revenue', value: '$102,000', growth: '+18%' },
-        { label: 'Total Leads', value: '220', growth: '+21%' },
-        { label: 'Website Visits', value: '34,892', growth: '+21%' }
+        { label: 'Monthly Revenue', value: '$102,000', growth: '+10,000%' },
+        { label: 'Total Leads', value: '220', growth: '+2,100%' },
+        { label: 'Website Visits', value: '34,892', growth: '+3,400%' }
       ],
       services: [
         { label: 'Lead Generation', variant: 'primary' },
@@ -57,9 +57,9 @@ const CaseStudySection = () => {
       industry: 'Kitchen Remodeling',
       description: 'Kitchen remodeling business that booked 185 consultations and generated $95K revenue in August 2025',
       metrics: [
-        { label: 'Monthly Revenue', value: '$95,000', growth: '+18%' },
-        { label: 'Consultations', value: '185', growth: '+21%' },
-        { label: 'Landing Page CVR', value: '5.9%', growth: '+3.6%' }
+        { label: 'Monthly Revenue', value: '$95,000', growth: '+217%' },
+        { label: 'Consultations', value: '185', growth: '+517%' },
+        { label: 'Landing Page CVR', value: '5.9%', growth: '+295%' }
       ],
       services: [
         { label: 'Lead Generation', variant: 'primary' },
@@ -74,9 +74,9 @@ const CaseStudySection = () => {
       industry: 'ATM Business Coaching',
       description: 'ATM mentorship program that achieved 110 strategy calls and $42.2K MRR in September 2025',
       metrics: [
-        { label: 'Monthly Revenue', value: '$42,200', growth: '+24%' },
-        { label: 'Strategy Calls', value: '110', growth: '+26%' },
-        { label: 'New Students', value: '34', growth: '+38.6%' }
+        { label: 'Monthly Revenue', value: '$42,200', growth: '+322%' },
+        { label: 'Strategy Calls', value: '110', growth: '+1,000%' },
+        { label: 'New Students', value: '34', growth: '+240%' }
       ],
       services: [
         { label: 'Lead Generation', variant: 'primary' },
