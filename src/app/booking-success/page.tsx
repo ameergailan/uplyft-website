@@ -52,7 +52,7 @@ const BookingSuccessPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          🎉 YOUR CALL IS BOOKED! 🎉
+          YOUR CALL IS BOOKED!
         </motion.h1>
 
         {/* FOLLOW THE NEXT 2 STEPS */}
