@@ -322,8 +322,21 @@ const GetStartedPage = () => {
                   Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
                 </h3>
                 <p className="text-gray-600 text-lg">
-                  The video will automatically start after you submit the form
+                  After submitting the form, click the "Watch Video" button below
                 </p>
+              </div>
+
+              {/* Watch Video Button */}
+              <div className="text-center px-8 pb-4">
+                <button
+                  onClick={() => {
+                    setShowVideoModal(false);
+                    setShowVideo(true);
+                  }}
+                  className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 font-bold text-lg shadow-lg"
+                >
+                  ✅ I Submitted - Watch Video Now
+                </button>
               </div>
 
               {/* LeadConnector Form Embed */}
@@ -334,67 +347,22 @@ const GetStartedPage = () => {
                   style={{ height: '500px' }}
                   title="Lead Capture Form"
                   onLoad={() => {
-                    let checkCount = 0;
-                    const maxChecks = 300; // Check for 5 minutes (300 * 1 second)
-                    
-                    // Listen for LeadConnector form submission events
+                    // Simple postMessage listener (keep it minimal)
                     const handleMessage = (event: MessageEvent) => {
-                      if (event.data) {
-                        // Check for various possible submission events
-                        if (event.data.type === 'form_submitted' || 
-                            event.data.type === 'submission_complete' ||
-                            event.data.action === 'submit' ||
-                            event.data.event === 'form_submit' ||
-                            event.data.message === 'form_submitted' ||
-                            (typeof event.data === 'string' && event.data.includes('submit'))) {
-                          console.log('Form submitted via postMessage, showing video');
-                          setShowVideoModal(false);
-                          setShowVideo(true);
-                          return;
-                        }
-                      }
-                    };
-                    
-                    // Backup method: Check for form changes/success indicators
-                    const checkForSubmission = () => {
-                      try {
-                        const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
-                        if (iframe && iframe.contentWindow) {
-                          // Try to access iframe content (may be blocked by CORS)
-                          try {
-                            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                            if (iframeDoc) {
-                              // Look for success indicators in the form
-                              const successElements = iframeDoc.querySelectorAll('[class*="success"], [class*="thank"], [class*="submitted"], [id*="success"], [id*="thank"]');
-                              if (successElements.length > 0) {
-                                console.log('Form submission detected via DOM changes, showing video');
-                                setShowVideoModal(false);
-                                setShowVideo(true);
-                                return;
-                              }
-                            }
-                          } catch (e) {
-                            // CORS blocked, continue with other methods
-                          }
-                        }
-                      } catch (e) {
-                        // Continue checking
-                      }
-                      
-                      checkCount++;
-                      if (checkCount < maxChecks) {
-                        setTimeout(checkForSubmission, 1000);
+                      console.log('Received message:', event.data);
+                      if (event.data && (
+                        event.data.type === 'form_submitted' || 
+                        event.data.action === 'submit' ||
+                        (typeof event.data === 'string' && event.data.includes('submit'))
+                      )) {
+                        console.log('Auto-showing video');
+                        setShowVideoModal(false);
+                        setShowVideo(true);
                       }
                     };
                     
                     window.addEventListener('message', handleMessage);
-                    
-                    // Start checking after a short delay
-                    setTimeout(checkForSubmission, 2000);
-                    
-                    return () => {
-                      window.removeEventListener('message', handleMessage);
-                    };
+                    return () => window.removeEventListener('message', handleMessage);
                   }}
                 />
               </div>
