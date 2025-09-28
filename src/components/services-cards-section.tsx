@@ -170,23 +170,23 @@ const ServicesCardsSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-4"
+            className="text-center mb-4 px-4"
           >
             <h2 className="text-sm uppercase tracking-wider text-gray-500 mb-4">
               Services
             </h2>
-            <h1 className="text-4xl lg:text-5xl font-bold text-black mb-6">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mb-6">
               Here's what we do
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Three core systems that transform agencies into scalable powerhouses
             </p>
           </motion.div>
 
            {/* Cards container with navigation arrows */}
-           <div className="relative h-[550px] flex items-center justify-center">
+           <div className="relative h-[400px] sm:h-[550px] flex items-center justify-center">
             
-            {/* Left Arrow - positioned at left edge of card border */}
+            {/* Navigation Arrows - HIDDEN ON MOBILE */}
             <AnimatePresence>
               {(activeCard === 1 || activeCard === 2) && slideOverProgress < 0.3 && (
                 <motion.button
@@ -220,9 +220,9 @@ const ServicesCardsSection = () => {
                     stiffness: 200
                   }}
                   onClick={() => setActiveCard(Math.max(0, activeCard - 1))}
-                  className="absolute z-40 bg-black/80 backdrop-blur-sm hover:bg-black/90 text-white p-5 rounded-full transition-all duration-300 shadow-xl"
+                  className="hidden lg:block absolute z-40 bg-black/80 backdrop-blur-sm hover:bg-black/90 text-white p-5 rounded-full transition-all duration-300 shadow-xl"
                    style={{ 
-                     left: `calc(50% - 750px - 50px)`, // Card edge (750px) + arrow spacing (50px)
+                     left: `calc(50% - 750px - 50px)`,
                      top: '40%',
                      transform: 'translateY(-50%)'
                    }}
@@ -233,7 +233,6 @@ const ServicesCardsSection = () => {
               )}
             </AnimatePresence>
 
-            {/* Right Arrow - positioned at right edge of card border */}
             <AnimatePresence>
               {(activeCard === 0 || activeCard === 1) && slideOverProgress < 0.3 && (
                 <motion.button
@@ -267,9 +266,9 @@ const ServicesCardsSection = () => {
                     stiffness: 200
                   }}
                   onClick={() => setActiveCard(Math.min(cards.length - 1, activeCard + 1))}
-                  className="absolute z-40 bg-black/80 backdrop-blur-sm hover:bg-black/90 text-white p-5 rounded-full transition-all duration-300 shadow-xl"
+                  className="hidden lg:block absolute z-40 bg-black/80 backdrop-blur-sm hover:bg-black/90 text-white p-5 rounded-full transition-all duration-300 shadow-xl"
                    style={{ 
-                     right: `calc(50% - 750px - 50px)`, // Card edge (750px) + arrow spacing (50px)
+                     right: `calc(50% - 750px - 50px)`,
                      top: '40%',
                      transform: 'translateY(-50%)'
                    }}
@@ -304,7 +303,7 @@ const ServicesCardsSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                   className={`absolute w-[1000px] lg:w-[1500px] h-[400px] lg:h-[500px] rounded-3xl p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
+                   className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
                    style={{
                      transform: `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
                      filter: activeCard === index 
@@ -372,10 +371,10 @@ const ServicesCardsSection = () => {
                       <div className="text-sm uppercase tracking-wider opacity-80 mb-2">
                         {card.subtitle}
                       </div>
-                      <h3 className="text-2xl lg:text-3xl font-bold mb-4">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4">
                         {card.title}
                       </h3>
-                      <p className="text-white/90 leading-relaxed mb-6">
+                      <p className="text-white/90 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">
                         {card.description}
                       </p>
                     </div>
@@ -396,21 +395,26 @@ const ServicesCardsSection = () => {
             </AnimatePresence>
           </div>
 
-          {/* Progress indicator */}
-          <div className="flex justify-center mt-12 space-x-3">
+          {/* Mobile Navigation Dots */}
+          <div className="flex justify-center mt-8 space-x-3">
             {cards.map((_, index) => (
-              <div
+              <button
                 key={index}
-                className={`w-3 h-3 rounded-full transition-all duration-500 ${
-                  activeCard === index ? 'bg-black scale-125' : 'bg-gray-300'
+                onClick={() => setActiveCard(index)}
+                className={`w-4 h-4 rounded-full transition-all duration-500 lg:pointer-events-none ${
+                  activeCard === index ? 'bg-black scale-125' : 'bg-gray-300 hover:bg-gray-400'
                 }`}
+                aria-label={`View service ${index + 1}`}
               />
             ))}
           </div>
 
-          {/* Scroll hint */}
-          <div className="text-center mt-8">
-            <p className="text-gray-500 text-sm animate-pulse">
+          {/* Mobile Swipe Hint / Desktop Scroll Hint */}
+          <div className="text-center mt-6">
+            <p className="text-gray-500 text-sm animate-pulse lg:hidden">
+              Tap dots above to explore services
+            </p>
+            <p className="text-gray-500 text-sm animate-pulse hidden lg:block">
               Scroll to explore services
             </p>
           </div>
