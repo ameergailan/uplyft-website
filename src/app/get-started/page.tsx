@@ -13,6 +13,7 @@ import { ArrowLeft, Zap, Target, TrendingUp, CheckCircle, Calendar, Users, X, Pl
 const GetStartedPage = () => {
   const [showVideoModal, setShowVideoModal] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
+  const [videoError, setVideoError] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -128,14 +129,14 @@ const GetStartedPage = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
           >
-            <span className="text-red-500 text-4xl lg:text-5xl">Free:</span>{' '}
+            <span className="text-4xl lg:text-5xl text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6)' }}>Free:</span>{' '}
             <span className="text-white">Get the exact </span>
-            <span className="text-red-500">UpLyft Growth System™</span>
+            <span className="text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6)' }}>UpLyft Growth System™</span>
             <br />
             <span className="text-white text-4xl lg:text-5xl">
               that scaled agencies to{' '}
             </span>
-            <span className="text-red-500 text-5xl lg:text-6xl">
+            <span className="text-5xl lg:text-6xl text-white" style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6)' }}>
               $100k+/Mo
             </span>
           </motion.h1>
@@ -165,35 +166,55 @@ const GetStartedPage = () => {
                 >
                   {showVideo ? (
                     <div className="w-full bg-black rounded-3xl overflow-hidden">
-                      <video
-                        className="w-full rounded-3xl"
-                        controls
-                        autoPlay
-                        muted
-                        playsInline
-                        preload="metadata"
-                      >
-                        <source src="/agency-growth-video.mp4" type="video/mp4" />
-                        <p className="text-white text-xl p-8">
-                          Your browser does not support the video tag. Please update your browser or try a different one.
-                        </p>
-                      </video>
+                      {!videoError ? (
+                        <video
+                          className="w-full rounded-3xl"
+                          controls
+                          autoPlay
+                          muted
+                          playsInline
+                          preload="auto"
+                          onError={(e) => {
+                            console.error('Video error:', e);
+                            setVideoError(true);
+                          }}
+                          onLoadStart={() => console.log('Video loading started')}
+                          onCanPlay={() => console.log('Video can play')}
+                        >
+                          <source src="/agency-growth-video.mp4" type="video/mp4" />
+                          <p className="text-white text-xl p-8">
+                            Your browser does not support the video tag or the video file could not be loaded.
+                          </p>
+                        </video>
+                      ) : (
+                        <div className="w-full h-96 bg-gray-900 rounded-3xl flex items-center justify-center">
+                          <div className="text-center text-white p-8">
+                            <h3 className="text-2xl font-bold mb-4">Video Temporarily Unavailable</h3>
+                            <p className="text-gray-300 mb-6">
+                              We're working on optimizing the video delivery. 
+                            </p>
+                            <a 
+                              href="mailto:hello@uplyft.com?subject=Video%20Access%20Request"
+                              className="bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors font-semibold"
+                            >
+                              Contact Us for Video Access
+                            </a>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ) : (
-                    <div className="relative w-full h-full">
-                      {/* Video Thumbnail Background */}
-                      <video 
-                        className="w-full rounded-3xl"
-                        muted
-                        playsInline
-                        preload="metadata"
-                        style={{ filter: 'blur(4px) brightness(0.6)' }}
-                      >
-                        <source src="/agency-growth-video.mp4#t=0.1" type="video/mp4" />
-                      </video>
+                    <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
+                      {/* Static Background with Gradient */}
+                      <div 
+                        className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
+                        style={{ 
+                          backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.8) 100%)',
+                        }}
+                      />
                       
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 rounded-3xl" />
+                      {/* Additional Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 rounded-3xl" />
                       
                       {/* Play Button - Center Only */}
                       <div className="absolute inset-0 flex items-center justify-center">

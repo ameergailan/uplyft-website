@@ -15,6 +15,15 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
+  // Ensure static files are properly handled
+  async rewrites() {
+    return [
+      {
+        source: '/agency-growth-video.mp4',
+        destination: '/agency-growth-video.mp4',
+      },
+    ];
+  },
 }
 
 module.exports = nextConfig
