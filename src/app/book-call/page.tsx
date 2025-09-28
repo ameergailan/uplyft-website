@@ -42,14 +42,60 @@ const BookCallPage = () => {
         </div>
       </header>
 
-      {/* Booking Widget Container */}
-      <main className="container mx-auto px-6 py-8 flex items-center justify-center min-h-[calc(100vh-80px)]">
-        <div className="w-4/5 max-w-3xl">
-          {/* LeadConnector Booking Widget - 20% smaller */}
-          <div className="w-full bg-black rounded-lg overflow-hidden" style={{ height: '80vh' }}>
+      {/* Booking Page Layout */}
+      <main className="min-h-[calc(100vh-80px)] flex">
+        {/* Left Side - UpLyft Branding & Info */}
+        <div className="w-1/2 bg-black p-12 flex flex-col justify-center">
+          <div className="max-w-md">
+            {/* Logo */}
+            <div className="mb-8">
+              <img src="/UPLYFTLOGO.png" alt="UpLyft" className="h-16 mb-6" />
+            </div>
+            
+            {/* Heading */}
+            <h1 className="text-4xl font-bold text-white mb-6">
+              Ready to Scale Your Agency?
+            </h1>
+            
+            {/* Description */}
+            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+              Book your free 1-on-1 strategy session with David and discover how we can scale your agency to new heights.
+            </p>
+            
+            {/* Benefits */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span className="text-gray-300">Personalized growth strategy</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span className="text-gray-300">No commitment required</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span className="text-gray-300">30-minute consultation</span>
+              </div>
+            </div>
+            
+            {/* Contact Info */}
+            <div className="mt-12 pt-8 border-t border-gray-800">
+              <p className="text-gray-400 text-sm">
+                Questions? Email us at{' '}
+                <a href="mailto:hello@uplyft.com" className="text-blue-400 hover:text-blue-300 transition-colors">
+                  hello@uplyft.com
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Booking Calendar */}
+        <div className="w-1/2 bg-black">
+          <div className="h-full p-6">
             <iframe
               src="https://api.leadconnectorhq.com/widget/booking/X2R834MdELL4Zw1DQeGl"
-              className="w-full h-full border-0"
+              className="w-full h-full border-0 rounded-lg"
               title="Book a Call with David - UpLyft Team"
               allow="camera; microphone; geolocation"
             />
