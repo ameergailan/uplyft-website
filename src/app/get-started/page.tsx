@@ -334,19 +334,27 @@ const GetStartedPage = () => {
                   style={{ height: '500px' }}
                   title="Lead Capture Form"
                   onLoad={() => {
-                    let initialHeight = 0;
                     let hasSubmitted = false;
-                    let checkCount = 0;
-                    const maxChecks = 180; // 3 minutes
                     
-                    // Get initial iframe height
-                    setTimeout(() => {
-                      const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
-                      if (iframe) {
-                        initialHeight = iframe.offsetHeight;
-                        console.log('Initial iframe height:', initialHeight);
+                    // Intercept network requests to detect form submission
+                    const originalFetch = window.fetch;
+                    window.fetch = async (...args) => {
+                      const response = await originalFetch(...args);
+                      const url = args[0] as string;
+                      
+                      // Check if this is a LeadConnector form submission
+                      if (url && (url.includes('leadconnectorhq.com') || url.includes('gohighlevel')) && 
+                          (url.includes('submit') || url.includes('form')) && !hasSubmitted) {
+                        console.log('Form submission detected via fetch interception!');
+                        hasSubmitted = true;
+                        setTimeout(() => {
+                          setShowVideoModal(false);
+                          setShowVideo(true);
+                        }, 2000); // 2 second delay
                       }
-                    }, 1000);
+                      
+                      return response;
+                    };
                     
                     // Enhanced postMessage listener
                     const handleMessage = (event: MessageEvent) => {
@@ -369,59 +377,28 @@ const GetStartedPage = () => {
                           setTimeout(() => {
                             setShowVideoModal(false);
                             setShowVideo(true);
-                          }, 1500); // 1.5 second delay to show success
+                          }, 1500);
                         }
                       }
                     };
                     
-                    // Monitor iframe changes
-                    const monitorChanges = () => {
-                      if (hasSubmitted) return;
-                      
-                      const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
-                      if (iframe) {
-                        const currentHeight = iframe.offsetHeight;
-                        
-                        // If height changed significantly, likely a success message appeared
-                        if (initialHeight > 0 && Math.abs(currentHeight - initialHeight) > 50) {
-                          console.log('Iframe height changed significantly, assuming form submitted');
-                          hasSubmitted = true;
-                          setTimeout(() => {
-                            setShowVideoModal(false);
-                            setShowVideo(true);
-                          }, 2000); // 2 second delay
-                          return;
-                        }
-                        
-                        // Try to detect URL changes in iframe (if accessible)
-                        try {
-                          if (iframe.contentWindow && iframe.contentWindow.location.href.includes('thank')) {
-                            console.log('Thank you page detected!');
-                            hasSubmitted = true;
-                            setTimeout(() => {
-                              setShowVideoModal(false);
-                              setShowVideo(true);
-                            }, 1500);
-                            return;
-                          }
-                        } catch (e) {
-                          // CORS blocked, continue
-                        }
+                    // Timer-based fallback - show video after 15 seconds of form being open
+                    const fallbackTimer = setTimeout(() => {
+                      if (!hasSubmitted) {
+                        console.log('Fallback timer triggered - assuming form was submitted');
+                        hasSubmitted = true;
+                        setShowVideoModal(false);
+                        setShowVideo(true);
                       }
-                      
-                      checkCount++;
-                      if (checkCount < maxChecks && !hasSubmitted) {
-                        setTimeout(monitorChanges, 1000);
-                      }
-                    };
+                    }, 15000); // 15 seconds
                     
                     window.addEventListener('message', handleMessage);
                     
-                    // Start monitoring after iframe loads
-                    setTimeout(monitorChanges, 3000);
-                    
                     return () => {
                       window.removeEventListener('message', handleMessage);
+                      clearTimeout(fallbackTimer);
+                      // Restore original fetch
+                      window.fetch = originalFetch;
                     };
                   }}
                 />
