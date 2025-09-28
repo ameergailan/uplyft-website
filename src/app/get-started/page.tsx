@@ -322,7 +322,7 @@ const GetStartedPage = () => {
                   Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
                 </h3>
                 <p className="text-gray-600 text-lg">
-                  Watch the exclusive video after submitting
+                  After submitting, close this window to watch the exclusive video
                 </p>
               </div>
 
@@ -334,11 +334,20 @@ const GetStartedPage = () => {
                   style={{ height: '500px' }}
                   title="Lead Capture Form"
                   onLoad={() => {
-                    // Listen for form submission (you may need to adjust this based on LeadConnector's postMessage events)
+                    // Listen for LeadConnector form submission events
                     const handleMessage = (event: MessageEvent) => {
-                      if (event.data && event.data.type === 'form_submitted') {
-                        setShowVideoModal(false);
-                        setShowVideo(true);
+                      // LeadConnector might send different event types, so let's listen for common ones
+                      if (event.data) {
+                        // Check for various possible submission events
+                        if (event.data.type === 'form_submitted' || 
+                            event.data.type === 'submission_complete' ||
+                            event.data.action === 'submit' ||
+                            event.data.event === 'form_submit' ||
+                            (typeof event.data === 'string' && event.data.includes('submit'))) {
+                          console.log('Form submitted, showing video');
+                          setShowVideoModal(false);
+                          setShowVideo(true);
+                        }
                       }
                     };
                     window.addEventListener('message', handleMessage);
