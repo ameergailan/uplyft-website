@@ -335,69 +335,65 @@ const GetStartedPage = () => {
                   title="Lead Capture Form"
                   onLoad={() => {
                     let hasSubmitted = false;
-                    let formLoadTime = Date.now();
                     
-                    // Only intercept actual form submissions (not form loads)
+                    // SIMPLE AS FUCK - detect ANY click in the iframe after 2 seconds
+                    const detectClick = () => {
+                      try {
+                        const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
+                        if (iframe && iframe.contentDocument) {
+                          iframe.contentDocument.addEventListener('click', (e) => {
+                            if (!hasSubmitted) {
+                              console.log('CLICK DETECTED IN FORM - ASSUMING SUBMIT');
+                              hasSubmitted = true;
+                              setTimeout(() => {
+                                setShowVideoModal(false);
+                                setShowVideo(true);
+                              }, 1500); // EXACTLY 1.5 SECONDS LIKE YOU ASKED
+                            }
+                          });
+                        }
+                      } catch (e) {
+                        console.log('CORS blocked click detection');
+                      }
+                    };
+                    
+                    // Try to detect clicks after iframe loads
+                    setTimeout(detectClick, 2000);
+                    
+                    // Backup method - detect form submission via fetch
                     const originalFetch = window.fetch;
                     window.fetch = async (...args) => {
                       const response = await originalFetch(...args);
                       const url = args[0] as string;
                       
-                      // Only trigger if form has been open for at least 5 seconds (user had time to fill it)
-                      const timeOpen = Date.now() - formLoadTime;
-                      
-                      if (url && timeOpen > 5000 && // Form open for 5+ seconds
-                          (url.includes('leadconnectorhq.com') || url.includes('gohighlevel')) && 
-                          url.includes('submit') && !hasSubmitted) {
-                        console.log('Form submission detected via fetch after', timeOpen/1000, 'seconds');
+                      if (url && url.includes('leadconnectorhq.com') && !hasSubmitted) {
+                        console.log('FETCH DETECTED - SHOWING VIDEO IN 1.5 SECONDS');
                         hasSubmitted = true;
                         setTimeout(() => {
                           setShowVideoModal(false);
                           setShowVideo(true);
-                        }, 1000); // 1 second delay to see success message
+                        }, 1500); // EXACTLY 1.5 SECONDS
                       }
                       
                       return response;
                     };
                     
-                    // Conservative postMessage listener - only specific events
+                    // Backup postMessage
                     const handleMessage = (event: MessageEvent) => {
-                      console.log('Received message:', event.data);
-                      
-                      if (hasSubmitted) return;
-                      
-                      const timeOpen = Date.now() - formLoadTime;
-                      
-                      // Only trigger if form has been open for at least 3 seconds
-                      if (timeOpen > 3000 && event.data) {
-                        if (event.data.type === 'form_submitted' ||
-                            event.data.action === 'submit' ||
-                            (event.data.message && event.data.message.includes('submitted'))) {
-                          console.log('Form submitted via postMessage after', timeOpen/1000, 'seconds');
-                          hasSubmitted = true;
-                          setTimeout(() => {
-                            setShowVideoModal(false);
-                            setShowVideo(true);
-                          }, 1000);
-                        }
+                      if (!hasSubmitted && event.data) {
+                        console.log('MESSAGE DETECTED - SHOWING VIDEO IN 1.5 SECONDS');
+                        hasSubmitted = true;
+                        setTimeout(() => {
+                          setShowVideoModal(false);
+                          setShowVideo(true);
+                        }, 1500); // EXACTLY 1.5 SECONDS
                       }
                     };
-                    
-                    // Reasonable fallback timer - 30 seconds
-                    const fallbackTimer = setTimeout(() => {
-                      if (!hasSubmitted) {
-                        console.log('Fallback timer triggered - user probably submitted');
-                        hasSubmitted = true;
-                        setShowVideoModal(false);
-                        setShowVideo(true);
-                      }
-                    }, 30000); // 30 seconds - reasonable time to fill form
                     
                     window.addEventListener('message', handleMessage);
                     
                     return () => {
                       window.removeEventListener('message', handleMessage);
-                      clearTimeout(fallbackTimer);
                       window.fetch = originalFetch;
                     };
                   }}
