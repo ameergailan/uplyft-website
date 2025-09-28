@@ -289,7 +289,7 @@ const GetStartedPage = () => {
         </motion.div>
       </main>
 
-      {/* Video Access Modal */}
+      {/* LeadConnector Form Modal */}
       <AnimatePresence>
         {showVideoModal && (
           <motion.div
@@ -302,7 +302,7 @@ const GetStartedPage = () => {
             }}
           >
             <motion.div
-              className="bg-white rounded-2xl max-w-lg w-full p-8 relative"
+              className="bg-white rounded-2xl max-w-lg w-full relative overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -311,120 +311,41 @@ const GetStartedPage = () => {
               {/* Close Button */}
               <button
                 onClick={() => setShowVideoModal(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors z-10"
               >
                 <X size={24} />
               </button>
 
               {/* Form Header */}
-              <div className="text-center mb-8">
+              <div className="text-center p-6 pb-4">
                 <h3 className="text-2xl font-bold text-black mb-2">
                   Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
                 </h3>
                 <p className="text-gray-600 text-lg">
-                  We'll <span className="font-semibold">SMS</span> You Access 📱
+                  Watch the exclusive video after submitting
                 </p>
               </div>
 
-              {/* Form */}
-              <form onSubmit={handleFormSubmit} className="space-y-6">
-                {/* First Name */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    placeholder="First Name"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
-                  />
-                </div>
-
-                {/* Last Name */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Last Name"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="Email"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
-                  />
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="Phone"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all duration-200 text-gray-900"
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <motion.button
-                  type="submit"
-                  className="w-full bg-black text-white py-4 px-6 rounded-lg font-semibold text-lg hover:bg-gray-800 transition-colors duration-200"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Submit
-                </motion.button>
-
-                {/* Terms Checkbox */}
-                <div className="flex items-start space-x-3 text-sm">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    required
-                    className="mt-1 h-4 w-4 text-black focus:ring-black border-gray-300 rounded flex-shrink-0"
-                  />
-                  <label htmlFor="terms" className="text-gray-600 leading-relaxed">
-                    I agree to the{' '}
-                    <Link href="/privacy-policy" className="text-blue-600 underline hover:text-blue-700">
-                      privacy policy
-                    </Link>{' '}
-                    &{' '}
-                    <Link href="/terms-of-service" className="text-blue-600 underline hover:text-blue-700">
-                      terms & conditions
-                    </Link>{' '}
-                    provided by the company. By providing my phone number, I agree to receive text messages from the business. Text{' '}
-                    <span className="font-semibold">HELP</span> to +1 415-993-5456 for assistance. You can reply{' '}
-                    <span className="font-semibold">STOP</span> to unsubscribe at any time.
-                  </label>
-                </div>
-              </form>
+              {/* LeadConnector Form Embed */}
+              <div className="px-6 pb-6">
+                <iframe
+                  src="https://api.leadconnectorhq.com/widget/form/XiLsnN6JR8vJ81UozoBN"
+                  className="w-full border-0"
+                  style={{ height: '400px' }}
+                  title="Lead Capture Form"
+                  onLoad={() => {
+                    // Listen for form submission (you may need to adjust this based on LeadConnector's postMessage events)
+                    const handleMessage = (event: MessageEvent) => {
+                      if (event.data && event.data.type === 'form_submitted') {
+                        setShowVideoModal(false);
+                        setShowVideo(true);
+                      }
+                    };
+                    window.addEventListener('message', handleMessage);
+                    return () => window.removeEventListener('message', handleMessage);
+                  }}
+                />
+              </div>
             </motion.div>
           </motion.div>
         )}
