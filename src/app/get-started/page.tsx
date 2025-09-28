@@ -339,8 +339,8 @@ const GetStartedPage = () => {
               </button>
 
               {/* Form Header */}
-              <div className="text-center p-4 sm:p-6 pb-2 sm:pb-4">
-                <h3 className="text-lg sm:text-2xl font-bold text-black mb-2">
+              <div className="text-center p-4 sm:p-6 pb-1 sm:pb-2">
+                <h3 className="text-lg sm:text-2xl font-bold text-black mb-1">
                   Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
                 </h3>
                 <p className="text-gray-600 text-sm sm:text-lg">
