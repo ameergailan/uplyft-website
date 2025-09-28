@@ -246,90 +246,21 @@ const GetStartedPage = () => {
             </div>
           </motion.div>
 
-          {/* Social Proof */}
+          {/* Single CTA Button */}
           <motion.div
-            className="flex flex-wrap justify-center gap-6 mb-8"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
           >
-            {socialProof.map((proof, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <CheckCircle className="text-green-400" size={20} />
-                <span className="text-gray-300">{proof}</span>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Benefits Grid */}
-        <motion.div
-          className="grid md:grid-cols-3 gap-6 mb-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-        >
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              className="bg-gray-900 rounded-2xl p-8 border border-gray-700"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.6 + index * 0.1 }}
-              whileHover={{ scale: 1.05, backgroundColor: 'rgb(31, 41, 55)' }}
+            <motion.button
+              className="bg-white text-black px-12 py-5 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-xl shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="p-3 bg-gray-800 rounded-lg w-fit mb-4">
-                <benefit.icon className="text-white" size={32} />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-white">
-                {benefit.title}
-              </h3>
-              <p className="text-gray-300 leading-relaxed">
-                {benefit.description}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Main CTA */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.9 }}
-        >
-          <div className="bg-gray-900 rounded-3xl p-12 border border-gray-700">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-              Ready to Transform Your Agency?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Book a free strategy session to discover how we can scale your agency to new heights.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                className="bg-white text-black px-8 py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold text-lg shadow-lg flex items-center justify-center space-x-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Calendar size={20} />
-                <span>Book Free Strategy Call</span>
-              </motion.button>
-              
-              <motion.button
-                className="bg-gray-800 text-white px-8 py-4 rounded-lg hover:bg-gray-700 transition-all duration-300 font-semibold text-lg border border-gray-600 flex items-center justify-center space-x-2"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Users size={20} />
-                <span>Join Our Community</span>
-              </motion.button>
-            </div>
-            
-            <p className="text-sm text-gray-400 mt-6">
-              No commitment required • Free 30-minute consultation
-            </p>
-          </div>
+              I want to scale faster, book me on a call with the UpLyft Team
+            </motion.button>
+          </motion.div>
         </motion.div>
 
         {/* Footer */}
