@@ -15,17 +15,40 @@ const GetStartedPage = () => {
   const [showVideo, setShowVideo] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false)
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: ''
-  })
+  const [isVideoUnlocked, setIsVideoUnlocked] = useState(false)
 
-  // Ensure normal cursor on this page
+  // Check for video unlock query parameter and set cursor
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Check if video is unlocked via query parameter
+    const urlParams = new URLSearchParams(window.location.search)
+    const vslUnlocked = urlParams.get('vsl') === 'unlocked'
+    
+    if (vslUnlocked) {
+      console.log('VIDEO UNLOCKED VIA QUERY PARAMETER - SHOWING VIDEO')
+      setIsVideoUnlocked(true)
+      setShowVideo(true)
+      // Store in localStorage for persistence
+      try {
+        localStorage.setItem('vsl_unlocked', '1')
+      } catch (e) {
+        console.log('LocalStorage not available')
+      }
+    } else {
+      // Check localStorage for previous unlock
+      try {
+        const storedUnlock = localStorage.getItem('vsl_unlocked')
+        if (storedUnlock === '1') {
+          console.log('VIDEO UNLOCKED VIA LOCALSTORAGE - SHOWING VIDEO')
+          setIsVideoUnlocked(true)
+          setShowVideo(true)
+        }
+      } catch (e) {
+        console.log('LocalStorage not available')
+      }
+    }
     
     return () => {
       // Restore when leaving page
@@ -35,7 +58,13 @@ const GetStartedPage = () => {
   }, [])
 
   const handlePlayClick = () => {
-    setShowVideoModal(true)
+    // If video is already unlocked, play it directly
+    if (isVideoUnlocked) {
+      setShowVideo(true)
+    } else {
+      // Show form modal to unlock video
+      setShowVideoModal(true)
+    }
   }
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -333,78 +362,6 @@ const GetStartedPage = () => {
                   className="w-full border-0"
                   style={{ height: '500px' }}
                   title="Lead Capture Form"
-                  onLoad={() => {
-                    let hasSubmitted = false;
-                    
-                    // ONLY detect clicks on SUBMIT buttons, not form fields
-                    const detectSubmitClick = () => {
-                      try {
-                        const iframe = document.querySelector('iframe[title="Lead Capture Form"]') as HTMLIFrameElement;
-                        if (iframe && iframe.contentDocument) {
-                          iframe.contentDocument.addEventListener('click', (e) => {
-                            const target = e.target as HTMLElement;
-                            // Only trigger on submit buttons, not input fields
-                            if (!hasSubmitted && target && (
-                              target.type === 'submit' ||
-                              target.tagName === 'BUTTON' ||
-                              target.textContent?.toLowerCase().includes('submit') ||
-                              target.className?.toLowerCase().includes('submit') ||
-                              target.className?.toLowerCase().includes('btn')
-                            )) {
-                              console.log('SUBMIT BUTTON CLICKED - SHOWING VIDEO IN 1.5 SECONDS');
-                              hasSubmitted = true;
-                              setTimeout(() => {
-                                setShowVideoModal(false);
-                                setShowVideo(true);
-                              }, 1500);
-                            }
-                          });
-                        }
-                      } catch (e) {
-                        console.log('CORS blocked submit detection');
-                      }
-                    };
-                    
-                    // Try to detect SUBMIT clicks after iframe loads
-                    setTimeout(detectSubmitClick, 2000);
-                    
-                    // Backup method - detect form submission via fetch
-                    const originalFetch = window.fetch;
-                    window.fetch = async (...args) => {
-                      const response = await originalFetch(...args);
-                      const url = args[0] as string;
-                      
-                      if (url && url.includes('leadconnectorhq.com') && !hasSubmitted) {
-                        console.log('FETCH DETECTED - SHOWING VIDEO IN 1.5 SECONDS');
-                        hasSubmitted = true;
-                        setTimeout(() => {
-                          setShowVideoModal(false);
-                          setShowVideo(true);
-                        }, 1500); // EXACTLY 1.5 SECONDS
-                      }
-                      
-                      return response;
-                    };
-                    
-                    // Backup postMessage
-                    const handleMessage = (event: MessageEvent) => {
-                      if (!hasSubmitted && event.data) {
-                        console.log('MESSAGE DETECTED - SHOWING VIDEO IN 1.5 SECONDS');
-                        hasSubmitted = true;
-                        setTimeout(() => {
-                          setShowVideoModal(false);
-                          setShowVideo(true);
-                        }, 1500); // EXACTLY 1.5 SECONDS
-                      }
-                    };
-                    
-                    window.addEventListener('message', handleMessage);
-                    
-                    return () => {
-                      window.removeEventListener('message', handleMessage);
-                      window.fetch = originalFetch;
-                    };
-                  }}
                 />
               </div>
             </motion.div>
