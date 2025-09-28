@@ -157,7 +157,11 @@ const CustomCursor = () => {
   }
 
   // Don't show cursor on booking success page or when over interactive elements
-  if (currentPath === '/booking-success' || isOverInteractive) {
+  const isBookingSuccessPage = currentPath === '/booking-success' || 
+                               currentPath.includes('booking-success') ||
+                               document.querySelector('[data-page="booking-success"]')
+  
+  if (isBookingSuccessPage || isOverInteractive) {
     return null
   }
 
