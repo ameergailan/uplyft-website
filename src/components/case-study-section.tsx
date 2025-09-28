@@ -12,8 +12,62 @@ import type { CaseStudyProject, CaseStudyMetric } from '@/types'
 
 const CaseStudySection = () => {
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   
+  // Mount check
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // Mouse position tracking for reliable hover detection
+  useEffect(() => {
+    if (!isMounted) return
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      // Get the case study section
+      const caseStudySection = document.querySelector('.case-study-section')
+      if (!caseStudySection) return
+      
+      const rect = caseStudySection.getBoundingClientRect()
+      const isInSection = e.clientX >= rect.left && e.clientX <= rect.right && 
+                         e.clientY >= rect.top && e.clientY <= rect.bottom
+      
+      if (isInSection) {
+        // Check which card is being hovered
+        const cards = document.querySelectorAll('.case-study-section .hover-sensitive')
+        let foundCard = null
+        
+        cards.forEach((card, cardIndex) => {
+          const cardRect = card.getBoundingClientRect()
+          const isOverCard = e.clientX >= cardRect.left && e.clientX <= cardRect.right && 
+                            e.clientY >= cardRect.top && e.clientY <= cardRect.bottom
+          
+          if (isOverCard) {
+            foundCard = cardIndex
+          }
+        })
+        
+        if (foundCard !== hoveredCard) {
+          console.log('CASE STUDY CARD TRACKING - SWITCHED TO:', foundCard)
+          setHoveredCard(foundCard)
+        }
+      } else {
+        if (hoveredCard !== null) {
+          console.log('CASE STUDY CARD TRACKING - LEFT SECTION')
+          setHoveredCard(null)
+        }
+      }
+    }
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
+  }, [isMounted, hoveredCard])
+
   // Check if being overlaid by CTA section
   useEffect(() => {
     const handleScroll = () => {
@@ -140,20 +194,22 @@ const CaseStudySection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ 
-                scale: 1.05,
-                y: -10,
-                zIndex: 50,
+              animate={{
+                scale: hoveredCard === index ? 1.05 : 1,
+                y: hoveredCard === index ? -10 : 0,
+                zIndex: hoveredCard === index ? 50 : 10,
                 transition: { duration: 0.4, ease: "easeOut" }
               }}
               className="hover-sensitive relative cursor-pointer group"
             >
               <div 
-                className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10 group-hover:shadow-2xl group-hover:border-gray-300 transition-all duration-400 ease-out"
+                className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 h-full flex flex-col relative z-10 transition-all duration-400 ease-out"
                 style={{
                   transform: isBeingShadowed ? 'scale(0.9)' : 'scale(1)',
                   filter: isBeingShadowed ? 'drop-shadow(0 15px 30px rgba(0,0,0,0.4))' : 'drop-shadow(0 10px 25px rgba(0,0,0,0.3))',
-                  transition: 'transform 0.5s ease-out, filter 0.5s ease-out, box-shadow 0.4s ease-out, border-color 0.4s ease-out'
+                  transition: 'transform 0.5s ease-out, filter 0.5s ease-out, box-shadow 0.4s ease-out, border-color 0.4s ease-out',
+                  boxShadow: hoveredCard === index ? '0 25px 50px -12px rgba(0, 0, 0, 0.25)' : '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                  borderColor: hoveredCard === index ? '#d1d5db' : '#e5e7eb'
                 }}
               >
                 {/* Client Header */}
@@ -168,18 +224,27 @@ const CaseStudySection = () => {
                   </div>
                   
                   {/* Profile Picture */}
-                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-200 group-hover:scale-110 transition-transform duration-400 ease-out">
+                  <div 
+                    className="w-20 h-20 rounded-xl overflow-hidden bg-gray-200 transition-transform duration-400 ease-out"
+                    style={{
+                      transform: hoveredCard === index ? 'scale(1.1)' : 'scale(1)'
+                    }}
+                  >
                     <img 
                       src={`/${project.client.toLowerCase()}-profile.png`}
                       alt={`${project.client} profile`}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400 ease-out"
+                      className="w-full h-full object-cover transition-transform duration-400 ease-out"
+                      style={{
+                        transform: hoveredCard === index ? 'scale(1.05)' : 'scale(1)'
+                      }}
                       onError={(e) => {
                         // Fallback to initials if image fails to load
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
                         const parent = target.parentElement;
                         if (parent) {
-                          parent.className = 'w-20 h-20 bg-black rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-400 ease-out';
+                          parent.className = 'w-20 h-20 bg-black rounded-xl flex items-center justify-center transition-transform duration-400 ease-out';
+                          parent.style.transform = hoveredCard === index ? 'scale(1.1)' : 'scale(1)';
                           parent.innerHTML = `<span class="text-white font-bold text-lg">${project.logo}</span>`;
                         }
                       }}
@@ -188,27 +253,58 @@ const CaseStudySection = () => {
                 </div>
 
                 {/* Business Name */}
-                <h5 className="text-xl font-bold text-black mb-4 group-hover:text-gray-800 transition-colors duration-400 ease-out">
+                <h5 
+                  className="text-xl font-bold text-black mb-4 transition-colors duration-400 ease-out"
+                  style={{
+                    color: hoveredCard === index ? '#1f2937' : '#000000'
+                  }}
+                >
                   {project.title}
                 </h5>
 
                 {/* Description */}
-                <p className="text-gray-700 leading-relaxed mb-6 flex-grow group-hover:text-gray-600 transition-colors duration-400 ease-out">
+                <p 
+                  className="text-gray-700 leading-relaxed mb-6 flex-grow transition-colors duration-400 ease-out"
+                  style={{
+                    color: hoveredCard === index ? '#4b5563' : '#374151'
+                  }}
+                >
                   {project.description}
                 </p>
 
                 {/* Key Metrics */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   {project.metrics.map((metric, metricIndex) => (
-                    <div key={metricIndex} className="text-center group-hover:scale-105 transition-transform duration-400 ease-out">
-                      <div className="text-lg lg:text-xl font-bold text-black group-hover:text-gray-800 transition-colors duration-400 ease-out">
+                    <div 
+                      key={metricIndex} 
+                      className="text-center transition-transform duration-400 ease-out"
+                      style={{
+                        transform: hoveredCard === index ? 'scale(1.05)' : 'scale(1)'
+                      }}
+                    >
+                      <div 
+                        className="text-lg lg:text-xl font-bold text-black transition-colors duration-400 ease-out"
+                        style={{
+                          color: hoveredCard === index ? '#1f2937' : '#000000'
+                        }}
+                      >
                         {metric.value}
                       </div>
-                      <div className="text-xs text-gray-600 mb-1 group-hover:text-gray-500 transition-colors duration-400 ease-out">
+                      <div 
+                        className="text-xs text-gray-600 mb-1 transition-colors duration-400 ease-out"
+                        style={{
+                          color: hoveredCard === index ? '#6b7280' : '#4b5563'
+                        }}
+                      >
                         {metric.label}
                       </div>
                       {metric.growth && (
-                        <div className="text-xs text-green-600 font-medium group-hover:text-green-700 transition-colors duration-400 ease-out">
+                        <div 
+                          className="text-xs text-green-600 font-medium transition-colors duration-400 ease-out"
+                          style={{
+                            color: hoveredCard === index ? '#059669' : '#16a34a'
+                          }}
+                        >
                           {metric.growth}
                         </div>
                       )}
@@ -221,7 +317,11 @@ const CaseStudySection = () => {
                   {project.services.map((service, serviceIndex) => (
                     <span
                       key={serviceIndex}
-                      className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full group-hover:bg-gray-200 group-hover:text-gray-900 transition-all duration-400 ease-out"
+                      className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full transition-all duration-400 ease-out"
+                      style={{
+                        backgroundColor: hoveredCard === index ? '#e5e7eb' : '#f3f4f6',
+                        color: hoveredCard === index ? '#111827' : '#1f2937'
+                      }}
                     >
                       {service.label}
                     </span>
@@ -231,10 +331,19 @@ const CaseStudySection = () => {
                 {/* View Details Button */}
                 <button
                   onClick={() => console.log(`View details for ${project.client}`)}
-                  className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-900 group-hover:scale-105 transition-all duration-400 ease-out flex items-center justify-center gap-2"
+                  className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-900 transition-all duration-400 ease-out flex items-center justify-center gap-2"
+                  style={{
+                    transform: hoveredCard === index ? 'scale(1.05)' : 'scale(1)'
+                  }}
                 >
                   View Case Study
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight 
+                    size={16} 
+                    className="transition-transform duration-200"
+                    style={{
+                      transform: hoveredCard === index ? 'translateX(4px)' : 'translateX(0)'
+                    }}
+                  />
                 </button>
               </div>
             </motion.div>
