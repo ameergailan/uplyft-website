@@ -251,13 +251,21 @@ const GetStartedPage = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <motion.button
-              className="bg-red-600 text-white px-8 py-4 rounded-lg hover:bg-red-700 transition-all duration-300 font-bold text-lg shadow-lg"
+              className="bg-white text-black px-8 py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-lg shadow-lg border border-gray-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              animate={{
+                y: [0, -8, 0],
+                transition: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
             >
               <div className="text-center">
                 <div className="text-xl font-bold">I Want To Scale Faster!</div>
-                <div className="text-sm font-medium mt-1">Apply For 1 on 1 Mentorship w/ Derek</div>
+                <div className="text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ Derek</div>
               </div>
             </motion.button>
           </motion.div>
