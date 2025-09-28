@@ -142,7 +142,7 @@ const GetStartedPage = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <p className="text-2xl lg:text-3xl font-bold text-white">
-              👇 Agency Owners 👇
+              👇 Business Owners 👇
             </p>
           </motion.div>
 
