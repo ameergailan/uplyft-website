@@ -217,49 +217,46 @@ const GetStartedPage = () => {
                     </div>
                   ) : (
                     <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
-                      {/* Professional Video Thumbnail */}
-                      <div 
-                        className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
+                      {/* Real Video Thumbnail - Blurred */}
+                      <video 
+                        className="absolute inset-0 w-full h-full object-cover rounded-3xl"
+                        muted
+                        playsInline
+                        preload="metadata"
                         style={{ 
-                          backgroundImage: `
-                            linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%),
-                            radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                            radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)
-                          `
+                          filter: 'blur(4px) brightness(0.6)',
+                          pointerEvents: 'none'
                         }}
-                      />
+                        onLoadedData={(e) => {
+                          console.log('Thumbnail loaded');
+                          const video = e.target as HTMLVideoElement;
+                          video.currentTime = 2; // Seek to 2 seconds for better frame
+                          setThumbnailLoaded(true);
+                        }}
+                        onError={(e) => {
+                          console.log('Thumbnail failed, using fallback');
+                          setThumbnailLoaded(false);
+                        }}
+                      >
+                        <source src="/agency-growth-video.mp4" type="video/mp4" />
+                      </video>
                       
-                      {/* Simulated Video Content Preview */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-full h-full relative overflow-hidden rounded-3xl">
-                          {/* Simulated blurred video content */}
-                          <div 
-                            className="absolute inset-0 opacity-60"
-                            style={{
-                              background: `
-                                linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%),
-                                linear-gradient(-45deg, rgba(0,0,0,0.3) 0%, rgba(255,255,255,0.05) 50%, rgba(0,0,0,0.3) 100%)
-                              `,
-                              filter: 'blur(8px)'
-                            }}
-                          />
-                          
-                          {/* Fake UI elements to simulate video content */}
-                          <div className="absolute top-8 left-8 right-8">
-                            <div className="bg-white/10 h-3 rounded-full mb-3" style={{ width: '60%' }} />
-                            <div className="bg-white/8 h-2 rounded-full mb-2" style={{ width: '80%' }} />
-                            <div className="bg-white/6 h-2 rounded-full" style={{ width: '40%' }} />
-                          </div>
-                          
-                          <div className="absolute bottom-8 left-8 right-8">
-                            <div className="bg-white/8 h-2 rounded-full mb-3" style={{ width: '90%' }} />
-                            <div className="bg-white/10 h-3 rounded-full" style={{ width: '70%' }} />
-                          </div>
-                        </div>
-                      </div>
+                      {/* Fallback gradient (shows if video fails to load) */}
+                      {!thumbnailLoaded && (
+                        <div 
+                          className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-br from-gray-800 via-gray-900 to-black"
+                          style={{ 
+                            backgroundImage: `
+                              linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.8) 100%),
+                              radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                              radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%)
+                            `
+                          }}
+                        />
+                      )}
                       
-                      {/* Additional Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 rounded-3xl" />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10 rounded-3xl" />
                       
                       {/* Play Button - Center Only */}
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -271,11 +268,6 @@ const GetStartedPage = () => {
                             <Play className="text-white w-8 h-8 ml-1" fill="white" />
                           </div>
                         </motion.div>
-                      </div>
-                      
-                      {/* "Video Preview" Label */}
-                      <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
-                        <span className="text-white text-sm font-medium">Preview</span>
                       </div>
                     </div>
                   )}
