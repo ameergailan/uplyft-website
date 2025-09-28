@@ -26,10 +26,21 @@ const GetStartedPage = () => {
     const urlParams = new URLSearchParams(window.location.search)
     const vslUnlocked = urlParams.get('vsl') === 'unlocked'
     
+    // Clear any old localStorage to ensure fresh locking behavior
+    try {
+      localStorage.removeItem('vsl_unlocked')
+    } catch (e) {
+      console.log('LocalStorage not available')
+    }
+    
     if (vslUnlocked) {
       console.log('VIDEO UNLOCKED VIA QUERY PARAMETER - SHOWING VIDEO')
       setIsVideoUnlocked(true)
       setShowVideo(true)
+    } else {
+      console.log('VIDEO LOCKED - FORM REQUIRED')
+      setIsVideoUnlocked(false)
+      setShowVideo(false)
     }
     
     return () => {
