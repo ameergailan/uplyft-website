@@ -249,10 +249,6 @@ const SolutionsSplitSection = () => {
             <div className="relative z-10">
                <div
                  className="mb-6 lg:mb-8 time-content"
-                 style={{
-                   filter: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? 'blur(0px)' : 'blur(4px)') : 'blur(0px)',
-                   transition: 'filter 0.4s ease-out'
-                 }}
                >
                 <motion.div
                   animate={{
@@ -270,8 +266,8 @@ const SolutionsSplitSection = () => {
                 <motion.h2 
                   className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 lg:mb-4"
                   animate={{
-                    scale: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? 1.05 : 1) : 1,
-                    textShadow: window.innerWidth >= 1024 ? (hoveredSide === 'time' ? '0 0 20px rgba(96, 165, 250, 0.5)' : '0 0 0px rgba(96, 165, 250, 0)') : '0 0 0px rgba(96, 165, 250, 0)'
+                    scale: hoveredSide === 'time' ? 1.05 : 1,
+                    textShadow: hoveredSide === 'time' ? '0 0 20px rgba(96, 165, 250, 0.5)' : '0 0 0px rgba(96, 165, 250, 0)'
                   }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
                 >
