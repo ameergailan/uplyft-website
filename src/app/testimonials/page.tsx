@@ -67,6 +67,7 @@ const LiveCounter = ({ target, duration, suffix = '' }: { target: number; durati
 const TestimonialsPage = () => {
   const [roadmapOpen, setRoadmapOpen] = useState(false)
   const [roadmapStep, setRoadmapStep] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   // Set cursor for this page
   useEffect(() => {
@@ -76,6 +77,31 @@ const TestimonialsPage = () => {
     return () => {
       document.body.classList.add('custom-cursor-active')
       document.body.style.cursor = 'none'
+    }
+  }, [])
+
+  // Handle scroll for overlapping effect
+  useEffect(() => {
+    let rafId: number
+    
+    const handleScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        const windowHeight = window.innerHeight
+        
+        // Calculate scroll progress (0 to 1)
+        const progress = Math.min(scrollY / (windowHeight * 2), 1) // 2x window height for full effect
+        setScrollProgress(progress)
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -394,18 +420,31 @@ const TestimonialsPage = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12 relative z-10">
+        {/* Spacer to enable scrolling */}
+        <div className="h-screen" />
+        
         {/* Main Testimonials */}
-        {testimonials.map((testimonial, index) => (
-          <motion.section
-            key={testimonial.id}
-            id={testimonial.id}
-            className={`relative ${index > 0 ? '-mt-32' : ''} ${index === testimonials.length - 1 ? 'mb-24' : ''}`}
-            style={{ zIndex: testimonials.length - index }}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
-          >
+        {testimonials.map((testimonial, index) => {
+          // Calculate transform for each testimonial based on scroll progress
+          const baseOffset = index * 200 // Base offset for each testimonial (increased for better spacing)
+          const scrollOffset = scrollProgress * 200 // How much to move based on scroll
+          const totalOffset = baseOffset - scrollOffset
+          
+          return (
+            <motion.section
+              key={testimonial.id}
+              id={testimonial.id}
+              className={`relative ${index === testimonials.length - 1 ? 'mb-24' : ''}`}
+              style={{ 
+                zIndex: testimonials.length - index,
+                transform: `translateY(${totalOffset}px)`,
+                transition: 'transform 0.1s ease-out'
+              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+            >
             {/* Background for overlapping effect */}
             <div className="absolute inset-0 bg-black/90 backdrop-blur-sm rounded-3xl -z-10" />
             
@@ -498,7 +537,8 @@ const TestimonialsPage = () => {
             </div>
             </div>
           </motion.section>
-        ))}
+          )
+        })}
 
         {/* Social Proof Section */}
         <motion.section
