@@ -6,42 +6,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Zap, Target, TrendingUp, CheckCircle, Calendar, Users, X, Play } from 'lucide-react'
+import { ArrowLeft, Zap, Target, TrendingUp, CheckCircle, Calendar, Users, Play } from 'lucide-react'
 
 const GetStartedPage = () => {
-  const [showVideoModal, setShowVideoModal] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false)
-  const [isVideoUnlocked, setIsVideoUnlocked] = useState(false)
 
-  // Check for video unlock query parameter and set cursor
+  // Set cursor and auto-unlock video
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
     
-    // Check if video is unlocked via query parameter
-    const urlParams = new URLSearchParams(window.location.search)
-    const vslUnlocked = urlParams.get('vsl') === 'unlocked'
-    
-    // Clear any old localStorage to ensure fresh locking behavior
-    try {
-      localStorage.removeItem('vsl_unlocked')
-    } catch (e) {
-      console.log('LocalStorage not available')
-    }
-    
-    if (vslUnlocked) {
-      console.log('VIDEO UNLOCKED VIA QUERY PARAMETER - SHOWING VIDEO')
-      setIsVideoUnlocked(true)
-      setShowVideo(true)
-    } else {
-      console.log('VIDEO LOCKED - FORM REQUIRED')
-      setIsVideoUnlocked(false)
-      setShowVideo(false)
-    }
+    // Auto-unlock video - no form required
+    console.log('VIDEO AUTO-UNLOCKED - NO FORM REQUIRED')
+    setShowVideo(true)
     
     return () => {
       // Restore when leaving page
@@ -51,30 +32,10 @@ const GetStartedPage = () => {
   }, [])
 
   const handlePlayClick = () => {
-    // If video is already unlocked, play it directly
-    if (isVideoUnlocked) {
-      setShowVideo(true)
-    } else {
-      // Show form modal to unlock video
-      setShowVideoModal(true)
-    }
-  }
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Here you would normally submit the form data
-    console.log('Form submitted:', formData)
-    setShowVideoModal(false)
+    // Video is always unlocked, just play it
     setShowVideo(true)
-    setIsVideoUnlocked(true) // Unlock the video so the button changes
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
 
   const benefits = [
     {
@@ -273,30 +234,8 @@ const GetStartedPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            {isVideoUnlocked ? (
-              <Link href="/book-call">
-                <motion.button
-                  className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-base sm:text-lg shadow-lg border border-gray-200 w-full sm:w-auto"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  animate={{
-                    y: [0, -8, 0],
-                    transition: {
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }
-                  }}
-                >
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl font-bold">I Want To Scale Faster!</div>
-                    <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
-                  </div>
-                </motion.button>
-              </Link>
-            ) : (
+            <Link href="/book-call">
               <motion.button
-                onClick={() => setShowVideoModal(true)}
                 className="bg-white text-black px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-gray-100 transition-all duration-300 font-bold text-base sm:text-lg shadow-lg border border-gray-200 w-full sm:w-auto"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -310,11 +249,11 @@ const GetStartedPage = () => {
                 }}
               >
                 <div className="text-center">
-                  <div className="text-lg sm:text-xl font-bold">CLICK HERE TO GET ACCESS</div>
-                  <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Fill out the form to unlock the video</div>
+                  <div className="text-lg sm:text-xl font-bold">I Want To Scale Faster!</div>
+                  <div className="text-xs sm:text-sm font-medium mt-1 text-gray-700">Apply For 1 on 1 Mentorship w/ David</div>
                 </div>
               </motion.button>
-            )}
+            </Link>
           </motion.div>
         </motion.div>
 
@@ -334,56 +273,6 @@ const GetStartedPage = () => {
         </motion.div>
       </main>
 
-      {/* LeadConnector Form Modal */}
-      <AnimatePresence>
-        {showVideoModal && (
-          <motion.div
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={(e) => {
-              if (e.target === e.currentTarget) setShowVideoModal(false)
-            }}
-          >
-            <motion.div
-              className="bg-white rounded-2xl max-w-2xl w-full mx-4 relative overflow-hidden"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setShowVideoModal(false)}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors z-10"
-              >
-                <X size={24} />
-              </button>
-
-              {/* Form Header */}
-              <div className="text-center p-4 sm:p-6 pb-1 sm:pb-2">
-                <h3 className="text-lg sm:text-2xl font-bold text-black mb-1">
-                  Fill Out The Form Below To Get The <span className="text-green-600">FREE</span> Training
-                </h3>
-                <p className="text-gray-600 text-sm sm:text-lg">
-                  The video will automatically start after you submit the form
-                </p>
-              </div>
-
-              {/* LeadConnector Form Embed */}
-              <div className="px-4 sm:px-8 pb-4 sm:pb-8">
-                <iframe
-                  src="https://api.leadconnectorhq.com/widget/form/XiLsnN6JR8vJ81UozoBN"
-                  className="w-full border-0"
-                  style={{ height: '450px' }}
-                  title="Lead Capture Form"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }
