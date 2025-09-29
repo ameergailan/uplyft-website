@@ -51,12 +51,13 @@ const CustomCursor = () => {
         // Add class to hide default cursor
         document.body.classList.add('custom-cursor-active')
         
-        // Hide cursor on legal pages and get-started page
-        const isOnLegalPage = window.location.pathname.includes('/privacy-policy') || 
-                             window.location.pathname.includes('/terms-of-service') ||
-                             window.location.pathname.includes('/get-started')
+        // Hide cursor on legal pages, get-started page, and testimonials page
+        const isOnSpecialPage = window.location.pathname.includes('/privacy-policy') || 
+                               window.location.pathname.includes('/terms-of-service') ||
+                               window.location.pathname.includes('/get-started') ||
+                               window.location.pathname.includes('/testimonials')
         
-        if (isOnLegalPage) {
+        if (isOnSpecialPage) {
           setIsOverInteractive(true) // Always hide on these pages
           // Ensure normal cursor is visible
           document.body.classList.remove('custom-cursor-active')

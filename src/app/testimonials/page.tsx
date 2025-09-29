@@ -12,6 +12,7 @@ import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, C
 
 const TestimonialsPage = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [showNav, setShowNav] = useState(true)
 
   // Set cursor for this page
   useEffect(() => {
@@ -23,6 +24,31 @@ const TestimonialsPage = () => {
       document.body.style.cursor = 'none'
     }
   }, [])
+
+  // Handle scroll to hide/show navigation
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      setShowNav(scrollY < 100) // Hide nav after scrolling 100px
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Helper function to get logo path
+  const getLogoPath = (title: string) => {
+    switch (title) {
+      case 'Amplify Sound Agency':
+        return 'ASALOGO.png'
+      case 'Zealous Granite & Tile':
+        return 'ZEALOUSLOGO.png'
+      case 'Vault Mastery Mentorship':
+        return 'VAULTLOGO.png'
+      default:
+        return 'UPLYFTLOGO.png'
+    }
+  }
 
   // Check for section parameter in URL
   useEffect(() => {
@@ -137,7 +163,85 @@ const TestimonialsPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Interactive Background */}
+      <div className="fixed inset-0 z-0">
+        {/* Animated Waves */}
+        <div className="absolute inset-0 opacity-20">
+          <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.1" />
+              </linearGradient>
+              <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.2" />
+                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
+              </linearGradient>
+            </defs>
+            
+            {/* Wave 1 */}
+            <motion.path
+              d="M0,400 Q300,300 600,400 T1200,400 L1200,800 L0,800 Z"
+              fill="url(#waveGradient1)"
+              initial={{ d: "M0,400 Q300,300 600,400 T1200,400 L1200,800 L0,800 Z" }}
+              animate={{ 
+                d: [
+                  "M0,400 Q300,300 600,400 T1200,400 L1200,800 L0,800 Z",
+                  "M0,400 Q300,500 600,400 T1200,400 L1200,800 L0,800 Z",
+                  "M0,400 Q300,300 600,400 T1200,400 L1200,800 L0,800 Z"
+                ]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            
+            {/* Wave 2 */}
+            <motion.path
+              d="M0,600 Q400,500 800,600 T1200,600 L1200,800 L0,800 Z"
+              fill="url(#waveGradient2)"
+              initial={{ d: "M0,600 Q400,500 800,600 T1200,600 L1200,800 L0,800 Z" }}
+              animate={{ 
+                d: [
+                  "M0,600 Q400,500 800,600 T1200,600 L1200,800 L0,800 Z",
+                  "M0,600 Q400,700 800,600 T1200,600 L1200,800 L0,800 Z",
+                  "M0,600 Q400,500 800,600 T1200,600 L1200,800 L0,800 Z"
+                ]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            />
+          </svg>
+        </div>
+        
+        {/* Floating Particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80" />
+      </div>
+
       {/* Header */}
       <motion.header 
         className="bg-black border-b border-gray-800 sticky top-0 z-40"
@@ -163,13 +267,15 @@ const TestimonialsPage = () => {
 
       {/* Navigation */}
       <motion.nav 
-        className="bg-gray-900 border-b border-gray-800 sticky top-16 z-30"
+        className={`bg-black/95 backdrop-blur-md border-b border-gray-800 sticky top-16 z-30 transition-all duration-300 ${
+          showNav ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+        }`}
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex flex-wrap gap-4 justify-center">
+        <div className="container mx-auto px-6 py-3">
+          <div className="flex flex-wrap gap-3 justify-center">
             {testimonials.map((testimonial) => (
               <button
                 key={testimonial.id}
@@ -177,10 +283,10 @@ const TestimonialsPage = () => {
                   setActiveSection(testimonial.id)
                   document.getElementById(testimonial.id)?.scrollIntoView({ behavior: 'smooth' })
                 }}
-                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+                className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${
                   activeSection === testimonial.id 
-                    ? 'bg-white text-black' 
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-white text-black shadow-lg' 
+                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-white'
                 }`}
               >
                 {testimonial.title}
@@ -191,10 +297,10 @@ const TestimonialsPage = () => {
                 setActiveSection('social-proof')
                 document.getElementById('social-proof')?.scrollIntoView({ behavior: 'smooth' })
               }}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 ${
+              className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${
                 activeSection === 'social-proof' 
-                  ? 'bg-white text-black' 
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  ? 'bg-white text-black shadow-lg' 
+                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-white'
               }`}
             >
               Social Proof
@@ -204,7 +310,7 @@ const TestimonialsPage = () => {
       </motion.nav>
 
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12">
+      <main className="container mx-auto px-6 py-12 relative z-10">
         {/* Main Testimonials */}
         {testimonials.map((testimonial, index) => (
           <motion.section
@@ -219,8 +325,22 @@ const TestimonialsPage = () => {
             {/* Client Header */}
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <div className="w-20 h-20 rounded-xl bg-gray-800 flex items-center justify-center mr-4">
-                  <span className="text-white font-bold text-lg">{testimonial.logo}</span>
+                <div className="w-20 h-20 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mr-4 p-2">
+                  <img 
+                    src={`/${getLogoPath(testimonial.title)}`}
+                    alt={`${testimonial.title} Logo`}
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      // Fallback to initials if logo fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.className = 'w-20 h-20 rounded-xl bg-gray-800 flex items-center justify-center mr-4';
+                        parent.innerHTML = `<span class="text-white font-bold text-lg">${testimonial.logo}</span>`;
+                      }
+                    }}
+                  />
                 </div>
                 <div className="text-left">
                   <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
