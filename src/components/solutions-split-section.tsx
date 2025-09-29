@@ -277,11 +277,11 @@ const SolutionsSplitSection = () => {
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-0 min-h-[80vh]">
+        <div className={`grid gap-0 ${isMobile ? 'min-h-[160vh] grid-cols-1' : 'min-h-[80vh] lg:grid-cols-2'}`}>
           
           {/* LEFT SIDE - TIME */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 time-section"
+            className={`relative flex flex-col justify-center time-section ${isMobile ? 'p-6 border-b border-gray-700' : 'p-8 lg:p-16 border-r border-gray-700'}`}
             style={{
               cursor: isMobile ? 'default' : 'pointer',
               touchAction: isMobile ? 'none' : 'auto',
@@ -403,7 +403,7 @@ const SolutionsSplitSection = () => {
 
           {/* RIGHT SIDE - MONEY */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center money-section"
+            className={`relative flex flex-col justify-center money-section ${isMobile ? 'p-6' : 'p-8 lg:p-16'}`}
             style={{
               cursor: isMobile ? 'default' : 'pointer',
               touchAction: isMobile ? 'none' : 'auto',

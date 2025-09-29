@@ -280,52 +280,43 @@ const ServicesCardsSection = () => {
             </AnimatePresence>
 
             <AnimatePresence mode="wait">
-              {cards.map((card, index) => {
-                // Calculate the position in the stack
-                const stackPosition = (index - activeCard + cards.length) % cards.length
-                const isTopCard = stackPosition === 0
-                const isVisible = stackPosition < 3 // Only show top 3 cards in stack
-                
-                return (
-                  <motion.div
-                    key={card.id}
-                    initial={{ 
-                      opacity: 0, 
-                      scale: 0.8, 
-                      rotateY: -15,
-                      z: -100
-                    }}
-                    animate={{ 
-                      opacity: isVisible ? (1 - slideOverProgress * 0.6) : 0,
-                      scale: isTopCard ? (1 - slideOverProgress * 0.3) : (0.95 - stackPosition * 0.05) * (1 - slideOverProgress * 0.3),
-                      rotateY: isTopCard ? 0 : -3,
-                      z: isTopCard ? 0 : -20,
-                      x: 0, // All cards centered horizontally
-                      y: stackPosition * 4 + slideOverProgress * 50, // Minimal vertical offset for stacking
-                      rotateZ: stackPosition * 1 // Very slight rotation for each card in stack
-                    }}
-                    transition={{ 
-                      duration: 0.8, 
-                      ease: [0.25, 0.46, 0.45, 0.94],
-                      type: "spring",
-                      stiffness: 100
-                    }}
-                    className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      transform: `translate(-50%, -50%) perspective(1000px) ${isTopCard ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
-                      filter: isTopCard 
-                        ? `brightness(${1 - slideOverProgress * 0.4}) contrast(${1 - slideOverProgress * 0.3})`
-                        : `brightness(${0.7 - stackPosition * 0.1 - slideOverProgress * 0.3}) contrast(${0.8 - stackPosition * 0.05 - slideOverProgress * 0.2})`,
-                      zIndex: isTopCard ? 30 : 30 - stackPosition,
-                      boxShadow: isTopCard 
-                        ? `0 ${25 + slideOverProgress * 25}px ${50 + slideOverProgress * 30}px rgba(0, 0, 0, ${0.4 + slideOverProgress * 0.4})` 
-                        : `0 ${10 + stackPosition * 5 + slideOverProgress * 20}px ${30 + stackPosition * 10 + slideOverProgress * 20}px rgba(0, 0, 0, ${0.3 + stackPosition * 0.1 + slideOverProgress * 0.3})`
-                    }}
-                  >
-                  {/* Throbbing layers - only active on top card */}
-                  {isTopCard ? (
+              {cards.map((card, index) => (
+                <motion.div
+                  key={card.id}
+                  initial={{ 
+                    opacity: 0, 
+                    scale: 0.8, 
+                    rotateY: -15,
+                    z: -100
+                  }}
+                   animate={{ 
+                     opacity: 1 - slideOverProgress * 0.6, // Fade as third page slides over
+                     scale: (activeCard === index ? 1 : 0.9) * (1 - slideOverProgress * 0.3), // Shrink as third page approaches
+                     rotateY: activeCard === index ? 0 : -3,
+                     z: activeCard === index ? 0 : -20,
+                     x: 0, // All cards centered
+                     y: (index - activeCard) * 20 + slideOverProgress * 50 // Stack + slide down effect
+                   }}
+                  transition={{ 
+                    duration: 0.8, 
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    type: "spring",
+                    stiffness: 100
+                  }}
+                   className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
+                   style={{
+                     transform: `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
+                     filter: activeCard === index 
+                       ? `brightness(${1 - slideOverProgress * 0.4}) contrast(${1 - slideOverProgress * 0.3})`
+                       : `brightness(${0.5 - slideOverProgress * 0.3}) contrast(${0.7 - slideOverProgress * 0.2})`,
+                     zIndex: activeCard === index ? 30 : 25 - index,
+                     boxShadow: activeCard === index 
+                       ? `0 ${25 + slideOverProgress * 25}px ${50 + slideOverProgress * 30}px rgba(0, 0, 0, ${0.4 + slideOverProgress * 0.4})` 
+                       : `0 ${10 + slideOverProgress * 20}px ${30 + slideOverProgress * 20}px rgba(0, 0, 0, ${0.6 + slideOverProgress * 0.3})`
+                   }}
+                >
+                  {/* Throbbing layers - only active on current card */}
+                  {activeCard === index ? (
                     <>
                       <div 
                         className="absolute inset-0 rounded-3xl"
@@ -399,9 +390,8 @@ const ServicesCardsSection = () => {
                       </div>
                     </div>
                   </div>
-                  </motion.div>
-                )
-              })}
+                </motion.div>
+              ))}
             </AnimatePresence>
           </div>
 
