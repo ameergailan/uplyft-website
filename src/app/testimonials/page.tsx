@@ -13,6 +13,8 @@ import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, C
 const TestimonialsPage = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [showNav, setShowNav] = useState(true)
+  const [roadmapOpen, setRoadmapOpen] = useState(false)
+  const [roadmapStep, setRoadmapStep] = useState(0)
 
   // Set cursor for this page
   useEffect(() => {
@@ -47,6 +49,69 @@ const TestimonialsPage = () => {
         return 'VAULTLOGO.png'
       default:
         return 'UPLYFTLOGO.png'
+    }
+  }
+
+  // Get roadmap steps for each testimonial
+  const getRoadmapSteps = (title: string) => {
+    const baseSteps = [
+      {
+        id: 1,
+        title: 'Offer Creation',
+        description: 'We crafted a compelling offer that resonates with your target audience and drives conversions.',
+        icon: Target
+      },
+      {
+        id: 2,
+        title: 'Funnel Construction',
+        description: 'Built a high-converting sales funnel that guides prospects through the customer journey.',
+        icon: TrendingUp
+      },
+      {
+        id: 3,
+        title: 'Facebook Ad Creation & Optimization',
+        description: 'Created and optimized Facebook ad campaigns to reach your ideal customers at scale.',
+        icon: Users
+      },
+      {
+        id: 4,
+        title: 'Sales Training',
+        description: 'Trained your team on proven sales techniques to maximize conversion rates.',
+        icon: CheckCircle
+      },
+      {
+        id: 5,
+        title: 'UGC Ad Creation',
+        description: 'Developed user-generated content ads that build trust and drive authentic engagement.',
+        icon: ExternalLink
+      },
+      {
+        id: 6,
+        title: 'Creative Editing',
+        description: 'Produced high-quality video and image content that captures attention and converts.',
+        icon: Play
+      }
+    ]
+
+    // Customize steps based on the testimonial
+    switch (title) {
+      case 'Amplify Sound Agency':
+        return baseSteps.map(step => ({
+          ...step,
+          description: step.description.replace('your', 'Amplify Sound Agency\'s').replace('your team', 'Olu\'s team')
+        }))
+      case 'Zealous Granite & Tile':
+        return baseSteps.map(step => ({
+          ...step,
+          description: step.description.replace('your', 'Zealous Granite & Tile\'s').replace('your team', 'Hashim\'s team')
+        }))
+      case 'Vault Mastery Mentorship':
+        return baseSteps.map(step => ({
+          ...step,
+          description: step.description.replace('your', 'Vault Mastery\'s').replace('your team', 'Abdullah\'s team')
+        }))
+      default:
+        return baseSteps
     }
   }
 
@@ -146,19 +211,28 @@ const TestimonialsPage = () => {
 
   const socialProof = [
     {
-      type: 'Instagram Story',
-      content: 'Client testimonial screenshot from Instagram',
-      platform: 'Instagram'
+      type: 'Client Testimonial',
+      content: 'Real feedback from our satisfied clients',
+      platform: 'Social Media',
+      image: 'pic1.png'
     },
     {
-      type: 'Discord Screenshot',
-      content: 'Client feedback from Discord community',
-      platform: 'Discord'
+      type: 'Success Story',
+      content: 'Another amazing client transformation',
+      platform: 'Instagram',
+      image: 'pic2.png'
     },
     {
-      type: 'Email Testimonial',
-      content: 'Client success story via email',
-      platform: 'Email'
+      type: 'Results Showcase',
+      content: 'Proof of our system working',
+      platform: 'Discord',
+      image: 'pic3.png'
+    },
+    {
+      type: 'Client Review',
+      content: 'Detailed feedback on our services',
+      platform: 'Email',
+      image: 'pic4.png'
     }
   ]
 
@@ -392,87 +466,19 @@ const TestimonialsPage = () => {
               </div>
             </div>
 
-            {/* Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              {testimonial.metrics.map((metric, metricIndex) => (
-                <motion.div
-                  key={metricIndex}
-                  className="bg-gray-900 rounded-2xl p-6 text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: metricIndex * 0.1 }}
+
+            {/* Interactive Roadmap Section */}
+            <div className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-8">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  How We Did It
+                </h2>
+                <button
+                  onClick={() => setRoadmapOpen(true)}
+                  className="bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105"
                 >
-                  <div className="text-3xl font-bold text-white mb-2">
-                    {metric.value}
-                  </div>
-                  <div className="text-sm text-gray-400 mb-1">
-                    {metric.label}
-                  </div>
-                  <div className="text-sm text-green-400 font-medium">
-                    {metric.growth}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Analysis Section */}
-            <div className="bg-gray-900 rounded-3xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-8 text-center">
-                How We Did It
-              </h2>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Challenge & Solution */}
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center">
-                      <Target className="w-5 h-5 mr-2 text-red-400" />
-                      The Challenge
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      {testimonial.analysis.challenge}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center">
-                      <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
-                      Our Solution
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      {testimonial.analysis.solution}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Results & Strategies */}
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center">
-                      <TrendingUp className="w-5 h-5 mr-2 text-blue-400" />
-                      The Results
-                    </h3>
-                    <p className="text-gray-300 leading-relaxed">
-                      {testimonial.analysis.results}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-3 flex items-center">
-                      <DollarSign className="w-5 h-5 mr-2 text-yellow-400" />
-                      Key Strategies
-                    </h3>
-                    <ul className="space-y-2">
-                      {testimonial.analysis.keyStrategies.map((strategy, strategyIndex) => (
-                        <li key={strategyIndex} className="text-gray-300 flex items-start">
-                          <span className="text-green-400 mr-2 mt-1">•</span>
-                          {strategy}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                  View Our Process
+                </button>
               </div>
             </div>
           </motion.section>
@@ -496,37 +502,183 @@ const TestimonialsPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {socialProof.map((proof, index) => (
               <motion.div
                 key={index}
-                className="bg-gray-900 rounded-2xl p-6"
+                className="bg-gray-900/50 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-gray-800/50 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
               >
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-                    <ExternalLink className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">
-                      {proof.type}
-                    </h3>
-                    <p className="text-sm text-gray-400">
-                      {proof.platform}
-                    </p>
-                  </div>
+                <div className="aspect-square relative">
+                  <img 
+                    src={`/${proof.image}`}
+                    alt={proof.type}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `
+                          <div class="w-full h-full bg-gray-800 flex items-center justify-center">
+                            <div class="text-center">
+                              <ExternalLink class="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                              <p class="text-gray-400 text-sm">${proof.type}</p>
+                            </div>
+                          </div>
+                        `;
+                      }
+                    }}
+                  />
                 </div>
-                <p className="text-gray-300">
-                  {proof.content}
-                </p>
+                <div className="p-4">
+                  <h3 className="text-lg font-bold text-white mb-1">
+                    {proof.type}
+                  </h3>
+                  <p className="text-sm text-gray-400 mb-2">
+                    {proof.platform}
+                  </p>
+                  <p className="text-gray-300 text-sm">
+                    {proof.content}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
         </motion.section>
       </main>
+
+      {/* Interactive Roadmap Modal */}
+      {roadmapOpen && (
+        <motion.div
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setRoadmapOpen(false)}
+        >
+          <motion.div
+            className="bg-gray-900 rounded-3xl p-8 max-w-4xl w-full max-h-[80vh] overflow-hidden relative"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setRoadmapOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Roadmap Content */}
+            <div className="h-full flex flex-col">
+              <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                Our Process Roadmap
+              </h2>
+              
+              <div className="flex-1 flex items-center justify-center">
+                {roadmapStep === 0 ? (
+                  // Overview - All steps small
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+                    {getRoadmapSteps('Amplify Sound Agency').map((step, index) => (
+                      <motion.div
+                        key={step.id}
+                        className="bg-gray-800 rounded-2xl p-4 cursor-pointer hover:bg-gray-700 transition-all duration-300"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ scale: 1.05 }}
+                        onClick={() => setRoadmapStep(step.id)}
+                      >
+                        <div className="text-center">
+                          <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <step.icon className="w-6 h-6 text-white" />
+                          </div>
+                          <h3 className="text-white font-bold text-sm mb-2">
+                            {step.title}
+                          </h3>
+                          <p className="text-gray-400 text-xs">
+                            Step {step.id}
+                          </p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  // Detailed view - Single step zoomed
+                  <motion.div
+                    className="w-full max-w-2xl mx-auto text-center"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                  >
+                    {(() => {
+                      const currentStep = getRoadmapSteps('Amplify Sound Agency').find(step => step.id === roadmapStep)
+                      if (!currentStep) return null
+                      
+                      return (
+                        <>
+                          <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <currentStep.icon className="w-12 h-12 text-white" />
+                          </div>
+                          <h3 className="text-3xl font-bold text-white mb-4">
+                            {currentStep.title}
+                          </h3>
+                          <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                            {currentStep.description}
+                          </p>
+                          
+                          {/* Navigation */}
+                          <div className="flex justify-center gap-4">
+                            <button
+                              onClick={() => setRoadmapStep(roadmapStep - 1)}
+                              disabled={roadmapStep === 1}
+                              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                                roadmapStep === 1
+                                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                                  : 'bg-gray-700 text-white hover:bg-gray-600'
+                              }`}
+                            >
+                              Previous
+                            </button>
+                            
+                            <button
+                              onClick={() => setRoadmapStep(0)}
+                              className="px-6 py-2 rounded-full font-medium bg-white text-black hover:bg-gray-100 transition-all duration-300"
+                            >
+                              Overview
+                            </button>
+                            
+                            <button
+                              onClick={() => setRoadmapStep(roadmapStep + 1)}
+                              disabled={roadmapStep === 6}
+                              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                                roadmapStep === 6
+                                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                                  : 'bg-blue-600 text-white hover:bg-blue-700'
+                              }`}
+                            >
+                              Next
+                            </button>
+                          </div>
+                        </>
+                      )
+                    })()}
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   )
 }
