@@ -16,15 +16,46 @@ const SolutionsSplitSection = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const [isIPhone, setIsIPhone] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     setIsMounted(true)
+    
+    // Detect iPhone
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isIPhoneDevice = /iphone/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    setIsIPhone(isIPhoneDevice)
   }, [])
   
-  // Mouse position tracking for reliable hover detection
+  // Prevent touch events on iPhone
   useEffect(() => {
-    if (!isMounted) return
+    if (!isMounted || !isIPhone) return
+    
+    const preventTouch = (e: TouchEvent) => {
+      e.preventDefault()
+    }
+    
+    const section = sectionRef.current
+    if (section) {
+      section.addEventListener('touchstart', preventTouch, { passive: false })
+      section.addEventListener('touchmove', preventTouch, { passive: false })
+      section.addEventListener('touchend', preventTouch, { passive: false })
+    }
+    
+    return () => {
+      if (section) {
+        section.removeEventListener('touchstart', preventTouch)
+        section.removeEventListener('touchmove', preventTouch)
+        section.removeEventListener('touchend', preventTouch)
+      }
+    }
+  }, [isMounted, isIPhone])
+
+  // Mouse position tracking for reliable hover detection (disabled on iPhone)
+  useEffect(() => {
+    if (!isMounted || isIPhone) return
     
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY })
@@ -80,7 +111,7 @@ const SolutionsSplitSection = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [isMounted, hoveredSide])
+  }, [isMounted, isIPhone, hoveredSide])
   
   // Check if being overlaid by CTA section
   useEffect(() => {
@@ -103,6 +134,7 @@ const SolutionsSplitSection = () => {
   }, [])
   
   const handleTimeHover = (e: React.MouseEvent) => {
+    if (isIPhone) return // Disable on iPhone
     e.stopPropagation()
     e.preventDefault()
     console.log('TIME HOVERED - PRODUCTION')
@@ -114,6 +146,7 @@ const SolutionsSplitSection = () => {
   }
   
   const handleTimeLeave = (e: React.MouseEvent) => {
+    if (isIPhone) return // Disable on iPhone
     e.stopPropagation()
     e.preventDefault()
     console.log('TIME LEFT - PRODUCTION')
@@ -121,6 +154,7 @@ const SolutionsSplitSection = () => {
   }
   
   const handleMoneyHover = (e: React.MouseEvent) => {
+    if (isIPhone) return // Disable on iPhone
     e.stopPropagation()
     e.preventDefault()
     console.log('MONEY HOVERED - PRODUCTION')
@@ -132,15 +166,16 @@ const SolutionsSplitSection = () => {
   }
   
   const handleMoneyLeave = (e: React.MouseEvent) => {
+    if (isIPhone) return // Disable on iPhone
     e.stopPropagation()
     e.preventDefault()
     console.log('MONEY LEFT - PRODUCTION')
     setHoveredSide(null)
   }
 
-  // Animated counter effect with easing
+  // Animated counter effect with easing (disabled on iPhone)
   useEffect(() => {
-    if (hoveredCard !== null) {
+    if (hoveredCard !== null && !isIPhone) {
       const targetValue = hoveredCard < 3 ? timeDetails[hoveredCard].metric : moneyDetails[hoveredCard - 3].metric
       const duration = 1500 // 1.5 seconds for smoother animation
       const steps = 60 // 60fps
@@ -168,7 +203,7 @@ const SolutionsSplitSection = () => {
     } else {
       setAnimatedValue(0)
     }
-  }, [hoveredCard])
+  }, [hoveredCard, isIPhone])
 
   const timeDetails = [
     {
@@ -242,7 +277,12 @@ const SolutionsSplitSection = () => {
           
           {/* LEFT SIDE - TIME */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 cursor-pointer time-section sm:cursor-default sm:pointer-events-none"
+            className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 time-section"
+            style={{
+              cursor: isIPhone ? 'default' : 'pointer',
+              touchAction: isIPhone ? 'none' : 'auto',
+              pointerEvents: isIPhone ? 'none' : 'auto'
+            }}
           >
              {/* Blur overlay - DESKTOP ONLY */}
              <div
@@ -299,8 +339,13 @@ const SolutionsSplitSection = () => {
                 {timeDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative card-hover"
+                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 relative card-hover"
                       data-card-index={index}
+                      style={{
+                        cursor: isIPhone ? 'default' : 'pointer',
+                        touchAction: isIPhone ? 'none' : 'auto',
+                        pointerEvents: isIPhone ? 'none' : 'auto'
+                      }}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       animate={{
@@ -354,7 +399,12 @@ const SolutionsSplitSection = () => {
 
           {/* RIGHT SIDE - MONEY */}
           <div
-            className="relative p-8 lg:p-16 flex flex-col justify-center cursor-pointer money-section sm:cursor-default sm:pointer-events-none"
+            className="relative p-8 lg:p-16 flex flex-col justify-center money-section"
+            style={{
+              cursor: isIPhone ? 'default' : 'pointer',
+              touchAction: isIPhone ? 'none' : 'auto',
+              pointerEvents: isIPhone ? 'none' : 'auto'
+            }}
           >
              {/* Blur overlay - DESKTOP ONLY */}
              <div
@@ -540,8 +590,13 @@ const SolutionsSplitSection = () => {
                 {moneyDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative card-hover"
+                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 relative card-hover"
                       data-card-index={index + 3}
+                      style={{
+                        cursor: isIPhone ? 'default' : 'pointer',
+                        touchAction: isIPhone ? 'none' : 'auto',
+                        pointerEvents: isIPhone ? 'none' : 'auto'
+                      }}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       animate={{

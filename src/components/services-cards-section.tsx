@@ -185,52 +185,6 @@ const ServicesCardsSection = () => {
 
            {/* Cards container with navigation arrows */}
            <div className="relative h-[400px] sm:h-[550px] flex items-center justify-center">
-             
-             {/* iPhone Layout - Vertical Stack */}
-             <div className="block sm:hidden w-full px-4 space-y-6">
-               {cards.map((card, index) => (
-                 <motion.div
-                   key={card.id}
-                   initial={{ opacity: 0, y: 50 }}
-                   whileInView={{ opacity: 1, y: 0 }}
-                   viewport={{ once: true }}
-                   transition={{ delay: index * 0.2 }}
-                   className="w-full h-[200px] rounded-2xl p-6 text-white shadow-2xl relative overflow-hidden"
-                   style={{
-                     background: index === 0 
-                       ? `linear-gradient(135deg, #4b5563 0%, #374151 50%, #1f2937 100%)`
-                       : index === 1
-                       ? `linear-gradient(135deg, #374151 0%, #1f2937 50%, #111827 100%)`
-                       : `linear-gradient(135deg, #1f2937 0%, #111827 50%, #000000 100%)`
-                   }}
-                 >
-                   <div className="h-full flex flex-col justify-between relative z-10">
-                     <div>
-                       <div className="text-sm uppercase tracking-wider opacity-80 mb-2">
-                         {card.subtitle}
-                       </div>
-                       <h3 className="text-xl font-bold mb-3">
-                         {card.title}
-                       </h3>
-                       <p className="text-white/90 leading-relaxed mb-4 text-sm">
-                         {card.description}
-                       </p>
-                     </div>
-                     
-                     <div>
-                       <div className="space-y-2">
-                         {card.features.map((feature, idx) => (
-                           <div key={idx} className="flex items-center text-sm">
-                             <div className="w-1.5 h-1.5 bg-white rounded-full mr-3" />
-                             {feature}
-                           </div>
-                         ))}
-                       </div>
-                     </div>
-                   </div>
-                 </motion.div>
-               ))}
-             </div>
             
             {/* Navigation Arrows - HIDDEN ON MOBILE */}
             <AnimatePresence>
@@ -325,10 +279,8 @@ const ServicesCardsSection = () => {
               )}
             </AnimatePresence>
 
-            {/* Desktop Layout - Hidden on iPhone */}
-            <div className="hidden sm:block w-full">
-              <AnimatePresence mode="wait">
-                {cards.map((card, index) => (
+            <AnimatePresence mode="wait">
+              {cards.map((card, index) => (
                 <motion.div
                   key={card.id}
                   initial={{ 
@@ -439,13 +391,12 @@ const ServicesCardsSection = () => {
                     </div>
                   </div>
                 </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
+              ))}
+            </AnimatePresence>
           </div>
 
-          {/* Mobile Navigation Dots - Hidden on iPhone */}
-          <div className="hidden sm:flex justify-center mt-8 space-x-3">
+          {/* Mobile Navigation Dots */}
+          <div className="flex justify-center mt-8 space-x-3">
             {cards.map((_, index) => (
               <button
                 key={index}
@@ -460,7 +411,7 @@ const ServicesCardsSection = () => {
 
           {/* Mobile Swipe Hint / Desktop Scroll Hint */}
           <div className="text-center mt-6">
-            <p className="text-gray-500 text-sm animate-pulse hidden sm:block lg:hidden">
+            <p className="text-gray-500 text-sm animate-pulse lg:hidden">
               Tap dots above to explore services
             </p>
             <p className="text-gray-500 text-sm animate-pulse hidden lg:block">
