@@ -13,6 +13,7 @@ import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, C
 const TestimonialsPage = () => {
   const [roadmapOpen, setRoadmapOpen] = useState(false)
   const [roadmapStep, setRoadmapStep] = useState(0)
+  const [roadmapZoom, setRoadmapZoom] = useState(false)
 
   // Set cursor for this page
   useEffect(() => {
@@ -261,29 +262,38 @@ const TestimonialsPage = () => {
           </svg>
         </div>
         
-        {/* Floating Particles */}
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                opacity: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </div>
+         {/* Floating Particles */}
+         <div className="absolute inset-0">
+           {[...Array(20)].map((_, i) => {
+             // Use consistent seed for SSR compatibility
+             const seed = i * 0.1
+             const left = (Math.sin(seed) * 50 + 50) % 100
+             const top = (Math.cos(seed) * 50 + 50) % 100
+             const duration = 3 + (i % 3) * 0.5
+             const delay = (i % 5) * 0.4
+             
+             return (
+               <motion.div
+                 key={i}
+                 className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30"
+                 style={{
+                   left: `${left}%`,
+                   top: `${top}%`,
+                 }}
+                 animate={{
+                   y: [0, -30, 0],
+                   opacity: [0.3, 0.8, 0.3],
+                 }}
+                 transition={{
+                   duration,
+                   repeat: Infinity,
+                   delay,
+                   ease: "easeInOut"
+                 }}
+               />
+             )
+           })}
+         </div>
         
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80" />
@@ -423,7 +433,19 @@ const TestimonialsPage = () => {
 
 
              {/* Mini Roadmap Section */}
-             <div className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-6">
+             <motion.div 
+               className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-6"
+               animate={roadmapZoom ? {
+                 scale: 1.2,
+                 y: -50,
+                 zIndex: 100
+               } : {
+                 scale: 1,
+                 y: 0,
+                 zIndex: 10
+               }}
+               transition={{ duration: 0.6, ease: "easeInOut" }}
+             >
                <div className="text-center mb-6">
                  <h2 className="text-xl font-bold text-white mb-4">
                    Our Process
@@ -442,7 +464,7 @@ const TestimonialsPage = () => {
                        whileHover={{ scale: 1.05 }}
                        onClick={() => {
                          setRoadmapStep(step.id)
-                         setRoadmapOpen(true)
+                         setRoadmapZoom(true)
                        }}
                      >
                        <div className="text-center">
@@ -463,14 +485,14 @@ const TestimonialsPage = () => {
                  <button
                    onClick={() => {
                      setRoadmapStep(1) // Start from first step
-                     setRoadmapOpen(true)
+                     setRoadmapZoom(true)
                    }}
                    className="bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 text-sm"
                  >
                    View Detailed Process
                  </button>
                </div>
-             </div>
+             </motion.div>
           </motion.section>
         ))}
 
@@ -542,14 +564,14 @@ const TestimonialsPage = () => {
         </motion.section>
       </main>
 
-      {/* Interactive Roadmap Modal */}
-      {roadmapOpen && (
+      {/* Zoomed Roadmap Detail View */}
+      {roadmapZoom && (
         <motion.div
-          className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={() => setRoadmapOpen(false)}
+          onClick={() => setRoadmapZoom(false)}
         >
           <motion.div
             className="bg-gray-900 rounded-3xl p-8 max-w-4xl w-full max-h-[80vh] overflow-hidden relative"
@@ -560,7 +582,7 @@ const TestimonialsPage = () => {
           >
             {/* Close Button */}
             <button
-              onClick={() => setRoadmapOpen(false)}
+              onClick={() => setRoadmapZoom(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -575,95 +597,66 @@ const TestimonialsPage = () => {
               </h2>
               
               <div className="flex-1 flex items-center justify-center">
-                {roadmapStep === 0 ? (
-                  // Overview - All steps small
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
-                    {getRoadmapSteps('Amplify Sound Agency').map((step, index) => (
-                      <motion.div
-                        key={step.id}
-                        className="bg-gray-800 rounded-2xl p-4 cursor-pointer hover:bg-gray-700 transition-all duration-300"
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ delay: index * 0.1 }}
-                        whileHover={{ scale: 1.05 }}
-                        onClick={() => setRoadmapStep(step.id)}
-                      >
-                        <div className="text-center">
-                          <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <step.icon className="w-6 h-6 text-white" />
-                          </div>
-                          <h3 className="text-white font-bold text-sm mb-2">
-                            {step.title}
-                          </h3>
-                          <p className="text-gray-400 text-xs">
-                            Step {step.id}
-                          </p>
+                {/* Detailed view - Single step zoomed */}
+                <motion.div
+                  className="w-full max-w-2xl mx-auto text-center"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                >
+                  {(() => {
+                    const currentStep = getRoadmapSteps('Amplify Sound Agency').find(step => step.id === roadmapStep)
+                    if (!currentStep) return null
+                    
+                    return (
+                      <>
+                        <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                          <currentStep.icon className="w-12 h-12 text-white" />
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                ) : (
-                  // Detailed view - Single step zoomed
-                  <motion.div
-                    className="w-full max-w-2xl mx-auto text-center"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.8, opacity: 0 }}
-                  >
-                    {(() => {
-                      const currentStep = getRoadmapSteps('Amplify Sound Agency').find(step => step.id === roadmapStep)
-                      if (!currentStep) return null
-                      
-                      return (
-                        <>
-                          <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <currentStep.icon className="w-12 h-12 text-white" />
-                          </div>
-                          <h3 className="text-3xl font-bold text-white mb-4">
-                            {currentStep.title}
-                          </h3>
-                          <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                            {currentStep.description}
-                          </p>
+                        <h3 className="text-3xl font-bold text-white mb-4">
+                          {currentStep.title}
+                        </h3>
+                        <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                          {currentStep.description}
+                        </p>
+                        
+                        {/* Navigation */}
+                        <div className="flex justify-center gap-4">
+                          <button
+                            onClick={() => setRoadmapStep(roadmapStep - 1)}
+                            disabled={roadmapStep === 1}
+                            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                              roadmapStep === 1
+                                ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                                : 'bg-gray-700 text-white hover:bg-gray-600'
+                            }`}
+                          >
+                            Previous
+                          </button>
                           
-                          {/* Navigation */}
-                          <div className="flex justify-center gap-4">
-                            <button
-                              onClick={() => setRoadmapStep(roadmapStep - 1)}
-                              disabled={roadmapStep === 1}
-                              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                                roadmapStep === 1
-                                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                                  : 'bg-gray-700 text-white hover:bg-gray-600'
-                              }`}
-                            >
-                              Previous
-                            </button>
-                            
-                            <button
-                              onClick={() => setRoadmapStep(0)}
-                              className="px-6 py-2 rounded-full font-medium bg-white text-black hover:bg-gray-100 transition-all duration-300"
-                            >
-                              Overview
-                            </button>
-                            
-                            <button
-                              onClick={() => setRoadmapStep(roadmapStep + 1)}
-                              disabled={roadmapStep === 6}
-                              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                                roadmapStep === 6
-                                  ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
-                                  : 'bg-blue-600 text-white hover:bg-blue-700'
-                              }`}
-                            >
-                              Next
-                            </button>
-                          </div>
-                        </>
-                      )
-                    })()}
-                  </motion.div>
-                )}
+                          <button
+                            onClick={() => setRoadmapZoom(false)}
+                            className="px-6 py-2 rounded-full font-medium bg-white text-black hover:bg-gray-100 transition-all duration-300"
+                          >
+                            Back to Overview
+                          </button>
+                          
+                          <button
+                            onClick={() => setRoadmapStep(roadmapStep + 1)}
+                            disabled={roadmapStep === 6}
+                            className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                              roadmapStep === 6
+                                ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                                : 'bg-blue-600 text-white hover:bg-blue-700'
+                            }`}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </>
+                    )
+                  })()}
+                </motion.div>
               </div>
             </div>
           </motion.div>
