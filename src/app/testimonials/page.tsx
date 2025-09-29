@@ -265,10 +265,15 @@ const TestimonialsPage = () => {
          {/* Floating Particles */}
          <div className="absolute inset-0">
            {[...Array(20)].map((_, i) => {
-             // Use consistent seed for SSR compatibility
-             const seed = i * 0.1
-             const left = (Math.sin(seed) * 50 + 50) % 100
-             const top = (Math.cos(seed) * 50 + 50) % 100
+             // Use completely deterministic positioning for SSR compatibility
+             const positions = [
+               { left: 10, top: 20 }, { left: 25, top: 80 }, { left: 40, top: 15 }, { left: 60, top: 70 },
+               { left: 75, top: 30 }, { left: 85, top: 90 }, { left: 15, top: 60 }, { left: 35, top: 40 },
+               { left: 50, top: 85 }, { left: 70, top: 25 }, { left: 90, top: 55 }, { left: 5, top: 75 },
+               { left: 30, top: 10 }, { left: 55, top: 50 }, { left: 80, top: 65 }, { left: 20, top: 35 },
+               { left: 45, top: 95 }, { left: 65, top: 5 }, { left: 95, top: 45 }, { left: 12, top: 85 }
+             ]
+             const pos = positions[i] || { left: 50, top: 50 }
              const duration = 3 + (i % 3) * 0.5
              const delay = (i % 5) * 0.4
              
@@ -277,8 +282,8 @@ const TestimonialsPage = () => {
                  key={i}
                  className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30"
                  style={{
-                   left: `${left}%`,
-                   top: `${top}%`,
+                   left: `${pos.left}%`,
+                   top: `${pos.top}%`,
                  }}
                  animate={{
                    y: [0, -30, 0],
