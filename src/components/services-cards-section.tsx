@@ -300,9 +300,9 @@ const ServicesCardsSection = () => {
                       scale: isTopCard ? (1 - slideOverProgress * 0.3) : (0.95 - stackPosition * 0.05) * (1 - slideOverProgress * 0.3),
                       rotateY: isTopCard ? 0 : -3,
                       z: isTopCard ? 0 : -20,
-                      x: 0,
-                      y: stackPosition * 8 + slideOverProgress * 50, // Stack cards with small offset
-                      rotateZ: stackPosition * 2 // Slight rotation for each card in stack
+                      x: 0, // All cards centered horizontally
+                      y: stackPosition * 4 + slideOverProgress * 50, // Minimal vertical offset for stacking
+                      rotateZ: stackPosition * 1 // Very slight rotation for each card in stack
                     }}
                     transition={{ 
                       duration: 0.8, 
@@ -312,11 +312,13 @@ const ServicesCardsSection = () => {
                     }}
                     className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
                     style={{
-                      transform: `perspective(1000px) ${isTopCard ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
+                      left: '50%',
+                      top: '50%',
+                      transform: `translate(-50%, -50%) perspective(1000px) ${isTopCard ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
                       filter: isTopCard 
                         ? `brightness(${1 - slideOverProgress * 0.4}) contrast(${1 - slideOverProgress * 0.3})`
                         : `brightness(${0.7 - stackPosition * 0.1 - slideOverProgress * 0.3}) contrast(${0.8 - stackPosition * 0.05 - slideOverProgress * 0.2})`,
-                      zIndex: isTopCard ? 30 : 25 - stackPosition,
+                      zIndex: isTopCard ? 30 : 30 - stackPosition,
                       boxShadow: isTopCard 
                         ? `0 ${25 + slideOverProgress * 25}px ${50 + slideOverProgress * 30}px rgba(0, 0, 0, ${0.4 + slideOverProgress * 0.4})` 
                         : `0 ${10 + stackPosition * 5 + slideOverProgress * 20}px ${30 + stackPosition * 10 + slideOverProgress * 20}px rgba(0, 0, 0, ${0.3 + stackPosition * 0.1 + slideOverProgress * 0.3})`
