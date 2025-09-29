@@ -12,11 +12,13 @@ import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, C
 
 const TestimonialsPage = () => {
   const [roadmapOpen, setRoadmapOpen] = useState(false)
-  const [roadmapStep, setRoadmapStep] = useState(0)
+  const [roadmapStep, setRoadmapStep] = useState(1) // Start with step 1 instead of 0
   const [roadmapZoom, setRoadmapZoom] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
-  // Set cursor for this page
+  // Set cursor for this page and ensure component is mounted
   useEffect(() => {
+    setIsMounted(true)
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
     
@@ -25,6 +27,15 @@ const TestimonialsPage = () => {
       document.body.style.cursor = 'none'
     }
   }, [])
+
+  // Don't render until mounted to prevent hydration issues
+  if (!isMounted) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    )
+  }
 
 
   // Helper function to get logo path
