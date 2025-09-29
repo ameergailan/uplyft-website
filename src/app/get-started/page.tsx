@@ -8,7 +8,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, Zap, Target, TrendingUp, CheckCircle, Calendar, Users, Play } from 'lucide-react'
+import { Zap, Target, TrendingUp, CheckCircle, Calendar, Users, Play } from 'lucide-react'
 
 const GetStartedPage = () => {
   const [showVideo, setShowVideo] = useState(false)
@@ -71,14 +71,7 @@ const GetStartedPage = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link 
-              href="/"
-              className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"
-            >
-              <ArrowLeft size={20} />
-              <span className="font-medium">Back to UpLyft</span>
-            </Link>
+          <div className="flex items-center justify-center">
             <div className="text-xl font-bold text-white">
               <img src="/UPLYFTLOGO.png" alt="UpLyft" className="h-8" />
             </div>
@@ -257,20 +250,6 @@ const GetStartedPage = () => {
           </motion.div>
         </motion.div>
 
-        {/* Footer */}
-        <motion.div 
-          className="text-center mt-16"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.8 }}
-        >
-          <p className="text-gray-400">
-            Questions? Email us at{' '}
-            <a href="mailto:hello@uplyft.com" className="text-blue-400 hover:text-blue-300 transition-colors">
-              hello@uplyft.com
-            </a>
-          </p>
-        </motion.div>
       </main>
 
     </div>
