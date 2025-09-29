@@ -17,6 +17,7 @@ const ServicesCardsSection = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [slideOverProgress, setSlideOverProgress] = useState(0)
   const [blackPageProgress, setBlackPageProgress] = useState(0) // 0 to 1 smooth transition
+  const [isMobile, setIsMobile] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   
   const cards = [
@@ -50,6 +51,14 @@ const ServicesCardsSection = () => {
   ]
 
   useEffect(() => {
+    // Detect mobile devices
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone|mobile/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0)
+    setIsMobile(isMobileDevice)
+    
     let rafId: number
     
     const handleScroll = () => {
@@ -184,7 +193,7 @@ const ServicesCardsSection = () => {
           </motion.div>
 
            {/* Cards container with navigation arrows */}
-           <div className="relative h-[400px] sm:h-[550px] flex items-center justify-center">
+           <div className={`relative flex items-center justify-center ${isMobile ? 'h-auto flex-col space-y-6' : 'h-[400px] sm:h-[550px]'}`}>
             
             {/* Navigation Arrows - HIDDEN ON MOBILE */}
             <AnimatePresence>
@@ -290,12 +299,12 @@ const ServicesCardsSection = () => {
                     z: -100
                   }}
                    animate={{ 
-                     opacity: 1 - slideOverProgress * 0.6, // Fade as third page slides over
-                     scale: (activeCard === index ? 1 : 0.9) * (1 - slideOverProgress * 0.3), // Shrink as third page approaches
-                     rotateY: activeCard === index ? 0 : -3,
-                     z: activeCard === index ? 0 : -20,
+                     opacity: isMobile ? 1 : (1 - slideOverProgress * 0.6), // Always show on mobile
+                     scale: isMobile ? 1 : ((activeCard === index ? 1 : 0.9) * (1 - slideOverProgress * 0.3)), // Full scale on mobile
+                     rotateY: isMobile ? 0 : (activeCard === index ? 0 : -3),
+                     z: isMobile ? 0 : (activeCard === index ? 0 : -20),
                      x: 0, // All cards centered
-                     y: (index - activeCard) * 20 + slideOverProgress * 50 // Stack + slide down effect
+                     y: isMobile ? 0 : ((index - activeCard) * 20 + slideOverProgress * 50) // No stacking on mobile
                    }}
                   transition={{ 
                     duration: 0.8, 
@@ -303,20 +312,20 @@ const ServicesCardsSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                   className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
+                   className={`${isMobile ? 'relative w-full max-w-sm mx-auto' : 'absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px]'} h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
                    style={{
-                     transform: `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
-                     filter: activeCard === index 
+                     transform: isMobile ? 'none' : `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
+                     filter: isMobile ? 'none' : (activeCard === index 
                        ? `brightness(${1 - slideOverProgress * 0.4}) contrast(${1 - slideOverProgress * 0.3})`
-                       : `brightness(${0.5 - slideOverProgress * 0.3}) contrast(${0.7 - slideOverProgress * 0.2})`,
-                     zIndex: activeCard === index ? 30 : 25 - index,
-                     boxShadow: activeCard === index 
+                       : `brightness(${0.5 - slideOverProgress * 0.3}) contrast(${0.7 - slideOverProgress * 0.2})`),
+                     zIndex: isMobile ? 0 : (activeCard === index ? 30 : 25 - index),
+                     boxShadow: isMobile ? '0 10px 30px rgba(0, 0, 0, 0.3)' : (activeCard === index 
                        ? `0 ${25 + slideOverProgress * 25}px ${50 + slideOverProgress * 30}px rgba(0, 0, 0, ${0.4 + slideOverProgress * 0.4})` 
-                       : `0 ${10 + slideOverProgress * 20}px ${30 + slideOverProgress * 20}px rgba(0, 0, 0, ${0.6 + slideOverProgress * 0.3})`
+                       : `0 ${10 + slideOverProgress * 20}px ${30 + slideOverProgress * 20}px rgba(0, 0, 0, ${0.6 + slideOverProgress * 0.3})`)
                    }}
                 >
-                  {/* Throbbing layers - only active on current card */}
-                  {activeCard === index ? (
+                  {/* Throbbing layers - only active on current card (desktop) or all cards (mobile) */}
+                  {(isMobile || activeCard === index) ? (
                     <>
                       <div 
                         className="absolute inset-0 rounded-3xl"
