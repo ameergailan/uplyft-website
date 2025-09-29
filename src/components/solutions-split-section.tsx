@@ -16,46 +16,48 @@ const SolutionsSplitSection = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
-  const [isIPhone, setIsIPhone] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     setIsMounted(true)
     
-    // Detect iPhone
+    // Detect mobile devices
     const userAgent = navigator.userAgent.toLowerCase()
-    const isIPhoneDevice = /iphone/.test(userAgent) || 
-                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-    setIsIPhone(isIPhoneDevice)
+    const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone|mobile/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0)
+    setIsMobile(isMobileDevice)
   }, [])
   
-  // Prevent touch events on iPhone
+  // Prevent touch events on mobile devices (less aggressive)
   useEffect(() => {
-    if (!isMounted || !isIPhone) return
+    if (!isMounted || !isMobile) return
     
     const preventTouch = (e: TouchEvent) => {
-      e.preventDefault()
+      // Only prevent default for touchmove to prevent scrolling issues
+      if (e.type === 'touchmove') {
+        e.preventDefault()
+      }
     }
     
     const section = sectionRef.current
     if (section) {
-      section.addEventListener('touchstart', preventTouch, { passive: false })
+      // Only prevent touchmove to avoid freezing
       section.addEventListener('touchmove', preventTouch, { passive: false })
-      section.addEventListener('touchend', preventTouch, { passive: false })
     }
     
     return () => {
       if (section) {
-        section.removeEventListener('touchstart', preventTouch)
         section.removeEventListener('touchmove', preventTouch)
-        section.removeEventListener('touchend', preventTouch)
       }
     }
-  }, [isMounted, isIPhone])
+  }, [isMounted, isMobile])
 
-  // Mouse position tracking for reliable hover detection (disabled on iPhone)
+  // Mouse position tracking for reliable hover detection (disabled on mobile)
   useEffect(() => {
-    if (!isMounted || isIPhone) return
+    if (!isMounted || isMobile) return
     
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY })
@@ -111,7 +113,7 @@ const SolutionsSplitSection = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [isMounted, isIPhone, hoveredSide])
+  }, [isMounted, isMobile, hoveredSide])
   
   // Check if being overlaid by CTA section
   useEffect(() => {
@@ -134,7 +136,7 @@ const SolutionsSplitSection = () => {
   }, [])
   
   const handleTimeHover = (e: React.MouseEvent) => {
-    if (isIPhone) return // Disable on iPhone
+    if (isMobile) return // Disable on mobile
     e.stopPropagation()
     e.preventDefault()
     console.log('TIME HOVERED - PRODUCTION')
@@ -146,7 +148,7 @@ const SolutionsSplitSection = () => {
   }
   
   const handleTimeLeave = (e: React.MouseEvent) => {
-    if (isIPhone) return // Disable on iPhone
+    if (isMobile) return // Disable on mobile
     e.stopPropagation()
     e.preventDefault()
     console.log('TIME LEFT - PRODUCTION')
@@ -154,7 +156,7 @@ const SolutionsSplitSection = () => {
   }
   
   const handleMoneyHover = (e: React.MouseEvent) => {
-    if (isIPhone) return // Disable on iPhone
+    if (isMobile) return // Disable on mobile
     e.stopPropagation()
     e.preventDefault()
     console.log('MONEY HOVERED - PRODUCTION')
@@ -166,16 +168,16 @@ const SolutionsSplitSection = () => {
   }
   
   const handleMoneyLeave = (e: React.MouseEvent) => {
-    if (isIPhone) return // Disable on iPhone
+    if (isMobile) return // Disable on mobile
     e.stopPropagation()
     e.preventDefault()
     console.log('MONEY LEFT - PRODUCTION')
     setHoveredSide(null)
   }
 
-  // Animated counter effect with easing (disabled on iPhone)
+  // Animated counter effect with easing (disabled on mobile)
   useEffect(() => {
-    if (hoveredCard !== null && !isIPhone) {
+    if (hoveredCard !== null && !isMobile) {
       const targetValue = hoveredCard < 3 ? timeDetails[hoveredCard].metric : moneyDetails[hoveredCard - 3].metric
       const duration = 1500 // 1.5 seconds for smoother animation
       const steps = 60 // 60fps
@@ -203,7 +205,7 @@ const SolutionsSplitSection = () => {
     } else {
       setAnimatedValue(0)
     }
-  }, [hoveredCard, isIPhone])
+  }, [hoveredCard, isMobile])
 
   const timeDetails = [
     {
@@ -279,9 +281,9 @@ const SolutionsSplitSection = () => {
           <div
             className="relative p-8 lg:p-16 flex flex-col justify-center border-r border-gray-700 time-section"
             style={{
-              cursor: isIPhone ? 'default' : 'pointer',
-              touchAction: isIPhone ? 'none' : 'auto',
-              pointerEvents: isIPhone ? 'none' : 'auto'
+              cursor: isMobile ? 'default' : 'pointer',
+              touchAction: isMobile ? 'none' : 'auto',
+              pointerEvents: isMobile ? 'none' : 'auto'
             }}
           >
              {/* Blur overlay - DESKTOP ONLY */}
@@ -401,9 +403,9 @@ const SolutionsSplitSection = () => {
           <div
             className="relative p-8 lg:p-16 flex flex-col justify-center money-section"
             style={{
-              cursor: isIPhone ? 'default' : 'pointer',
-              touchAction: isIPhone ? 'none' : 'auto',
-              pointerEvents: isIPhone ? 'none' : 'auto'
+              cursor: isMobile ? 'default' : 'pointer',
+              touchAction: isMobile ? 'none' : 'auto',
+              pointerEvents: isMobile ? 'none' : 'auto'
             }}
           >
              {/* Blur overlay - DESKTOP ONLY */}
