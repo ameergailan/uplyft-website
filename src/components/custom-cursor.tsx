@@ -15,10 +15,19 @@ const CustomCursor = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [isOverInteractive, setIsOverInteractive] = useState(false)
   const [currentPath, setCurrentPath] = useState('')
+  const [isMobile, setIsMobile] = useState(false)
 
   // Only render on client side to prevent hydration issues
   useEffect(() => {
     setIsMounted(true)
+    
+    // Detect mobile devices
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone|mobile/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0)
+    setIsMobile(isMobileDevice)
     
     // Track current path
     const updatePath = () => {
@@ -42,7 +51,7 @@ const CustomCursor = () => {
   }, [])
 
   useEffect(() => {
-    if (!isMounted) return
+    if (!isMounted || isMobile) return // Don't run on mobile devices
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
@@ -117,7 +126,7 @@ const CustomCursor = () => {
       // Clean up on unmount
       document.body.classList.remove('custom-cursor-active')
     }
-  }, [isMounted, isDisabled])
+  }, [isMounted, isDisabled, isMobile])
 
   const handleClick = () => {
     if (isDisabled) return
@@ -150,8 +159,8 @@ const CustomCursor = () => {
     handleClick()
   }
 
-  // Don't render anything during SSR
-  if (!isMounted) return null
+  // Don't render anything during SSR or on mobile devices
+  if (!isMounted || isMobile) return null
 
   if (!isVisible || isDisabled) {
     return null
