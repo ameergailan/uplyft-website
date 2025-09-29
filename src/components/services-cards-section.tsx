@@ -65,7 +65,7 @@ const ServicesCardsSection = () => {
       if (rafId) cancelAnimationFrame(rafId)
       
       rafId = requestAnimationFrame(() => {
-        if (!sectionRef.current) return
+        if (!sectionRef.current || isMobile) return // Skip complex scroll logic on mobile
 
         const rect = sectionRef.current.getBoundingClientRect()
         const sectionHeight = rect.height
@@ -100,7 +100,7 @@ const ServicesCardsSection = () => {
     }
 
     const handleWheel = (e: WheelEvent) => {
-      if (!sectionRef.current) return
+      if (!sectionRef.current || isMobile) return // Skip on mobile
       
       const rect = sectionRef.current.getBoundingClientRect()
       const isInView = rect.top <= 0 && rect.bottom >= window.innerHeight
@@ -130,7 +130,7 @@ const ServicesCardsSection = () => {
     }
 
     const handleKeydown = (e: KeyboardEvent) => {
-      if (slideOverProgress >= 1.0) {
+      if (slideOverProgress >= 1.0 && !isMobile) { // Skip on mobile
         // Block keyboard scrolling too
         if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
           e.preventDefault()
@@ -141,7 +141,7 @@ const ServicesCardsSection = () => {
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (slideOverProgress >= 1.0) {
+      if (slideOverProgress >= 1.0 && !isMobile) { // Skip on mobile
         // Block touch scrolling on mobile
         e.preventDefault()
         console.log('Touch scroll blocked')
@@ -166,13 +166,13 @@ const ServicesCardsSection = () => {
     <section 
       ref={sectionRef}
       className="relative bg-gray-50"
-      style={{ height: '400vh', marginBottom: '0' }} // Much more height to accommodate full "Why 3" page
+      style={{ height: isMobile ? 'auto' : '400vh', marginBottom: '0' }} // Auto height on mobile
     >
       {/* Sticky container that locks in place */}
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden bg-gray-50 relative">
+      <div className={`${isMobile ? 'relative py-16' : 'sticky top-0 h-screen'} flex items-center justify-center overflow-hidden bg-gray-50 relative`}>
         
-        {/* Individual hover-responsive dots */}
-        <HoverDots />
+        {/* Individual hover-responsive dots - Hidden on mobile */}
+        {!isMobile && <HoverDots />}
         <div className="container-custom relative">
           
           {/* Section title */}
@@ -193,7 +193,7 @@ const ServicesCardsSection = () => {
           </motion.div>
 
            {/* Cards container with navigation arrows */}
-           <div className={`relative flex items-center justify-center ${isMobile ? 'h-auto flex-col space-y-6' : 'h-[400px] sm:h-[550px]'}`}>
+           <div className={`relative flex items-center justify-center ${isMobile ? 'h-auto flex-col space-y-8 px-4' : 'h-[400px] sm:h-[550px]'}`}>
             
             {/* Navigation Arrows - HIDDEN ON MOBILE */}
             <AnimatePresence>
@@ -312,7 +312,7 @@ const ServicesCardsSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                   className={`${isMobile ? 'relative w-full max-w-sm mx-auto' : 'absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px]'} h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
+                   className={`${isMobile ? 'relative w-full max-w-md mx-auto' : 'absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px]'} ${isMobile ? 'h-[280px]' : 'h-[300px] sm:h-[400px] lg:h-[500px]'} rounded-2xl sm:rounded-3xl ${isMobile ? 'p-6' : 'p-6 sm:p-10 lg:p-16'} text-white shadow-2xl relative overflow-hidden`}
                    style={{
                      transform: isMobile ? 'none' : `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
                      filter: isMobile ? 'none' : (activeCard === index 
@@ -404,39 +404,44 @@ const ServicesCardsSection = () => {
             </AnimatePresence>
           </div>
 
-          {/* Mobile Navigation Dots */}
-          <div className="flex justify-center mt-8 space-x-3">
-            {cards.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveCard(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-500 lg:pointer-events-none ${
-                  activeCard === index ? 'bg-black scale-125' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`View service ${index + 1}`}
-              />
-            ))}
-          </div>
+          {/* Mobile Navigation Dots - Hidden on mobile since all cards are shown */}
+          {!isMobile && (
+            <div className="flex justify-center mt-8 space-x-3">
+              {cards.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveCard(index)}
+                  className={`w-4 h-4 rounded-full transition-all duration-500 lg:pointer-events-none ${
+                    activeCard === index ? 'bg-black scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`View service ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Mobile Swipe Hint / Desktop Scroll Hint */}
-          <div className="text-center mt-6">
-            <p className="text-gray-500 text-sm animate-pulse lg:hidden">
-              Tap dots above to explore services
-            </p>
-            <p className="text-gray-500 text-sm animate-pulse hidden lg:block">
-              Scroll to explore services
-            </p>
-          </div>
+          {!isMobile && (
+            <div className="text-center mt-6">
+              <p className="text-gray-500 text-sm animate-pulse lg:hidden">
+                Tap dots above to explore services
+              </p>
+              <p className="text-gray-500 text-sm animate-pulse hidden lg:block">
+                Scroll to explore services
+              </p>
+            </div>
+          )}
         </div>
         
-        {/* Third page slide-over effect - "Why 3" positioned higher */}
-        <div 
-          className="absolute inset-0 bg-white z-40"
-          style={{ 
-            transform: `translateY(${(1 - slideOverProgress) * 100}vh)`,
-            transition: 'transform 0.1s ease-out'
-          }}
-        >
+        {/* Third page slide-over effect - "Why 3" positioned higher - Hidden on mobile */}
+        {!isMobile && (
+          <div 
+            className="absolute inset-0 bg-white z-40"
+            style={{ 
+              transform: `translateY(${(1 - slideOverProgress) * 100}vh)`,
+              transition: 'transform 0.1s ease-out'
+            }}
+          >
           {/* Dot grid background */}
           <div className="absolute inset-0">
             <div 
@@ -612,6 +617,7 @@ const ServicesCardsSection = () => {
             </motion.div>
           </motion.div>
         </div>
+        )}
       </div>
     </section>
   )
