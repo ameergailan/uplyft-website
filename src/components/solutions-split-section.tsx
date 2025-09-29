@@ -31,26 +31,28 @@ const SolutionsSplitSection = () => {
     setIsMobile(isMobileDevice)
   }, [])
   
-  // Prevent touch events on mobile devices (less aggressive)
+  // Prevent all touch events on mobile devices
   useEffect(() => {
     if (!isMounted || !isMobile) return
     
-    const preventTouch = (e: TouchEvent) => {
-      // Only prevent default for touchmove to prevent scrolling issues
-      if (e.type === 'touchmove') {
-        e.preventDefault()
-      }
+    const preventAllTouch = (e: TouchEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
     }
     
     const section = sectionRef.current
     if (section) {
-      // Only prevent touchmove to avoid freezing
-      section.addEventListener('touchmove', preventTouch, { passive: false })
+      // Prevent all touch events to completely disable interactions
+      section.addEventListener('touchstart', preventAllTouch, { passive: false })
+      section.addEventListener('touchmove', preventAllTouch, { passive: false })
+      section.addEventListener('touchend', preventAllTouch, { passive: false })
     }
     
     return () => {
       if (section) {
-        section.removeEventListener('touchmove', preventTouch)
+        section.removeEventListener('touchstart', preventAllTouch)
+        section.removeEventListener('touchmove', preventAllTouch)
+        section.removeEventListener('touchend', preventAllTouch)
       }
     }
   }, [isMounted, isMobile])
@@ -344,9 +346,9 @@ const SolutionsSplitSection = () => {
                       className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 relative card-hover"
                       data-card-index={index}
                       style={{
-                        cursor: isIPhone ? 'default' : 'pointer',
-                        touchAction: isIPhone ? 'none' : 'auto',
-                        pointerEvents: isIPhone ? 'none' : 'auto'
+                        cursor: isMobile ? 'default' : 'pointer',
+                        touchAction: isMobile ? 'none' : 'auto',
+                        pointerEvents: isMobile ? 'none' : 'auto'
                       }}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -595,9 +597,9 @@ const SolutionsSplitSection = () => {
                       className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 relative card-hover"
                       data-card-index={index + 3}
                       style={{
-                        cursor: isIPhone ? 'default' : 'pointer',
-                        touchAction: isIPhone ? 'none' : 'auto',
-                        pointerEvents: isIPhone ? 'none' : 'auto'
+                        cursor: isMobile ? 'default' : 'pointer',
+                        touchAction: isMobile ? 'none' : 'auto',
+                        pointerEvents: isMobile ? 'none' : 'auto'
                       }}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
