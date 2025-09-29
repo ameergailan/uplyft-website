@@ -10,9 +10,61 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, CheckCircle } from 'lucide-react'
 
+// Live Counter Component
+const LiveCounter = ({ target, duration, suffix = '' }: { target: number; duration: number; suffix?: string }) => {
+  const [count, setCount] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    const element = document.getElementById('live-counter')
+    if (element) {
+      observer.observe(element)
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible) return
+
+    let startTime: number
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime
+      const progress = Math.min((currentTime - startTime) / duration, 1)
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+      setCount(target * easeOutQuart)
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+
+    requestAnimationFrame(animate)
+  }, [isVisible, target, duration])
+
+  return (
+    <span id="live-counter">
+      {target < 10 ? Math.floor(count) : count.toFixed(1)}{suffix}
+    </span>
+  )
+}
+
 const TestimonialsPage = () => {
-  const [activeSection, setActiveSection] = useState<string | null>(null)
-  const [showNav, setShowNav] = useState(true)
   const [roadmapOpen, setRoadmapOpen] = useState(false)
   const [roadmapStep, setRoadmapStep] = useState(0)
 
@@ -27,16 +79,6 @@ const TestimonialsPage = () => {
     }
   }, [])
 
-  // Handle scroll to hide/show navigation
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      setShowNav(scrollY < 100) // Hide nav after scrolling 100px
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   // Helper function to get logo path
   const getLogoPath = (title: string) => {
@@ -115,21 +157,6 @@ const TestimonialsPage = () => {
     }
   }
 
-  // Check for section parameter in URL
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const section = urlParams.get('section')
-    if (section) {
-      setActiveSection(section)
-      // Scroll to section after a brief delay
-      setTimeout(() => {
-        const element = document.getElementById(section)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 100)
-    }
-  }, [])
 
   const testimonials = [
     {
@@ -339,49 +366,31 @@ const TestimonialsPage = () => {
         </div>
       </motion.header>
 
-      {/* Navigation */}
-      <motion.nav 
-        className={`bg-black/95 backdrop-blur-md border-b border-gray-800 sticky top-16 z-30 transition-all duration-300 ${
-          showNav ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
-        }`}
-        initial={{ opacity: 0, y: -10 }}
+      {/* Live Counter */}
+      <motion.div 
+        className="bg-black/80 backdrop-blur-sm border-b border-gray-800 sticky top-16 z-30"
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
       >
-        <div className="container mx-auto px-6 py-3">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {testimonials.map((testimonial) => (
-              <button
-                key={testimonial.id}
-                onClick={() => {
-                  setActiveSection(testimonial.id)
-                  document.getElementById(testimonial.id)?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${
-                  activeSection === testimonial.id 
-                    ? 'bg-white text-black shadow-lg' 
-                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-white'
-                }`}
-              >
-                {testimonial.title}
-              </button>
-            ))}
-            <button
-              onClick={() => {
-                setActiveSection('social-proof')
-                document.getElementById('social-proof')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-              className={`px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm ${
-                activeSection === 'social-proof' 
-                  ? 'bg-white text-black shadow-lg' 
-                  : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 hover:text-white'
-              }`}
-            >
-              Social Proof
-            </button>
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-center items-center gap-8">
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-white">
+                <LiveCounter target={13} duration={2000} />
+              </div>
+              <div className="text-sm text-gray-400">Agencies Scaled</div>
+            </div>
+            <div className="w-px h-12 bg-gray-600"></div>
+            <div className="text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-white">
+                $<LiveCounter target={2.2} duration={2500} suffix="M+" />
+              </div>
+              <div className="text-sm text-gray-400">Revenue Generated</div>
+            </div>
           </div>
         </div>
-      </motion.nav>
+      </motion.div>
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-12 relative z-10">
@@ -390,14 +399,20 @@ const TestimonialsPage = () => {
           <motion.section
             key={testimonial.id}
             id={testimonial.id}
-            className="mb-24"
+            className={`relative ${index > 0 ? '-mt-32' : ''} ${index === testimonials.length - 1 ? 'mb-24' : ''}`}
+            style={{ zIndex: testimonials.length - index }}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
           >
-            {/* Client Header */}
-            <div className="text-center mb-12">
+            {/* Background for overlapping effect */}
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-sm rounded-3xl -z-10" />
+            
+            {/* Content Container */}
+            <div className="relative z-10 p-8">
+              {/* Client Header */}
+              <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <div className="w-20 h-20 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mr-4 p-2">
                   <img 
@@ -480,6 +495,7 @@ const TestimonialsPage = () => {
                   View Our Process
                 </button>
               </div>
+            </div>
             </div>
           </motion.section>
         ))}
