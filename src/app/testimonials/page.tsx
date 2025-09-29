@@ -10,60 +10,6 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, CheckCircle } from 'lucide-react'
 
-// Live Counter Component
-const LiveCounter = ({ target, duration, suffix = '' }: { target: number; duration: number; suffix?: string }) => {
-  const [count, setCount] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    const element = document.getElementById('live-counter')
-    if (element) {
-      observer.observe(element)
-    }
-
-    return () => {
-      if (element) {
-        observer.unobserve(element)
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    let startTime: number
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime
-      const progress = Math.min((currentTime - startTime) / duration, 1)
-      
-      // Easing function for smooth animation
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-      setCount(target * easeOutQuart)
-
-      if (progress < 1) {
-        requestAnimationFrame(animate)
-      }
-    }
-
-    requestAnimationFrame(animate)
-  }, [isVisible, target, duration])
-
-  return (
-    <span id="live-counter">
-      {target < 10 ? Math.floor(count) : count.toFixed(1)}{suffix}
-    </span>
-  )
-}
-
 const TestimonialsPage = () => {
   const [roadmapOpen, setRoadmapOpen] = useState(false)
   const [roadmapStep, setRoadmapStep] = useState(0)
@@ -78,7 +24,6 @@ const TestimonialsPage = () => {
       document.body.style.cursor = 'none'
     }
   }, [])
-
 
 
   // Helper function to get logo path
@@ -378,14 +323,14 @@ const TestimonialsPage = () => {
           <div className="flex justify-center items-center gap-8">
             <div className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-white">
-                <LiveCounter target={13} duration={2000} />
+                13
               </div>
               <div className="text-sm text-gray-400">Agencies Scaled</div>
             </div>
             <div className="w-px h-12 bg-gray-600"></div>
             <div className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-white">
-                $<LiveCounter target={2.2} duration={2500} suffix="M+" />
+                $2.2M+
               </div>
               <div className="text-sm text-gray-400">Revenue Generated</div>
             </div>
@@ -406,13 +351,8 @@ const TestimonialsPage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: index * 0.2 }}
           >
-            {/* Background for overlapping effect */}
-            <div className="absolute inset-0 bg-black/90 backdrop-blur-sm rounded-3xl -z-10" />
-            
-            {/* Content Container */}
-            <div className="relative z-10 p-8">
-              {/* Client Header */}
-              <div className="text-center mb-12">
+            {/* Client Header */}
+            <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <div className="w-20 h-20 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center mr-4 p-2">
                   <img 
@@ -495,7 +435,6 @@ const TestimonialsPage = () => {
                   View Our Process
                 </button>
               </div>
-            </div>
             </div>
           </motion.section>
         ))}
