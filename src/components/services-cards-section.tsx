@@ -183,7 +183,7 @@ const ServicesCardsSection = () => {
             </p>
           </motion.div>
 
-           {/* Cards container with navigation arrows */}
+           {/* Cards container - stacked layout for mobile */}
            <div className="relative h-[400px] sm:h-[550px] flex items-center justify-center">
             
             {/* Navigation Arrows - HIDDEN ON MOBILE */}
@@ -279,7 +279,7 @@ const ServicesCardsSection = () => {
               )}
             </AnimatePresence>
 
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               {cards.map((card, index) => (
                 <motion.div
                   key={card.id}
@@ -291,11 +291,11 @@ const ServicesCardsSection = () => {
                   }}
                    animate={{ 
                      opacity: 1 - slideOverProgress * 0.6, // Fade as third page slides over
-                     scale: (activeCard === index ? 1 : 0.9) * (1 - slideOverProgress * 0.3), // Shrink as third page approaches
-                     rotateY: activeCard === index ? 0 : -3,
-                     z: activeCard === index ? 0 : -20,
-                     x: 0, // All cards centered
-                     y: (index - activeCard) * 20 + slideOverProgress * 50 // Stack + slide down effect
+                     scale: (1 - index * 0.05) * (1 - slideOverProgress * 0.3), // Each card slightly smaller
+                     rotateY: index * 2, // Slight rotation for depth
+                     z: -index * 20, // Stack behind each other
+                     x: index * 8, // Slight horizontal offset
+                     y: index * 12 + slideOverProgress * 50 // Vertical stacking + slide down effect
                    }}
                   transition={{ 
                     duration: 0.8, 
@@ -303,20 +303,16 @@ const ServicesCardsSection = () => {
                     type: "spring",
                     stiffness: 100
                   }}
-                   className={`absolute w-[300px] sm:w-[600px] lg:w-[1000px] xl:w-[1500px] h-[300px] sm:h-[400px] lg:h-[500px] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-16 text-white shadow-2xl relative overflow-hidden`}
+                   className={`absolute w-[280px] sm:w-[500px] lg:w-[800px] xl:w-[1200px] h-[280px] sm:h-[350px] lg:h-[450px] rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-12 text-white shadow-2xl relative overflow-hidden`}
                    style={{
-                     transform: `perspective(1000px) ${activeCard === index ? 'rotateY(0deg)' : 'rotateY(-3deg)'}`,
-                     filter: activeCard === index 
-                       ? `brightness(${1 - slideOverProgress * 0.4}) contrast(${1 - slideOverProgress * 0.3})`
-                       : `brightness(${0.5 - slideOverProgress * 0.3}) contrast(${0.7 - slideOverProgress * 0.2})`,
-                     zIndex: activeCard === index ? 30 : 25 - index,
-                     boxShadow: activeCard === index 
-                       ? `0 ${25 + slideOverProgress * 25}px ${50 + slideOverProgress * 30}px rgba(0, 0, 0, ${0.4 + slideOverProgress * 0.4})` 
-                       : `0 ${10 + slideOverProgress * 20}px ${30 + slideOverProgress * 20}px rgba(0, 0, 0, ${0.6 + slideOverProgress * 0.3})`
+                     transform: `perspective(1000px) rotateY(${index * 2}deg)`,
+                     filter: `brightness(${1 - index * 0.1 - slideOverProgress * 0.4}) contrast(${1 - index * 0.05 - slideOverProgress * 0.3})`,
+                     zIndex: 30 - index,
+                     boxShadow: `0 ${15 + index * 5}px ${30 + index * 10}px rgba(0, 0, 0, ${0.3 + index * 0.1 + slideOverProgress * 0.4})`
                    }}
                 >
-                  {/* Throbbing layers - only active on current card */}
-                  {activeCard === index ? (
+                  {/* Throbbing layers - all cards have subtle animation */}
+                  {index === 0 ? (
                     <>
                       <div 
                         className="absolute inset-0 rounded-3xl"
@@ -395,16 +391,15 @@ const ServicesCardsSection = () => {
             </AnimatePresence>
           </div>
 
-          {/* Mobile Navigation Dots */}
+          {/* Mobile Navigation Dots - Show all cards are visible */}
           <div className="flex justify-center mt-8 space-x-3">
             {cards.map((_, index) => (
-              <button
+              <div
                 key={index}
-                onClick={() => setActiveCard(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-500 lg:pointer-events-none ${
-                  activeCard === index ? 'bg-black scale-125' : 'bg-gray-300 hover:bg-gray-400'
+                className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                  index === 0 ? 'bg-black scale-125' : 'bg-gray-300'
                 }`}
-                aria-label={`View service ${index + 1}`}
+                aria-label={`Service ${index + 1} visible`}
               />
             ))}
           </div>
@@ -412,7 +407,7 @@ const ServicesCardsSection = () => {
           {/* Mobile Swipe Hint / Desktop Scroll Hint */}
           <div className="text-center mt-6">
             <p className="text-gray-500 text-sm animate-pulse lg:hidden">
-              Tap dots above to explore services
+              All services visible - scroll to continue
             </p>
             <p className="text-gray-500 text-sm animate-pulse hidden lg:block">
               Scroll to explore services
