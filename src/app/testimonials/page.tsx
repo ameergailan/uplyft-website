@@ -422,20 +422,55 @@ const TestimonialsPage = () => {
             </div>
 
 
-            {/* Interactive Roadmap Section */}
-            <div className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-8">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  How We Did It
-                </h2>
-                <button
-                  onClick={() => setRoadmapOpen(true)}
-                  className="bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105"
-                >
-                  View Our Process
-                </button>
-              </div>
-            </div>
+             {/* Mini Roadmap Section */}
+             <div className="bg-gray-900/50 backdrop-blur-sm rounded-3xl p-6">
+               <div className="text-center mb-6">
+                 <h2 className="text-xl font-bold text-white mb-4">
+                   Our Process
+                 </h2>
+                 
+                 {/* Mini Roadmap Steps */}
+                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+                   {getRoadmapSteps(testimonial.title).map((step, stepIndex) => (
+                     <motion.div
+                       key={step.id}
+                       className="bg-gray-800/50 rounded-xl p-3 cursor-pointer hover:bg-gray-700/50 transition-all duration-300 group"
+                       initial={{ opacity: 0, scale: 0.8 }}
+                       whileInView={{ opacity: 1, scale: 1 }}
+                       viewport={{ once: true }}
+                       transition={{ delay: stepIndex * 0.1 }}
+                       whileHover={{ scale: 1.05 }}
+                       onClick={() => {
+                         setRoadmapStep(step.id)
+                         setRoadmapOpen(true)
+                       }}
+                     >
+                       <div className="text-center">
+                         <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2 group-hover:bg-blue-500 transition-colors">
+                           <step.icon className="w-4 h-4 text-white" />
+                         </div>
+                         <h3 className="text-white font-medium text-xs mb-1 leading-tight">
+                           {step.title}
+                         </h3>
+                         <p className="text-gray-400 text-xs">
+                           Step {step.id}
+                         </p>
+                       </div>
+                     </motion.div>
+                   ))}
+                 </div>
+                 
+                 <button
+                   onClick={() => {
+                     setRoadmapStep(1) // Start from first step
+                     setRoadmapOpen(true)
+                   }}
+                   className="bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 text-sm"
+                 >
+                   View Detailed Process
+                 </button>
+               </div>
+             </div>
           </motion.section>
         ))}
 
@@ -448,14 +483,14 @@ const TestimonialsPage = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="text-center mb-12">
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Social Proof & Testimonials
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Real feedback from our clients across different platforms
-            </p>
-          </div>
+           <div className="text-center mb-12">
+             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+               Instagram Social Proof
+             </h1>
+             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+               Real feedback from our clients on Instagram
+             </p>
+           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {socialProof.map((proof, index) => (
@@ -468,7 +503,7 @@ const TestimonialsPage = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
               >
-                <div className="aspect-square relative">
+                 <div className="aspect-[3/4] relative">
                   <img 
                     src={`/${proof.image}`}
                     alt={proof.type}
