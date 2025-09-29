@@ -16,15 +16,21 @@ const SolutionsSplitSection = () => {
   const [isMounted, setIsMounted] = useState(false)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isBeingShadowed, setIsBeingShadowed] = useState(false)
+  const [isIPhone, setIsIPhone] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
   
   useEffect(() => {
     setIsMounted(true)
+    
+    // Detect iPhone
+    const userAgent = navigator.userAgent
+    const isIPhone = /iPhone/.test(userAgent)
+    setIsIPhone(isIPhone)
   }, [])
   
   // Mouse position tracking for reliable hover detection
   useEffect(() => {
-    if (!isMounted) return
+    if (!isMounted || isIPhone) return // Disable hover effects on iPhone
     
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY })
@@ -80,7 +86,7 @@ const SolutionsSplitSection = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
     }
-  }, [isMounted, hoveredSide])
+  }, [isMounted, hoveredSide, isIPhone])
   
   // Check if being overlaid by CTA section
   useEffect(() => {
@@ -299,14 +305,14 @@ const SolutionsSplitSection = () => {
                 {timeDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative card-hover"
+                      className={`flex items-start space-x-4 p-4 rounded-lg bg-white/80 relative card-hover ${isIPhone ? 'cursor-default' : 'cursor-pointer'}`}
                       data-card-index={index}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       animate={{
-                        scale: hoveredCard === index ? 1.05 : 1,
-                        boxShadow: hoveredCard === index ? '0 10px 25px rgba(0,0,0,0.2)' : '0 0 0px rgba(0,0,0,0)',
-                        backgroundColor: hoveredCard === index ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)'
+                        scale: !isIPhone && hoveredCard === index ? 1.05 : 1,
+                        boxShadow: !isIPhone && hoveredCard === index ? '0 10px 25px rgba(0,0,0,0.2)' : '0 0 0px rgba(0,0,0,0)',
+                        backgroundColor: !isIPhone && hoveredCard === index ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)'
                       }}
                       transition={{ 
                         opacity: { duration: 0.6, delay: index * 0.1 },
@@ -331,9 +337,9 @@ const SolutionsSplitSection = () => {
                     className="absolute top-1/2 transform -translate-y-1/2 z-50"
                     style={{ right: '100%', marginRight: '2.5rem' }}
                     animate={{
-                      opacity: hoveredCard === index ? 1 : 0,
-                      x: hoveredCard === index ? 0 : 50,
-                      scale: hoveredCard === index ? 1 : 0.8
+                      opacity: !isIPhone && hoveredCard === index ? 1 : 0,
+                      x: !isIPhone && hoveredCard === index ? 0 : 50,
+                      scale: !isIPhone && hoveredCard === index ? 1 : 0.8
                     }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   >
@@ -540,14 +546,14 @@ const SolutionsSplitSection = () => {
                 {moneyDetails.map((detail, index) => (
                   <div key={index} className="relative">
                     <motion.div
-                      className="flex items-start space-x-4 p-4 rounded-lg bg-white/80 cursor-pointer relative card-hover"
+                      className={`flex items-start space-x-4 p-4 rounded-lg bg-white/80 relative card-hover ${isIPhone ? 'cursor-default' : 'cursor-pointer'}`}
                       data-card-index={index + 3}
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       animate={{
-                        scale: hoveredCard === index + 3 ? 1.05 : 1,
-                        boxShadow: hoveredCard === index + 3 ? '0 10px 25px rgba(0,0,0,0.2)' : '0 0 0px rgba(0,0,0,0)',
-                        backgroundColor: hoveredCard === index + 3 ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)'
+                        scale: !isIPhone && hoveredCard === index + 3 ? 1.05 : 1,
+                        boxShadow: !isIPhone && hoveredCard === index + 3 ? '0 10px 25px rgba(0,0,0,0.2)' : '0 0 0px rgba(0,0,0,0)',
+                        backgroundColor: !isIPhone && hoveredCard === index + 3 ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)'
                       }}
                       transition={{ 
                         opacity: { duration: 0.6, delay: index * 0.1 },
@@ -572,9 +578,9 @@ const SolutionsSplitSection = () => {
                     className="absolute right-0 top-1/2 transform translate-x-full -translate-y-1/2 z-50"
                     style={{ left: '100%', marginLeft: '2rem' }}
                     animate={{
-                      opacity: hoveredCard === index + 3 ? 1 : 0,
-                      x: hoveredCard === index + 3 ? 0 : -50,
-                      scale: hoveredCard === index + 3 ? 1 : 0.8
+                      opacity: !isIPhone && hoveredCard === index + 3 ? 1 : 0,
+                      x: !isIPhone && hoveredCard === index + 3 ? 0 : -50,
+                      scale: !isIPhone && hoveredCard === index + 3 ? 1 : 0.8
                     }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
                   >
