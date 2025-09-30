@@ -5,15 +5,19 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Zap, Target, TrendingUp, CheckCircle, Calendar, Users, Play } from 'lucide-react'
+import PageTimer from '@/components/page-timer'
+import VideoTracker from '@/components/video-tracker'
+import { trackCTAClick, trackVideoEvent } from '@/lib/analytics'
 
 const GetStartedPage = () => {
   const [showVideo, setShowVideo] = useState(false)
   const [videoError, setVideoError] = useState(false)
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   // Set cursor and auto-unlock video
   useEffect(() => {
@@ -32,6 +36,15 @@ const GetStartedPage = () => {
   }, [])
 
   const handlePlayClick = () => {
+    // Track video thumbnail click
+    trackVideoEvent({
+      event: 'video_thumbnail_click',
+      video_id: 'HZynJ1uQLYQ',
+      video_title: 'UpLyft Agency Growth System Video',
+      page: '/get-started',
+      element: 'video_thumbnail'
+    })
+    
     // Video is always unlocked, just play it
     setShowVideo(true)
   }
@@ -147,6 +160,7 @@ const GetStartedPage = () => {
                       {/* Your Agency Growth Video */}
                       <div className="relative w-full" style={{ paddingBottom: '56.25%', height: 0 }}>
                         <iframe
+                          ref={iframeRef}
                           className="absolute top-0 left-0 w-full h-full rounded-3xl"
                           src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&rel=0&modestbranding=1"
                           title="UpLyft Agency Growth System Video"
@@ -164,6 +178,7 @@ const GetStartedPage = () => {
                         muted
                         playsInline
                         preload="metadata"
+                        data-video-thumbnail
                         style={{ 
                           filter: 'blur(4px) brightness(0.6)',
                           pointerEvents: 'none'
@@ -240,6 +255,7 @@ const GetStartedPage = () => {
                     ease: "easeInOut"
                   }
                 }}
+                onClick={() => trackCTAClick('I Want To Scale Faster!', 'get-started-main-cta')}
               >
                 <div className="text-center">
                   <div className="text-lg sm:text-xl font-bold">I Want To Scale Faster!</div>
@@ -251,6 +267,14 @@ const GetStartedPage = () => {
         </motion.div>
 
       </main>
+
+      {/* Analytics Components */}
+      <PageTimer pageName="get-started" />
+      <VideoTracker 
+        videoId="HZynJ1uQLYQ" 
+        videoTitle="UpLyft Agency Growth System Video"
+        iframeRef={iframeRef}
+      />
 
     </div>
   )

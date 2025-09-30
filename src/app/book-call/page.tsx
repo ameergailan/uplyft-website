@@ -8,6 +8,8 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import PageTimer from '@/components/page-timer'
+import { trackButtonClick } from '@/lib/analytics'
 
 const BookCallPage = () => {
   // Ensure normal cursor on this page
@@ -31,6 +33,13 @@ const BookCallPage = () => {
             <Link 
               href="/get-started"
               className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"
+              onClick={() => trackButtonClick({
+                event: 'button_click',
+                button_text: 'Back',
+                button_location: 'booking-page-header',
+                page: '/book-call',
+                element: 'back_button'
+              })}
             >
               <ArrowLeft size={20} />
               <span className="font-medium">Back</span>
@@ -104,6 +113,9 @@ const BookCallPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Analytics Components */}
+      <PageTimer pageName="book-call" />
     </div>
   )
 }

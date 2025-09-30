@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/custom-cursor'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -41,6 +42,7 @@ export default function RootLayout({
           <CustomCursor />
           {children}
         </div>
+        <GoogleAnalytics gaId="G-WSWP8K1C9V" />
       </body>
     </html>
   )
