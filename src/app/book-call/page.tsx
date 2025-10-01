@@ -91,8 +91,8 @@ const BookCallPage = () => {
             <div className="mt-12 pt-8 border-t border-gray-800">
               <p className="text-gray-400 text-sm">
                 Questions? Email us at{' '}
-                <a href="mailto:hello@uplyft.com" className="text-blue-400 hover:text-blue-300 transition-colors">
-                  hello@uplyft.com
+                <a href="mailto:contact@uplyftinc.com" className="text-blue-400 hover:text-blue-300 transition-colors">
+                  contact@uplyftinc.com
                 </a>
               </p>
             </div>
