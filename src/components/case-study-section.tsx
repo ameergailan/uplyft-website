@@ -343,24 +343,6 @@ const CaseStudySection = () => {
                   ))}
                 </div>
 
-                {/* View Details Button */}
-                <Link href={`/testimonials?section=${getTestimonialId(project.title)}`}>
-                  <button
-                    className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-900 transition-all duration-400 ease-out flex items-center justify-center gap-2"
-                    style={{
-                      transform: hoveredCard === index ? 'scale(1.05)' : 'scale(1)'
-                    }}
-                  >
-                    View Case Study
-                    <ArrowRight 
-                      size={16} 
-                      className="transition-transform duration-200"
-                      style={{
-                        transform: hoveredCard === index ? 'translateX(4px)' : 'translateX(0)'
-                      }}
-                    />
-                  </button>
-                </Link>
               </div>
             </motion.div>
           ))}
