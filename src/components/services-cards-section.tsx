@@ -7,10 +7,251 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, TrendingUp, Users, Zap } from 'lucide-react'
 import HoverDots from './hover-dots'
 import LimitingBeliefs from './limiting-beliefs'
 import TranslucentQuestionMarks from './translucent-question-marks'
+
+// Lead Generation Animation Component
+const LeadGenerationAnimation = () => {
+  const [currentStage, setCurrentStage] = useState(0)
+  const stages = ['Awareness', 'Interest', 'Consideration', 'Conversion']
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentStage(prev => (prev + 1) % stages.length)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="w-full h-full flex items-center justify-center space-x-6 pt-2">
+      {/* Animated Funnel */}
+      <div className="relative w-24 h-20">
+        {stages.map((stage, index) => (
+          <motion.div
+            key={stage}
+            className="absolute w-full h-4 bg-white/20 rounded-sm border border-white/30"
+            style={{
+              top: `${index * 16}px`,
+              width: `${100 - index * 15}%`,
+              left: `${index * 7.5}%`
+            }}
+            animate={{
+              backgroundColor: currentStage === index ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.2)',
+              scale: currentStage === index ? 1.05 : 1
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        ))}
+        
+        {/* Flowing leads */}
+        {[...Array(2)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1.5 h-1.5 bg-white rounded-full"
+            style={{ top: `${i * 8 + 2}px`, left: '10%' }}
+            animate={{
+              x: [0, 90, 0],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              delay: i * 0.5,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Conversion Rate */}
+      <motion.div 
+        className="text-center"
+        animate={{ scale: currentStage === 3 ? 1.1 : 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="text-xl font-bold text-white">+47%</div>
+        <div className="text-xs text-white/70">Conversion</div>
+      </motion.div>
+    </div>
+  )
+}
+
+// Sales Team Animation Component
+const SalesTeamAnimation = () => {
+  const [activeMetric, setActiveMetric] = useState(0)
+  const metrics = [
+    { label: 'Revenue', value: '+$2.4M', icon: TrendingUp },
+    { label: 'Deals', value: '127', icon: Users },
+    { label: 'Team', value: '54', icon: Users }
+  ]
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveMetric(prev => (prev + 1) % metrics.length)
+    }, 2500)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
+      {/* Metrics Boxes - Side by Side */}
+      <div className="flex space-x-3">
+        {metrics.map((metric, index) => {
+          const Icon = metric.icon
+          return (
+            <motion.div
+              key={metric.label}
+              className="bg-white/10 rounded-lg p-2 text-center border border-white/20 min-w-[60px]"
+              animate={{
+                backgroundColor: activeMetric === index ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
+                scale: activeMetric === index ? 1.05 : 1
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <Icon size={12} className="mx-auto mb-1 text-white" />
+              <div className="text-xs text-white/80">{metric.label}</div>
+              <div className="text-xs font-bold text-white">{metric.value}</div>
+            </motion.div>
+          )
+        })}
+      </div>
+      
+      {/* Performance Chart with Background */}
+      <div className="w-32 h-12 relative bg-white/5 rounded-lg border border-white/10 p-2">
+        {/* Chart Grid Lines */}
+        <svg viewBox="0 0 100 40" className="w-full h-full">
+          {/* Grid lines */}
+          <defs>
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100" height="40" fill="url(#grid)" />
+          
+          {/* Animated Performance Line */}
+          <motion.polyline
+            points="0,30 20,25 40,20 60,15 80,10 100,5"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            animate={{
+              pathLength: [0, 1, 0],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          {/* Data Points */}
+          {[0, 20, 40, 60, 80, 100].map((x, i) => (
+            <motion.circle
+              key={i}
+              cx={x}
+              cy={30 - i * 5}
+              r="1.5"
+              fill="white"
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1.5, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: i * 0.2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+// Automation System Animation Component
+const AutomationSystemAnimation = () => {
+  const [currentPlatform, setCurrentPlatform] = useState(0)
+  const platforms = [
+    { name: 'Discord', color: '#5865F2' },
+    { name: 'Zapier', color: '#FF4A00' },
+    { name: 'Gmail', color: '#EA4335' },
+    { name: 'Slack', color: '#4A154B' },
+    { name: 'HubSpot', color: '#FF7A59' }
+  ]
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPlatform(prev => (prev + 1) % platforms.length)
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="w-full h-full flex items-center justify-center space-x-6">
+      {/* UpLyft Logo */}
+      <div className="relative">
+        <motion.div
+          className="w-10 h-10 bg-white rounded-lg flex items-center justify-center"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <span className="text-black font-bold text-sm">U</span>
+        </motion.div>
+        
+        {/* Signal waves */}
+        {[...Array(2)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute inset-0 border border-white/30 rounded-lg"
+            animate={{
+              scale: [1, 1.8, 2.5],
+              opacity: [0.8, 0.4, 0]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              delay: i * 0.3
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Connection Line */}
+      <div className="relative w-12 h-0.5 bg-white/30">
+        <motion.div
+          className="absolute inset-0 bg-white"
+          animate={{
+            scaleX: [0, 1, 0]
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </div>
+      
+      {/* Platform Logo */}
+      <motion.div
+        key={currentPlatform}
+        className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-xs"
+        style={{ backgroundColor: platforms[currentPlatform].color }}
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
+        {platforms[currentPlatform].name.charAt(0)}
+      </motion.div>
+    </div>
+  )
+}
 
 const ServicesCardsSection = () => {
   const [activeCard, setActiveCard] = useState(0)
@@ -376,7 +617,8 @@ const ServicesCardsSection = () => {
                   )}
                   
                   <div className="h-full flex flex-col justify-between relative z-10">
-                    <div>
+                    {/* Text Content - Top Half */}
+                    <div className="flex-1 flex flex-col justify-center">
                       <div className="text-sm uppercase tracking-wider opacity-80 mb-2">
                         {card.subtitle}
                       </div>
@@ -386,9 +628,8 @@ const ServicesCardsSection = () => {
                       <p className="text-white/90 leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base">
                         {card.description}
                       </p>
-                    </div>
-                    
-                    <div>
+                      
+                      {/* Features List */}
                       <div className="space-y-2">
                         {card.features.map((feature, idx) => (
                           <div key={idx} className="flex items-center text-sm">
@@ -397,6 +638,13 @@ const ServicesCardsSection = () => {
                           </div>
                         ))}
                       </div>
+                    </div>
+                    
+                    {/* Animated Content - Bottom Half */}
+                    <div className="flex-1 flex items-center justify-center pt-4">
+                      {card.id === 1 && <LeadGenerationAnimation />}
+                      {card.id === 2 && <SalesTeamAnimation />}
+                      {card.id === 3 && <AutomationSystemAnimation />}
                     </div>
                   </div>
                 </motion.div>

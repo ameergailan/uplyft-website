@@ -80,3 +80,4 @@ const PageTimer = ({ pageName, trackInterval = 30 }: PageTimerProps) => {
 
 export default PageTimer
 
+
