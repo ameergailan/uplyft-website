@@ -672,9 +672,9 @@ const ServicesCardsSection = () => {
                     
                     {/* Animated Content - Bottom Half */}
                     <div className="flex-1 flex items-center justify-center pt-4">
-                      {card.id === 1 && <LeadGenerationAnimation />}
-                      {card.id === 2 && <SalesTeamAnimation />}
-                      {card.id === 3 && <AutomationSystemAnimation />}
+                      {!isMobile && card.id === 1 && <LeadGenerationAnimation />}
+                      {!isMobile && card.id === 2 && <SalesTeamAnimation />}
+                      {!isMobile && card.id === 3 && <AutomationSystemAnimation />}
                     </div>
                   </div>
                 </motion.div>
