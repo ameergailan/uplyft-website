@@ -15,7 +15,17 @@ import TranslucentQuestionMarks from './translucent-question-marks'
 // Lead Generation Animation Component
 const LeadGenerationAnimation = () => {
   const [currentStage, setCurrentStage] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const stages = ['Awareness', 'Interest', 'Consideration', 'Conversion']
+  
+  useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone|mobile/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0)
+    setIsMobile(isMobileDevice)
+  }, [])
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,15 +35,15 @@ const LeadGenerationAnimation = () => {
   }, [])
 
   return (
-    <div className="w-full h-full flex items-center justify-center space-x-6 pt-2">
+    <div className={`w-full h-full flex items-center justify-center ${isMobile ? 'space-x-3 pt-1' : 'space-x-6 pt-2'}`}>
       {/* Animated Funnel */}
-      <div className="relative w-24 h-20">
+      <div className={`relative ${isMobile ? 'w-16 h-12' : 'w-24 h-20'}`}>
         {stages.map((stage, index) => (
           <motion.div
             key={stage}
-            className="absolute w-full h-4 bg-white/20 rounded-sm border border-white/30"
+            className={`absolute w-full bg-white/20 rounded-sm border border-white/30 ${isMobile ? 'h-2' : 'h-4'}`}
             style={{
-              top: `${index * 16}px`,
+              top: `${index * (isMobile ? 10 : 16)}px`,
               width: `${100 - index * 15}%`,
               left: `${index * 7.5}%`
             }}
@@ -46,13 +56,13 @@ const LeadGenerationAnimation = () => {
         ))}
         
         {/* Flowing leads */}
-        {[...Array(2)].map((_, i) => (
+        {[...Array(isMobile ? 1 : 2)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1.5 h-1.5 bg-white rounded-full"
-            style={{ top: `${i * 8 + 2}px`, left: '10%' }}
+            className={`absolute bg-white rounded-full ${isMobile ? 'w-1 h-1' : 'w-1.5 h-1.5'}`}
+            style={{ top: `${i * (isMobile ? 6 : 8) + 2}px`, left: '10%' }}
             animate={{
-              x: [0, 90, 0],
+              x: [0, isMobile ? 60 : 90, 0],
               opacity: [0, 1, 0]
             }}
             transition={{
@@ -71,8 +81,8 @@ const LeadGenerationAnimation = () => {
         animate={{ scale: currentStage === 3 ? 1.1 : 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="text-xl font-bold text-white">+47%</div>
-        <div className="text-xs text-white/70">Conversion</div>
+        <div className={`font-bold text-white ${isMobile ? 'text-lg' : 'text-xl'}`}>+47%</div>
+        <div className={`text-white/70 ${isMobile ? 'text-xs' : 'text-xs'}`}>Conversion</div>
       </motion.div>
     </div>
   )
@@ -81,11 +91,21 @@ const LeadGenerationAnimation = () => {
 // Sales Team Animation Component
 const SalesTeamAnimation = () => {
   const [activeMetric, setActiveMetric] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const metrics = [
     { label: 'Revenue', value: '+$2.4M', icon: TrendingUp },
     { label: 'Deals', value: '127', icon: Users },
     { label: 'Team', value: '54', icon: Users }
   ]
+  
+  useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone|mobile/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0)
+    setIsMobile(isMobileDevice)
+  }, [])
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -95,31 +115,31 @@ const SalesTeamAnimation = () => {
   }, [])
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
+    <div className={`w-full h-full flex flex-col items-center justify-center ${isMobile ? 'space-y-2' : 'space-y-4'}`}>
       {/* Metrics Boxes - Side by Side */}
-      <div className="flex space-x-3">
+      <div className={`flex ${isMobile ? 'space-x-2' : 'space-x-3'}`}>
         {metrics.map((metric, index) => {
           const Icon = metric.icon
           return (
             <motion.div
               key={metric.label}
-              className="bg-white/10 rounded-lg p-2 text-center border border-white/20 min-w-[60px]"
+              className={`bg-white/10 rounded-lg text-center border border-white/20 ${isMobile ? 'p-1 min-w-[45px]' : 'p-2 min-w-[60px]'}`}
               animate={{
                 backgroundColor: activeMetric === index ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.1)',
                 scale: activeMetric === index ? 1.05 : 1
               }}
               transition={{ duration: 0.3 }}
             >
-              <Icon size={12} className="mx-auto mb-1 text-white" />
-              <div className="text-xs text-white/80">{metric.label}</div>
-              <div className="text-xs font-bold text-white">{metric.value}</div>
+              <Icon size={isMobile ? 10 : 12} className={`mx-auto text-white ${isMobile ? 'mb-0.5' : 'mb-1'}`} />
+              <div className={`text-white/80 ${isMobile ? 'text-xs' : 'text-xs'}`}>{metric.label}</div>
+              <div className={`font-bold text-white ${isMobile ? 'text-xs' : 'text-xs'}`}>{metric.value}</div>
             </motion.div>
           )
         })}
       </div>
       
       {/* Performance Chart with Background */}
-      <div className="w-32 h-12 relative bg-white/5 rounded-lg border border-white/10 p-2">
+      <div className={`relative bg-white/5 rounded-lg border border-white/10 ${isMobile ? 'w-24 h-8 p-1' : 'w-32 h-12 p-2'}`}>
         {/* Chart Grid Lines */}
         <svg viewBox="0 0 100 40" className="w-full h-full">
           {/* Grid lines */}
@@ -135,7 +155,7 @@ const SalesTeamAnimation = () => {
             points="0,30 20,25 40,20 60,15 80,10 100,5"
             fill="none"
             stroke="white"
-            strokeWidth="2"
+            strokeWidth={isMobile ? "1.5" : "2"}
             strokeLinecap="round"
             strokeLinejoin="round"
             animate={{
@@ -155,7 +175,7 @@ const SalesTeamAnimation = () => {
               key={i}
               cx={x}
               cy={30 - i * 5}
-              r="1.5"
+              r={isMobile ? "1" : "1.5"}
               fill="white"
               animate={{
                 opacity: [0, 1, 0],
@@ -178,6 +198,7 @@ const SalesTeamAnimation = () => {
 // Automation System Animation Component
 const AutomationSystemAnimation = () => {
   const [currentPlatform, setCurrentPlatform] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const platforms = [
     { name: 'Discord', color: '#5865F2' },
     { name: 'Zapier', color: '#FF4A00' },
@@ -187,6 +208,15 @@ const AutomationSystemAnimation = () => {
   ]
   
   useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isMobileDevice = /iphone|ipad|ipod|android|blackberry|windows phone|mobile/.test(userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                          ('ontouchstart' in window) ||
+                          (navigator.maxTouchPoints > 0)
+    setIsMobile(isMobileDevice)
+  }, [])
+  
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPlatform(prev => (prev + 1) % platforms.length)
     }, 2000)
@@ -194,24 +224,24 @@ const AutomationSystemAnimation = () => {
   }, [])
 
   return (
-    <div className="w-full h-full flex items-center justify-center space-x-6">
+    <div className={`w-full h-full flex items-center justify-center ${isMobile ? 'space-x-4' : 'space-x-6'}`}>
       {/* UpLyft Logo */}
       <div className="relative">
         <motion.div
-          className="w-10 h-10 bg-white rounded-lg flex items-center justify-center"
+          className={`bg-white rounded-lg flex items-center justify-center ${isMobile ? 'w-8 h-8' : 'w-10 h-10'}`}
           animate={{ scale: [1, 1.1, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <span className="text-black font-bold text-sm">U</span>
+          <span className={`text-black font-bold ${isMobile ? 'text-xs' : 'text-sm'}`}>U</span>
         </motion.div>
         
         {/* Signal waves */}
-        {[...Array(2)].map((_, i) => (
+        {[...Array(isMobile ? 1 : 2)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute inset-0 border border-white/30 rounded-lg"
             animate={{
-              scale: [1, 1.8, 2.5],
+              scale: [1, isMobile ? 1.5 : 1.8, isMobile ? 2 : 2.5],
               opacity: [0.8, 0.4, 0]
             }}
             transition={{
@@ -224,7 +254,7 @@ const AutomationSystemAnimation = () => {
       </div>
       
       {/* Connection Line */}
-      <div className="relative w-12 h-0.5 bg-white/30">
+      <div className={`relative bg-white/30 ${isMobile ? 'w-8 h-0.5' : 'w-12 h-0.5'}`}>
         <motion.div
           className="absolute inset-0 bg-white"
           animate={{
@@ -241,7 +271,7 @@ const AutomationSystemAnimation = () => {
       {/* Platform Logo */}
       <motion.div
         key={currentPlatform}
-        className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-xs"
+        className={`rounded-lg flex items-center justify-center text-white font-bold ${isMobile ? 'w-8 h-8 text-xs' : 'w-10 h-10 text-xs'}`}
         style={{ backgroundColor: platforms[currentPlatform].color }}
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
