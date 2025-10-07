@@ -9,12 +9,25 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, FileText, Scale, AlertTriangle, CreditCard, UserCheck, Gavel } from 'lucide-react'
+import { trackPageViewWithContent } from '@/lib/facebook-analytics'
 
 const TermsOfServicePage = () => {
   // Ensure normal cursor on legal pages
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Track Facebook events for terms of service page
+    trackPageViewWithContent(
+      'UpLyft Terms of Service',
+      'Legal',
+      undefined,
+      {
+        page_type: 'legal',
+        document_type: 'terms_of_service',
+        sections: 6
+      }
+    )
     
     return () => {
       // Restore when leaving page

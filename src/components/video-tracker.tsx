@@ -7,6 +7,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { trackYouTubeEvent, trackVideoEvent } from '@/lib/analytics'
+import { trackVideoView, trackVideoComplete } from '@/lib/facebook-analytics'
 
 interface VideoTrackerProps {
   videoId: string
@@ -47,6 +48,15 @@ const VideoTracker = ({ videoId, videoTitle = 'UpLyft Agency Growth System Video
             switch (state) {
               case window.YT.PlayerState.PLAYING:
                 trackYouTubeEvent('video_play', videoId, currentTime)
+                // Track Facebook video view event
+                trackVideoView({
+                  event: 'VideoView',
+                  content_name: videoTitle,
+                  content_category: 'Educational Content',
+                  content_ids: [videoId],
+                  content_type: 'video',
+                  value: 0
+                })
                 startWatchTimeTracking()
                 break
               case window.YT.PlayerState.PAUSED:
@@ -64,6 +74,15 @@ const VideoTracker = ({ videoId, videoTitle = 'UpLyft Agency Growth System Video
                   watch_time: watchTimeRef.current,
                   page: window.location.pathname,
                   element: 'youtube_iframe'
+                })
+                // Track Facebook video completion event
+                trackVideoComplete({
+                  event: 'VideoComplete',
+                  content_name: videoTitle,
+                  content_category: 'Educational Content',
+                  content_ids: [videoId],
+                  content_type: 'video',
+                  value: watchTimeRef.current
                 })
                 break
             }
@@ -157,5 +176,6 @@ declare global {
 }
 
 export default VideoTracker
+
 
 

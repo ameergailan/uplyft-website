@@ -10,12 +10,42 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import PageTimer from '@/components/page-timer'
 import { trackButtonClick } from '@/lib/analytics'
+import { trackSchedule, trackInitiateCheckout, trackPageViewWithContent } from '@/lib/facebook-analytics'
 
 const BookCallPage = () => {
-  // Ensure normal cursor on this page
+  // Ensure normal cursor on this page and track Facebook events
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Track Facebook events for booking page
+    trackPageViewWithContent(
+      'UpLyft Booking Page',
+      'Scheduling',
+      undefined,
+      {
+        page_type: 'booking',
+        booking_type: 'consultation',
+        widget_type: 'leadconnector'
+      }
+    )
+    
+    trackSchedule({
+      event: 'Schedule',
+      content_name: 'Consultation Booking',
+      content_category: 'Scheduling',
+      value: 0
+    })
+    
+    trackInitiateCheckout({
+      event: 'InitiateCheckout',
+      content_name: 'UpLyft Consultation',
+      content_category: 'Service Booking',
+      content_ids: ['consultation-1on1'],
+      content_type: 'service',
+      value: 0,
+      num_items: 1
+    })
     
     return () => {
       // Restore when leaving page

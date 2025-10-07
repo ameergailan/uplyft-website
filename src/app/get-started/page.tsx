@@ -12,6 +12,7 @@ import { Zap, Target, TrendingUp, CheckCircle, Calendar, Users, Play } from 'luc
 import PageTimer from '@/components/page-timer'
 import VideoTracker from '@/components/video-tracker'
 import { trackCTAClick, trackVideoEvent } from '@/lib/analytics'
+import { trackPageViewWithContent, trackVideoView, trackVideoComplete } from '@/lib/facebook-analytics'
 
 const GetStartedPage = () => {
   const [showVideo, setShowVideo] = useState(false)
@@ -23,6 +24,18 @@ const GetStartedPage = () => {
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Track Facebook events for get-started page
+    trackPageViewWithContent(
+      'UpLyft Get Started Page',
+      'Landing Page',
+      undefined,
+      {
+        page_type: 'landing',
+        traffic_source: 'all',
+        video_auto_unlock: true
+      }
+    )
     
     // Auto-unlock video - no form required
     console.log('VIDEO AUTO-UNLOCKED - NO FORM REQUIRED')
@@ -43,6 +56,16 @@ const GetStartedPage = () => {
       video_title: 'UpLyft Agency Growth System Video',
       page: '/get-started',
       element: 'video_thumbnail'
+    })
+    
+    // Track Facebook video view event
+    trackVideoView({
+      event: 'VideoView',
+      content_name: 'UpLyft Agency Growth System Video',
+      content_category: 'Educational Content',
+      content_ids: ['HZynJ1uQLYQ'],
+      content_type: 'video',
+      value: 0
     })
     
     // Video is always unlocked, just play it

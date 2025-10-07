@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Play, ExternalLink, TrendingUp, Users, DollarSign, Target, CheckCircle } from 'lucide-react'
+import { trackPageViewWithContent } from '@/lib/facebook-analytics'
 
 const TestimonialsPage = () => {
   const [roadmapOpen, setRoadmapOpen] = useState(false)
@@ -21,6 +22,18 @@ const TestimonialsPage = () => {
     setIsMounted(true)
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Track Facebook events for testimonials page
+    trackPageViewWithContent(
+      'UpLyft Testimonials Page',
+      'Social Proof',
+      undefined,
+      {
+        page_type: 'testimonials',
+        case_studies: ['amplify-sound', 'zealous-granite', 'vault-mastery'],
+        social_proof_count: 4
+      }
+    )
     
     return () => {
       document.body.classList.add('custom-cursor-active')

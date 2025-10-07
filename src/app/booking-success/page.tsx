@@ -8,14 +8,36 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
+import { trackCompleteRegistration, trackPageViewWithContent, trackVideoView } from '@/lib/facebook-analytics'
 
 const BookingSuccessPage = () => {
   const [showVideo, setShowVideo] = useState(false)
 
-  // Ensure normal cursor on this page
+  // Ensure normal cursor on this page and track Facebook events
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Track Facebook events for booking success page
+    trackPageViewWithContent(
+      'UpLyft Booking Success Page',
+      'Conversion',
+      undefined,
+      {
+        page_type: 'booking_success',
+        conversion_step: 'post_booking',
+        next_steps: ['confirm_call', 'watch_video']
+      }
+    )
+    
+    // Track successful booking completion
+    trackCompleteRegistration({
+      event: 'CompleteRegistration',
+      content_name: 'UpLyft Consultation Booking',
+      content_category: 'Service Registration',
+      value: 0,
+      status: 'completed'
+    })
     
     return () => {
       // Restore when leaving page
@@ -25,6 +47,16 @@ const BookingSuccessPage = () => {
   }, [])
 
   const handlePlayClick = () => {
+    // Track Facebook video view event
+    trackVideoView({
+      event: 'VideoView',
+      content_name: 'UpLyft Agency Growth System Video',
+      content_category: 'Educational Content',
+      content_ids: ['HZynJ1uQLYQ'],
+      content_type: 'video',
+      value: 0
+    })
+    
     setShowVideo(true)
   }
 

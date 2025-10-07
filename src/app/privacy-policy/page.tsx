@@ -9,12 +9,25 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Shield, Eye, Lock, Database, Users, Globe } from 'lucide-react'
+import { trackPageViewWithContent } from '@/lib/facebook-analytics'
 
 const PrivacyPolicyPage = () => {
   // Ensure normal cursor on legal pages
   useEffect(() => {
     document.body.classList.remove('custom-cursor-active')
     document.body.style.cursor = 'default'
+    
+    // Track Facebook events for privacy policy page
+    trackPageViewWithContent(
+      'UpLyft Privacy Policy',
+      'Legal',
+      undefined,
+      {
+        page_type: 'legal',
+        document_type: 'privacy_policy',
+        sections: 6
+      }
+    )
     
     return () => {
       // Restore when leaving page

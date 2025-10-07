@@ -7,6 +7,7 @@
 
 import { useEffect, useRef } from 'react'
 import { trackTimeOnPage } from '@/lib/analytics'
+import { trackContentEngagement } from '@/lib/facebook-analytics'
 
 interface PageTimerProps {
   pageName?: string
@@ -30,6 +31,24 @@ const PageTimer = ({ pageName, trackInterval = 30 }: PageTimerProps) => {
       
       if (timeSpent >= trackInterval) {
         trackTimeOnPage(timeSpent, pageName)
+        
+        // Track Facebook content engagement based on time spent
+        const totalTimeSpent = Math.floor((currentTime - startTimeRef.current) / 1000)
+        let engagementLevel: 'low' | 'medium' | 'high' = 'low'
+        
+        if (totalTimeSpent >= 120) { // 2+ minutes
+          engagementLevel = 'high'
+        } else if (totalTimeSpent >= 60) { // 1+ minute
+          engagementLevel = 'medium'
+        }
+        
+        trackContentEngagement(
+          pageName || window.location.pathname,
+          'Page Engagement',
+          totalTimeSpent,
+          engagementLevel
+        )
+        
         lastTrackTimeRef.current = currentTime
       }
     }, trackInterval * 1000)
@@ -79,5 +98,6 @@ const PageTimer = ({ pageName, trackInterval = 30 }: PageTimerProps) => {
 }
 
 export default PageTimer
+
 
 
