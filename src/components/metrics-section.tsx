@@ -5,15 +5,16 @@
 
 'use client'
 
+import { memo, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Target, RotateCcw, Zap } from 'lucide-react'
 import type { MetricItem, StatisticItem } from '@/types'
 
-const MetricsSection = () => {
-  const metrics: MetricItem[] = [
+const MetricsSection = memo(() => {
+  const metrics: MetricItem[] = useMemo(() => [
     {
       title: 'Revenue Growth',
-      description: 'Accelerated agency income'
+      description: 'Accelerated SaaS app revenue'
     },
     {
       title: 'Client Retention',
@@ -31,20 +32,20 @@ const MetricsSection = () => {
       title: 'Scale Velocity',
       description: 'Faster growth trajectory'
     }
-  ]
+  ], [])
 
-  const statistics: StatisticItem[] = [
+  const statistics: StatisticItem[] = useMemo(() => [
     {
       percentage: '3.2x',
       title: 'Revenue increase in first 12 months',
-      description: 'Agencies implementing our systems see dramatic revenue growth',
+      description: 'SaaS apps implementing our systems see dramatic revenue growth',
       source: 'UpLyft Client Study (2024)'
     },
     {
       percentage: '89%',
       title: 'Client retention rate improvement',
       description: 'Better processes lead to stronger client relationships',
-      source: 'Agency Growth Report'
+      source: 'SaaS Growth Report'
     },
     {
       percentage: '156%',
@@ -58,7 +59,7 @@ const MetricsSection = () => {
       description: 'Optimized systems reduce costs while increasing output quality',
       source: 'Operational Efficiency Study'
     }
-  ]
+  ], [])
 
   const getMetricIcon = (index: number) => {
     const icons = [Zap, Users, Target, RotateCcw, TrendingUp]
@@ -125,6 +126,8 @@ const MetricsSection = () => {
       </div>
     </section>
   )
-}
+})
+
+MetricsSection.displayName = 'MetricsSection'
 
 export default MetricsSection

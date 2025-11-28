@@ -119,22 +119,35 @@ const SolutionsSplitSection = () => {
   
   // Check if being overlaid by CTA section
   useEffect(() => {
+    let rafId: number | null = null
+    
     const handleScroll = () => {
-      if (!sectionRef.current) return
+      if (rafId) return
       
-      // Check if the next section (CTA) is sliding over us
-      const ctaSection = document.querySelector('section[class*="z-30"]')
-      if (ctaSection) {
-        const rect = ctaSection.getBoundingClientRect()
-        const shadowProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight))
-        setIsBeingShadowed(shadowProgress > 0.1)
-      }
+      rafId = requestAnimationFrame(() => {
+        if (!sectionRef.current) {
+          rafId = null
+          return
+        }
+        
+        // Check if the next section (CTA) is sliding over us
+        const ctaSection = document.querySelector('section[class*="z-30"]')
+        if (ctaSection) {
+          const rect = ctaSection.getBoundingClientRect()
+          const shadowProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight))
+          setIsBeingShadowed(shadowProgress > 0.1)
+        }
+        rafId = null
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
     
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
+    }
   }, [])
   
   const handleTimeHover = (e: React.MouseEvent) => {
@@ -220,7 +233,7 @@ const SolutionsSplitSection = () => {
     {
       icon: Target,
       title: "Precision Data Tracking",
-      description: "Real-time analytics and performance monitoring that provides actionable insights to optimize every aspect of your agency.",
+      description: "Real-time analytics and performance monitoring that provides actionable insights to optimize every aspect of your SaaS app.",
       metric: 95,
       metricLabel: "% accuracy increase"
     },

@@ -55,39 +55,59 @@ const SimpleQuestionMarks = () => {
     if (!isActive) return
 
     let animationFrame: number
+    let mouseRafId: number | null = null
+    let lastUpdate = 0
+    const throttleMs = 50 // Update mouse targets max every 50ms
 
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
+      const now = Date.now()
+      if (now - lastUpdate < throttleMs) return
+      lastUpdate = now
       
-      // Update target positions
-      setMarks(prevMarks => prevMarks.map((mark, index) => {
-        const angle = (index / 6) * Math.PI * 2
+      if (mouseRafId) return
+      
+      mouseRafId = requestAnimationFrame(() => {
+        setMousePos({ x: e.clientX, y: e.clientY })
+        
+        // Update target positions
+        setMarks(prevMarks => prevMarks.map((mark, index) => {
+          const angle = (index / 6) * Math.PI * 2
           const radius = 120 + (index % 5) * 40 // Much further spread for organic feel
-        return {
-          ...mark,
+          return {
+            ...mark,
             targetX: e.clientX + Math.cos(angle) * radius + (Math.random() - 0.5) * 10,
             targetY: e.clientY + Math.sin(angle) * radius + (Math.random() - 0.5) * 10
-        }
-      }))
+          }
+        }))
+        mouseRafId = null
+      })
     }
 
-    // Smooth animation loop with individual speeds
-    const animateMarks = () => {
-      setMarks(prevMarks => prevMarks.map(mark => ({
-        ...mark,
-        x: mark.x + (mark.targetX - mark.x) * mark.lerpSpeed, // Individual lerp speeds
-        y: mark.y + (mark.targetY - mark.y) * mark.lerpSpeed
-      })))
+    // Smooth animation loop with individual speeds - throttled to 30fps for better performance
+    let lastFrameTime = 0
+    const targetFPS = 30
+    const frameInterval = 1000 / targetFPS
+    
+    const animateMarks = (currentTime: number) => {
+      if (currentTime - lastFrameTime >= frameInterval) {
+        setMarks(prevMarks => prevMarks.map(mark => ({
+          ...mark,
+          x: mark.x + (mark.targetX - mark.x) * mark.lerpSpeed, // Individual lerp speeds
+          y: mark.y + (mark.targetY - mark.y) * mark.lerpSpeed
+        })))
+        lastFrameTime = currentTime
+      }
       
       animationFrame = requestAnimationFrame(animateMarks)
     }
 
-    animateMarks()
-    window.addEventListener('mousemove', handleMouseMove)
+    animationFrame = requestAnimationFrame(animateMarks)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       if (animationFrame) cancelAnimationFrame(animationFrame)
+      if (mouseRafId) cancelAnimationFrame(mouseRafId)
     }
   }, [isActive])
 

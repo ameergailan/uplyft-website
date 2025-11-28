@@ -172,10 +172,10 @@ const HorizontalWhySection = () => {
   }, [isAutoScrolling])
 
   const beliefs = [
-    "Full-stack agencies are generalists",
+    "Full-stack SaaS apps are generalists",
     "Our offer is unique—you won't get our niche", 
     "Quality over quantity—we're tired of junk leads",
-    "Agencies overpromise, then disappear",
+    "SaaS apps overpromise, then disappear",
     "Automation will break our current ops",
     "Sales is our brand voice—outsourcing risks reputation"
   ]
@@ -220,7 +220,8 @@ const HorizontalWhySection = () => {
                   style={{
                     left: position.left,
                     top: position.top,
-                    transform: 'translate(-50%, -50%)'
+                    transform: 'translate(-50%, -50%)',
+                    willChange: 'transform, opacity'
                   }}
                   initial={{ 
                     opacity: 0, 

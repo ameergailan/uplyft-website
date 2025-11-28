@@ -122,7 +122,7 @@ export const trackYouTubeEvent = (eventType: string, videoId: string, watchTime?
   trackVideoEvent({
     event: eventType as any,
     video_id: videoId,
-    video_title: 'UpLyft Agency Growth System Video',
+    video_title: 'UpLyft SaaS Growth System Video',
     watch_time: watchTime,
     page: window.location.pathname,
     element: 'youtube_iframe'

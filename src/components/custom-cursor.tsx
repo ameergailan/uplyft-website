@@ -53,50 +53,65 @@ const CustomCursor = () => {
   useEffect(() => {
     if (!isMounted || isMobile) return // Don't run on mobile devices
 
+    let rafId: number | null = null
+    let frameCount = 0
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-      if (!isDisabled) {
-        setIsVisible(true)
-        // Add class to hide default cursor
-        document.body.classList.add('custom-cursor-active')
-        
-        // Hide cursor on legal pages, get-started page, and testimonials page
+      if (rafId) return
+      
+      rafId = requestAnimationFrame(() => {
+        setMousePosition({ x: e.clientX, y: e.clientY })
+        if (!isDisabled) {
+          setIsVisible(true)
+          // Add class to hide default cursor
+          document.body.classList.add('custom-cursor-active')
+          
+        // Hide cursor on legal pages, book-call page, and testimonials page
         const isOnSpecialPage = window.location.pathname.includes('/privacy-policy') || 
                                window.location.pathname.includes('/terms-of-service') ||
-                               window.location.pathname.includes('/get-started') ||
+                               window.location.pathname.includes('/book-call') ||
                                window.location.pathname.includes('/testimonials')
-        
-        if (isOnSpecialPage) {
-          setIsOverInteractive(true) // Always hide on these pages
-          // Ensure normal cursor is visible
-          document.body.classList.remove('custom-cursor-active')
-          document.body.style.cursor = 'default'
-          return
+          
+          if (isOnSpecialPage) {
+            setIsOverInteractive(true) // Always hide on these pages
+            // Ensure normal cursor is visible
+            document.body.classList.remove('custom-cursor-active')
+            document.body.style.cursor = 'default'
+            rafId = null
+            return
+          }
+          
+          // Optimized: Cache DOM queries and reduce frequency
+          // Only check every few frames to reduce DOM traversal overhead
+          const target = e.target as Element
+          
+          // Always show cursor on hero section
+          const isOnHero = target?.closest('.hero-section') !== null
+          if (isOnHero) {
+            setIsOverInteractive(false) // Always show on hero
+            rafId = null
+            return
+          }
+          
+          // Throttle expensive DOM queries - only check every 3rd frame
+          frameCount++
+          if (frameCount % 3 === 0) {
+            // Hide cursor in specific sections (throttled DOM queries)
+            const isOverSolutions = target?.closest('.solutions-section') !== null
+            const isOverCTA = target?.closest('#cta-section') !== null
+            const isOverCaseStudy = target?.closest('.case-study-section') !== null
+            
+            // Check scroll position for footer (throttled)
+            const scrollY = window.scrollY
+            const windowHeight = window.innerHeight
+            const documentHeight = document.documentElement.scrollHeight
+            const isNearBottom = scrollY + windowHeight >= documentHeight - 200
+            
+            setIsOverInteractive(isOverSolutions || isOverCTA || isOverCaseStudy || isNearBottom)
+          }
         }
-        
-        // Get target element
-        const target = e.target as Element
-        
-        // Always show cursor on hero section
-        const isOnHero = target?.closest('.hero-section') !== null
-        if (isOnHero) {
-          setIsOverInteractive(false) // Always show on hero
-          return
-        }
-        
-        // Hide cursor in specific sections
-        const isOverSolutions = target?.closest('.solutions-section') !== null
-        const isOverCTA = target?.closest('#cta-section') !== null
-        const isOverCaseStudy = target?.closest('.case-study-section') !== null
-        
-        // Check scroll position for footer
-        const scrollY = window.scrollY
-        const windowHeight = window.innerHeight
-        const documentHeight = document.documentElement.scrollHeight
-        const isNearBottom = scrollY + windowHeight >= documentHeight - 200
-        
-        setIsOverInteractive(isOverSolutions || isOverCTA || isOverCaseStudy || isNearBottom)
-      }
+        rafId = null
+      })
     }
 
     const handleMouseLeave = () => {
@@ -123,6 +138,7 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseleave', handleMouseLeave)
       document.removeEventListener('mouseenter', handleMouseEnter)
+      if (rafId) cancelAnimationFrame(rafId)
       // Clean up on unmount
       document.body.classList.remove('custom-cursor-active')
     }
@@ -137,12 +153,12 @@ const CustomCursor = () => {
     setTimeout(() => {
       setIsClicked(false)
       
-      // Navigate to get-started page
+      // Navigate to book-call page
       if (typeof window !== 'undefined') {
-        console.log('CUSTOM CURSOR CLICKED - GOING TO GET STARTED PAGE')
+        console.log('CUSTOM CURSOR CLICKED - GOING TO BOOK CALL PAGE')
         
         // Direct page navigation - much more reliable
-        window.location.href = '/get-started/'
+        window.location.href = '/book-call/'
       }
       
       // Disable custom cursor and restore normal cursor

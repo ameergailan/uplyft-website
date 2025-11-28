@@ -5,36 +5,44 @@
 
 'use client'
 
+import { memo, useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
 
-const HeroSection = () => {
+const HeroSection = memo(() => {
   const [scrollProgress, setScrollProgress] = useState(0)
   
   // Direct click handler for hero section
-  const handleHeroClick = () => {
-    console.log('HERO CLICKED - GOING TO GET STARTED PAGE')
+  const handleHeroClick = useCallback(() => {
+    console.log('HERO CLICKED - GOING TO BOOK CALL PAGE')
     
     // Use Next.js router for better navigation
     if (typeof window !== 'undefined') {
-      window.location.href = '/get-started/'
+      window.location.href = '/book-call/'
     }
-  }
+  }, [])
 
   useEffect(() => {
+    let rafId: number | null = null
+    
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
+      if (rafId) return
       
-      // Calculate scroll progress for the first viewport
-      const progress = Math.min(scrollY / windowHeight, 1)
-      setScrollProgress(progress)
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        const windowHeight = window.innerHeight
+        
+        // Calculate scroll progress for the first viewport
+        const progress = Math.min(scrollY / windowHeight, 1)
+        setScrollProgress(progress)
+        rafId = null
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     
     return () => {
       window.removeEventListener('scroll', handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -77,7 +85,7 @@ const HeroSection = () => {
               opacity: 1 - scrollProgress * 0.3
             }}
           >
-            Scale your agency
+            Scale your SaaS app
             <br />
             <span className="text-balance">beyond limits</span>
           </h1>
@@ -93,7 +101,7 @@ const HeroSection = () => {
               opacity: 1 - scrollProgress * 0.4
             }}
           >
-            Transform your agency with proven systems, processes, and strategies that drive consistent growth and profitability.
+            Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability.
           </motion.p>
 
           {/* Description */}
@@ -107,7 +115,7 @@ const HeroSection = () => {
               opacity: 1 - scrollProgress * 0.5
             }}
           >
-            From client acquisition to team management, we help agencies achieve sustainable scale and operational excellence.
+            From user acquisition to team management, we help SaaS apps achieve sustainable scale and operational excellence.
           </motion.p>
 
           {/* Scroll to explore text */}
@@ -138,6 +146,8 @@ const HeroSection = () => {
       </div>
     </section>
   )
-}
+})
+
+HeroSection.displayName = 'HeroSection'
 
 export default HeroSection

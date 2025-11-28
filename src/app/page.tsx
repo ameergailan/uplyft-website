@@ -5,22 +5,20 @@
 
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import Header from '@/components/header'
 import HeroSection from '@/components/hero-section'
-import EfficiencySection from '@/components/efficiency-section'
-import MetricsSection from '@/components/metrics-section'
-import SolutionsSplitSection from '@/components/solutions-split-section'
-import CTAOverlaySection from '@/components/cta-overlay-section'
-import CaseStudySection from '@/components/case-study-section'
-import ContactSection from '@/components/contact-section'
-import Footer from '@/components/footer'
-import SlideOverEffect from '@/components/slide-over-effect'
-import ServicesCardsSection from '@/components/services-cards-section'
-import WhyThreeLockedPage from '@/components/why-three-locked-page'
-import PageSpecificQuestionMarks from '@/components/page-specific-question-marks'
-import GlobalScrollLock from '@/components/global-scroll-lock'
 import { trackPageViewWithContent } from '@/lib/facebook-analytics'
+
+// Lazy load below-the-fold components for better initial load performance
+const SlideOverEffect = lazy(() => import('@/components/slide-over-effect'))
+const ServicesCardsSection = lazy(() => import('@/components/services-cards-section'))
+const MetricsSection = lazy(() => import('@/components/metrics-section'))
+const SolutionsSplitSection = lazy(() => import('@/components/solutions-split-section'))
+const CTAOverlaySection = lazy(() => import('@/components/cta-overlay-section'))
+const Footer = lazy(() => import('@/components/footer'))
+const PageSpecificQuestionMarks = lazy(() => import('@/components/page-specific-question-marks'))
+const GlobalScrollLock = lazy(() => import('@/components/global-scroll-lock'))
 
 export default function HomePage() {
   useEffect(() => {
@@ -31,7 +29,7 @@ export default function HomePage() {
       undefined,
       {
         page_type: 'homepage',
-        sections: ['hero', 'services', 'metrics', 'solutions', 'case_study', 'cta', 'contact']
+        sections: ['hero', 'services', 'metrics', 'solutions', 'cta', 'contact']
       }
     )
   }, [])
@@ -44,20 +42,31 @@ export default function HomePage() {
       {/* Spacer to enable scrolling */}
       <div className="h-screen" />
       
-      <SlideOverEffect>
-        <ServicesCardsSection />
-        <MetricsSection />
-        <SolutionsSplitSection />
-        <CaseStudySection />
-        <CTAOverlaySection />
-        <Footer />
-      </SlideOverEffect>
-      
-      {/* Global question marks that detect correct page */}
-      <PageSpecificQuestionMarks />
-      
-      {/* Global scroll lock system */}
-      <GlobalScrollLock />
+      <Suspense fallback={null}>
+        <SlideOverEffect>
+          <Suspense fallback={null}>
+            <ServicesCardsSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <MetricsSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <SolutionsSplitSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <CTAOverlaySection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+        </SlideOverEffect>
+        
+        {/* Global question marks that detect correct page */}
+        <PageSpecificQuestionMarks />
+        
+        {/* Global scroll lock system */}
+        <GlobalScrollLock />
+      </Suspense>
     </main>
   )
 }

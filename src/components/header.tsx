@@ -5,134 +5,157 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { memo, useState, useEffect, useCallback } from 'react'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
-const Header = () => {
+const Header = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(true) // Start with dark mode for hero
 
-  const handleMobileMenuToggle = () => {
+  const handleMobileMenuToggle = useCallback(() => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
-  }
+  }, [isMobileMenuOpen])
 
-  const handleCollaborateClick = () => {
+  const handleCollaborateClick = useCallback(() => {
     // Scroll to contact section
     const contactSection = document.getElementById('contact')
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' })
     }
-  }
+  }, [])
 
-  const handleLogoClick = () => {
+  const handleLogoClick = useCallback(() => {
     // Scroll to top of page (hero section)
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     })
-  }
+  }, [])
 
   useEffect(() => {
+    let rafId: number | null = null
+    let lastScrollY = 0
+    
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
+      if (rafId) return
       
-      // Check if we're on any white background page
-      const isOnLegalPage = window.location.pathname.includes('/privacy-policy') || 
-                           window.location.pathname.includes('/terms-of-service')
-      const isOnGetStartedPage = window.location.pathname.includes('/get-started')
-      
-      if (isOnLegalPage) {
-        // Legal pages have white background, use black text
-        setIsDarkMode(false)
-        return
-      }
-      
-      if (isOnGetStartedPage) {
-        // Get started page has black background, use white text
-        setIsDarkMode(true)
-        return
-      }
-      
-      
-      // Check for white sections on main page
-      const whiteSections = document.querySelectorAll('section.bg-white, section.bg-gray-50, [data-slide-over="why-three"]')
-      for (const section of whiteSections) {
-        const rect = section.getBoundingClientRect()
-        const isVisible = rect.top <= 100 && rect.bottom >= 100
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        const windowHeight = window.innerHeight
         
-        if (isVisible) {
-          // White section visible, use black text
+        // Throttle: only update if scroll changed significantly (10px threshold)
+        if (Math.abs(scrollY - lastScrollY) < 10 && scrollY !== 0) {
+          rafId = null
+          return
+        }
+        lastScrollY = scrollY
+        
+        // Check if we're on any white background page
+        const isOnLegalPage = window.location.pathname.includes('/privacy-policy') || 
+                             window.location.pathname.includes('/terms-of-service')
+        const isOnBookCallPage = window.location.pathname.includes('/book-call')
+        
+        if (isOnLegalPage) {
+          // Legal pages have white background, use black text
           setIsDarkMode(false)
+          rafId = null
           return
         }
-      }
-      
-      // Check if we're in the contact section (dark background)
-      const contactSection = document.getElementById('contact')
-      if (contactSection) {
-        const contactRect = contactSection.getBoundingClientRect()
-        const isInContact = contactRect.top <= 100 && contactRect.bottom >= 100
         
-        if (isInContact) {
-          // Contact section has dark background, use white text
+        if (isOnBookCallPage) {
+          // Book call page has black background, use white text
           setIsDarkMode(true)
+          rafId = null
           return
         }
-      }
-      
-      // Check if we're in the metrics section (black background)
-      const metricsSection = document.querySelector('[data-section="metrics"]')
-      if (metricsSection) {
-        const metricsRect = metricsSection.getBoundingClientRect()
-        const isInMetrics = metricsRect.top <= 100 && metricsRect.bottom >= 100
         
-        if (isInMetrics) {
-          // Metrics section has black background, use white text
-          setIsDarkMode(true)
-          return
+        // Check for white sections on main page (optimized - only check first visible)
+        const whiteSections = document.querySelectorAll('section.bg-white, section.bg-gray-50, [data-slide-over="why-three"]')
+        for (const section of whiteSections) {
+          const rect = section.getBoundingClientRect()
+          const isVisible = rect.top <= 100 && rect.bottom >= 100
+          
+          if (isVisible) {
+            // White section visible, use black text
+            setIsDarkMode(false)
+            rafId = null
+            return
+          }
         }
-      }
-      
-      // Check if we're in the solutions section (black background)
-      const solutionsSection = document.querySelector('section.bg-black')
-      if (solutionsSection) {
-        const solutionsRect = solutionsSection.getBoundingClientRect()
-        const isInSolutions = solutionsRect.top <= 100 && solutionsRect.bottom >= 100
         
-        if (isInSolutions) {
-          // Solutions section has black background, use white text
-          setIsDarkMode(true)
-          return
+        // Check if we're in the contact section (dark background)
+        const contactSection = document.getElementById('contact')
+        if (contactSection) {
+          const contactRect = contactSection.getBoundingClientRect()
+          const isInContact = contactRect.top <= 100 && contactRect.bottom >= 100
+          
+          if (isInContact) {
+            // Contact section has dark background, use white text
+            setIsDarkMode(true)
+            rafId = null
+            return
+          }
         }
-      }
-      
-      // Check for white slide-over page (Why 3 different services)
-      const slideOverElement = document.querySelector('[data-slide-over="why-three"]')
-      if (slideOverElement) {
-        const slideRect = slideOverElement.getBoundingClientRect()
-        const slideProgress = Math.max(0, Math.min(1, (window.innerHeight - slideRect.top) / window.innerHeight))
         
-        if (slideProgress >= 0.9) {
-          // On white "Why 3" page, use black text
+        // Check if we're in the metrics section (black background)
+        const metricsSection = document.querySelector('[data-section="metrics"]')
+        if (metricsSection) {
+          const metricsRect = metricsSection.getBoundingClientRect()
+          const isInMetrics = metricsRect.top <= 100 && metricsRect.bottom >= 100
+          
+          if (isInMetrics) {
+            // Metrics section has black background, use white text
+            setIsDarkMode(true)
+            rafId = null
+            return
+          }
+        }
+        
+        // Check if we're in the solutions section (black background)
+        const solutionsSection = document.querySelector('section.bg-black')
+        if (solutionsSection) {
+          const solutionsRect = solutionsSection.getBoundingClientRect()
+          const isInSolutions = solutionsRect.top <= 100 && solutionsRect.bottom >= 100
+          
+          if (isInSolutions) {
+            // Solutions section has dark background, use white text
+            setIsDarkMode(true)
+            rafId = null
+            return
+          }
+        }
+        
+        // Check for white slide-over page (Why 3 different services)
+        const slideOverElement = document.querySelector('[data-slide-over="why-three"]')
+        if (slideOverElement) {
+          const slideRect = slideOverElement.getBoundingClientRect()
+          const slideProgress = Math.max(0, Math.min(1, (window.innerHeight - slideRect.top) / window.innerHeight))
+          
+          if (slideProgress >= 0.9) {
+            // On white "Why 3" page, use black text
+            setIsDarkMode(false)
+            rafId = null
+            return
+          }
+        }
+        
+        // Switch to light mode when in white sections
+        if (scrollY > windowHeight * 0.9) {
           setIsDarkMode(false)
-          return
+        } else {
+          setIsDarkMode(true)
         }
-      }
-      
-      // Switch to light mode when in white sections
-      if (scrollY > windowHeight * 0.9) {
-        setIsDarkMode(false)
-      } else {
-        setIsDarkMode(true)
-      }
+        
+        rafId = null
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     
     return () => {
       window.removeEventListener('scroll', handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -191,7 +214,7 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             <span className={`font-medium transition-colors duration-300 ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-              Agency Growth Solutions
+              SaaS Growth Solutions
             </span>
           </div>
 
@@ -215,7 +238,7 @@ const Header = () => {
           <div className="lg:hidden border-t border-gray-800 py-4 animate-fade-in bg-black/95">
             <div className="flex flex-col space-y-4">
               <span className="text-gray-300 font-medium px-4">
-                Agency Growth Solutions
+                SaaS Growth Solutions
               </span>
             </div>
           </div>
@@ -223,6 +246,8 @@ const Header = () => {
       </div>
     </header>
   )
-}
+})
+
+Header.displayName = 'Header'
 
 export default Header

@@ -5,10 +5,11 @@
 
 'use client'
 
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-const Footer = () => {
+const Footer = memo(() => {
   const currentYear = new Date().getFullYear()
 
   const handleCollaborateClick = () => {
@@ -37,14 +38,14 @@ const Footer = () => {
                 UpLyft
               </h3>
               <p className="text-sm text-gray-600">
-                Scaling Agencies Worldwide
+                Scaling SaaS Apps Worldwide
               </p>
             </div>
 
             {/* Services */}
             <div className="text-center lg:text-right">
               <p className="text-gray-700 font-medium mb-2">
-                Agency Growth Solutions
+                SaaS Growth Solutions
               </p>
               <div className="flex justify-center lg:justify-end space-x-6 mb-2">
                 <Link
@@ -69,6 +70,8 @@ const Footer = () => {
       </div>
     </footer>
   )
-}
+})
+
+Footer.displayName = 'Footer'
 
 export default Footer

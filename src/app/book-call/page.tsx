@@ -61,7 +61,7 @@ const BookCallPage = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link 
-              href="/get-started"
+              href="/"
               className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300"
               onClick={() => trackButtonClick({
                 event: 'button_click',
@@ -93,12 +93,12 @@ const BookCallPage = () => {
             
             {/* Heading */}
             <h1 className="text-4xl font-bold text-white mb-6">
-              Ready to Scale Your Agency?
+              Ready to Scale Your SaaS App?
             </h1>
             
             {/* Description */}
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Book your free 1-on-1 strategy session with David and discover how we can scale your agency to new heights.
+              Book your free 1-on-1 strategy session with David and discover how we can scale your SaaS app to new heights.
             </p>
             
             {/* Benefits */}

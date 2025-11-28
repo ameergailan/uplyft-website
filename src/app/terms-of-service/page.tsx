@@ -50,8 +50,8 @@ const TermsOfServicePage = () => {
       icon: FileText,
       title: "Service Description",
       content: [
-        "UpLyft provides agency growth solutions, including but not limited to lead generation systems, sales team integration, automation implementation, and business optimization consulting.",
-        "Our services are designed to help agencies scale their operations, increase revenue, and improve operational efficiency through proven methodologies and strategic guidance.",
+        "UpLyft provides SaaS growth solutions, including but not limited to user acquisition systems, sales team integration, automation implementation, and business optimization consulting.",
+        "Our services are designed to help SaaS apps scale their operations, increase revenue, and improve operational efficiency through proven methodologies and strategic guidance.",
         "Service delivery timelines, specific outcomes, and implementation details will be outlined in separate service agreements or statements of work."
       ]
     },

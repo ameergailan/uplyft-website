@@ -14,14 +14,22 @@ const ContactSection = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
+    let rafId: number | null = null
+    
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
+      if (rafId) return
+      
+      rafId = requestAnimationFrame(() => {
+        setMousePos({ x: e.clientX, y: e.clientY })
+        rafId = null
+      })
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 
@@ -37,7 +45,8 @@ const ContactSection = () => {
           height: '600px',
           background: 'radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 30%, transparent 70%)',
           borderRadius: '50%',
-          transition: 'all 0.3s ease-out'
+          transition: 'all 0.3s ease-out',
+          willChange: 'transform'
         }}
       />
       
@@ -55,11 +64,11 @@ const ContactSection = () => {
               Ready to Scale?
             </h2>
             <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Scale Your Agency to 6 FIGURES<br />
+              Scale Your SaaS App to 6 FIGURES<br />
               <span className="text-white">Without Hiring a Huge Team</span>
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
-              We partner with growth-focused agencies to install predictable lead generation, 
+              We partner with growth-focused SaaS apps to install predictable user acquisition, 
               sales systems, and automations that scale revenue fast.
             </p>
             <motion.div
@@ -69,7 +78,7 @@ const ContactSection = () => {
               className="flex justify-center mb-8 sm:mb-16"
             >
               <Link
-                href="/get-started"
+                href="/book-call"
                 className="get-started-button inline-flex items-center space-x-3 bg-white text-black px-8 sm:px-12 py-4 sm:py-6 rounded-lg transition-all duration-300 font-bold text-lg sm:text-xl shadow-2xl hover:shadow-white/20 hover:scale-105 relative overflow-hidden"
               >
                 <span className="relative z-10">Get Started</span>

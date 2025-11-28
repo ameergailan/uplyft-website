@@ -72,6 +72,7 @@ const CTAOverlaySection = () => {
              {/* Main wave - optimized mouse response */}
              <motion.path
                fill="url(#waveGradient1)"
+               style={{ willChange: 'd' }}
                animate={{
                  d: [
                    `M0,${Math.round(400 + (mousePos.y / (window.innerHeight || 800)) * 30)} Q300,${Math.round(200 + (mousePos.x / (window.innerWidth || 1200)) * 50)} 600,350 T1200,300 L1200,800 L0,800 Z`,
@@ -89,6 +90,7 @@ const CTAOverlaySection = () => {
              {/* Secondary wave - optimized */}
              <motion.path
                fill="url(#waveGradient2)"
+               style={{ willChange: 'd' }}
                animate={{
                  d: [
                    `M0,${Math.round(500 - (mousePos.y / (window.innerHeight || 800)) * 20)} Q400,${Math.round(300 + (mousePos.x / (window.innerWidth || 1200)) * 30)} 800,450 T1200,400 L1200,800 L0,800 Z`,
@@ -188,12 +190,12 @@ const CTAOverlaySection = () => {
               Ready to Scale?
             </h2>
              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 sm:mb-8 leading-tight px-4">
-               Scale Your Agency to<br />
+               Scale Your SaaS App to<br />
                <span className="text-4xl sm:text-6xl lg:text-8xl">6 FIGURES</span><br />
                <span className="text-2xl sm:text-4xl lg:text-6xl text-gray-300">Without Hiring a Huge Team</span>
              </h1>
             <p className="text-lg sm:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-6 sm:mb-12 px-4">
-              We partner with growth-focused agencies to install predictable lead generation, 
+              We partner with growth-focused SaaS apps to install predictable user acquisition, 
               sales systems, and automations that scale revenue fast.
             </p>
           </motion.div>
@@ -206,7 +208,7 @@ const CTAOverlaySection = () => {
             className="flex justify-center"
           >
             <Link
-              href="/get-started"
+              href="/book-call"
               className="get-started-button inline-flex items-center space-x-3 sm:space-x-4 bg-white text-black px-8 sm:px-16 py-4 sm:py-8 rounded-xl sm:rounded-2xl transition-all duration-300 font-bold text-lg sm:text-2xl shadow-2xl hover:shadow-white/30 hover:scale-105 relative overflow-hidden"
             >
               <span className="relative z-10">Get Started</span>

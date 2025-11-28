@@ -314,7 +314,7 @@ const ServicesCardsSection = () => {
       id: 3,
       title: "Backend Automations",
       subtitle: "Operational Excellence",
-      description: "Streamline operations with intelligent automation systems that scale with your agency.",
+      description: "Streamline operations with intelligent automation systems that scale with your SaaS app.",
       features: ["Workflow Automation", "Data Integration", "Process Optimization"],
       color: "from-gray-900 to-black",
       shadowColor: "shadow-gray-900/25"
@@ -459,7 +459,7 @@ const ServicesCardsSection = () => {
               Here's what we do
             </h1>
             <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-              Three core systems that transform agencies into scalable powerhouses
+              Three core systems that transform SaaS apps into scalable powerhouses
             </p>
           </motion.div>
 

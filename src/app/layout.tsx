@@ -14,9 +14,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://uplyftinc.com'),
-  title: 'UpLyft - Scale Your Agency Beyond Limits',
-  description: 'Transform your agency with proven systems, processes, and strategies that drive consistent growth and profitability. From client acquisition to team management, we help agencies achieve sustainable scale.',
-  keywords: 'agency growth, agency scaling, business consulting, agency operations, revenue growth, team management, client retention',
+  title: 'UpLyft - Scale Your SaaS App Beyond Limits',
+  description: 'Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability. From user acquisition to team management, we help SaaS apps achieve sustainable scale.',
+  keywords: 'SaaS growth, SaaS scaling, business consulting, SaaS operations, revenue growth, team management, user retention',
   authors: [{ name: 'UpLyft' }],
   icons: {
     icon: '/LLogoo.png',
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     apple: '/LLogoo.png',
   },
   openGraph: {
-    title: 'UpLyft - Scale Your Agency Beyond Limits',
-    description: 'Transform your agency with proven systems, processes, and strategies that drive consistent growth and profitability.',
+    title: 'UpLyft - Scale Your SaaS App Beyond Limits',
+    description: 'Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability.',
     type: 'website',
     locale: 'en_US',
     images: [
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'UpLyft - Scale Your Agency Beyond Limits',
-    description: 'Transform your agency with proven systems, processes, and strategies that drive consistent growth and profitability.',
+    title: 'UpLyft - Scale Your SaaS App Beyond Limits',
+    description: 'Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability.',
     images: ['/LLogoo.png'],
   },
   robots: 'index, follow',

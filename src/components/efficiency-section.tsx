@@ -25,7 +25,7 @@ const EfficiencySection = () => {
           <h3 className="text-3xl lg:text-4xl font-bold text-black mb-8">
             Everything we do
             <br />
-            drives agency success
+            drives SaaS app success
           </h3>
         </motion.div>
 
@@ -47,7 +47,7 @@ const EfficiencySection = () => {
                 Proven strategies with measurable impact
               </p>
               <p className="text-gray-600 leading-relaxed">
-                improving agency operations, client retention, and revenue growth
+                improving SaaS app operations, user retention, and revenue growth
               </p>
             </div>
           </motion.div>
@@ -71,7 +71,7 @@ const EfficiencySection = () => {
                 Systems built to match
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
-                how agencies operate, grow, and succeed
+                how SaaS apps operate, grow, and succeed
               </p>
               <p className="text-gray-600 leading-relaxed">
                 all backed by proven methodologies

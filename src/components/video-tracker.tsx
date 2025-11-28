@@ -15,7 +15,7 @@ interface VideoTrackerProps {
   iframeRef?: React.RefObject<HTMLIFrameElement>
 }
 
-const VideoTracker = ({ videoId, videoTitle = 'UpLyft Agency Growth System Video', iframeRef }: VideoTrackerProps) => {
+const VideoTracker = ({ videoId, videoTitle = 'UpLyft SaaS Growth System Video', iframeRef }: VideoTrackerProps) => {
   const [isTracking, setIsTracking] = useState(false)
   const watchTimeRef = useRef<number>(0)
   const lastTrackTimeRef = useRef<number>(0)

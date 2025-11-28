@@ -50,7 +50,7 @@ const PrivacyPolicyPage = () => {
       icon: Eye,
       title: "How We Use Your Information",
       content: [
-        "Service Delivery: To provide, maintain, and improve our agency growth solutions, consulting services, and customer support.",
+        "Service Delivery: To provide, maintain, and improve our SaaS growth solutions, consulting services, and customer support.",
         "Communication: To respond to inquiries, send updates about our services, and provide relevant business insights and marketing materials.",
         "Analytics: To understand user behavior, optimize our website performance, and develop new features and services.",
         "Legal Compliance: To comply with applicable laws, regulations, and legal processes."

@@ -11,19 +11,27 @@ const SlideOverEffect = ({ children }: { children: React.ReactNode }) => {
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
+    let rafId: number | null = null
+    
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
+      if (rafId) return
       
-      // Calculate how much the content should slide up
-      const progress = Math.min(scrollY / windowHeight, 1)
-      setScrollProgress(progress)
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        const windowHeight = window.innerHeight
+        
+        // Calculate how much the content should slide up
+        const progress = Math.min(scrollY / windowHeight, 1)
+        setScrollProgress(progress)
+        rafId = null
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     
     return () => {
       window.removeEventListener('scroll', handleScroll)
+      if (rafId) cancelAnimationFrame(rafId)
     }
   }, [])
 

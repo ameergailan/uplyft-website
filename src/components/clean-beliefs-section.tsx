@@ -15,10 +15,10 @@ const CleanBeliefsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const beliefs = [
-    "Full-stack agencies are generalists",
+    "Full-stack SaaS apps are generalists",
     "Our offer is unique—you won't get our niche", 
     "Quality over quantity—we're tired of junk leads",
-    "Agencies overpromise, then disappear",
+    "SaaS apps overpromise, then disappear",
     "Automation will break our current ops"
   ]
 
@@ -31,18 +31,28 @@ const CleanBeliefsSection = () => {
   ]
 
   useEffect(() => {
+    let rafId: number | null = null
+    
     const handleScroll = () => {
-      if (!sectionRef.current) return
+      if (rafId) return
       
-      const rect = sectionRef.current.getBoundingClientRect()
-      const isOnPage = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
-      
-      if (isOnPage && !scrollLocked && phase === 0) {
-        // Lock page when user reaches it
-        setScrollLocked(true)
-        document.body.style.overflow = 'hidden'
-        console.log('Page locked')
-      }
+      rafId = requestAnimationFrame(() => {
+        if (!sectionRef.current) {
+          rafId = null
+          return
+        }
+        
+        const rect = sectionRef.current.getBoundingClientRect()
+        const isOnPage = rect.top <= 100 && rect.bottom >= window.innerHeight - 100
+        
+        if (isOnPage && !scrollLocked && phase === 0) {
+          // Lock page when user reaches it
+          setScrollLocked(true)
+          document.body.style.overflow = 'hidden'
+          console.log('Page locked')
+        }
+        rafId = null
+      })
     }
 
     const handleWheel = (e: WheelEvent) => {
@@ -80,6 +90,7 @@ const CleanBeliefsSection = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
       document.removeEventListener('wheel', handleWheel)
+      if (rafId) cancelAnimationFrame(rafId)
       document.body.style.overflow = 'auto'
     }
   }, [phase, activeBelief, scrollLocked, beliefs.length])
@@ -152,7 +163,8 @@ const CleanBeliefsSection = () => {
               style={{
                 left: `${position.x}%`,
                 top: `${position.y}%`,
-                transform: 'translate(-50%, -50%)'
+                transform: 'translate(-50%, -50%)',
+                willChange: 'transform, opacity'
               }}
               initial={{ opacity: 0, scale: 0.5, rotateZ: -10 }}
               animate={{ 

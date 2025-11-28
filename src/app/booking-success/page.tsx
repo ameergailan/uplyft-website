@@ -50,7 +50,7 @@ const BookingSuccessPage = () => {
     // Track Facebook video view event
     trackVideoView({
       event: 'VideoView',
-      content_name: 'UpLyft Agency Growth System Video',
+      content_name: 'UpLyft SaaS Growth System Video',
       content_category: 'Educational Content',
       content_ids: ['HZynJ1uQLYQ'],
       content_type: 'video',
@@ -165,7 +165,7 @@ const BookingSuccessPage = () => {
                 {/* YouTube Thumbnail */}
                 <img 
                   src="https://img.youtube.com/vi/HZynJ1uQLYQ/maxresdefault.jpg"
-                  alt="UpLyft Agency Growth System Video"
+                  alt="UpLyft SaaS Growth System Video"
                   className="absolute inset-0 w-full h-full object-cover rounded-3xl"
                   style={{ 
                     filter: 'blur(2px) brightness(0.7)',
@@ -195,7 +195,7 @@ const BookingSuccessPage = () => {
                 <iframe
                   className="w-full h-full rounded-3xl"
                   src="https://www.youtube.com/embed/HZynJ1uQLYQ?autoplay=1&rel=0&modestbranding=1"
-                  title="UpLyft Agency Growth System Video"
+                  title="UpLyft SaaS Growth System Video"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

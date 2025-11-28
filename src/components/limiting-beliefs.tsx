@@ -21,7 +21,7 @@ const LimitingBeliefs = ({ scrollProgress }: { scrollProgress: number }) => {
   const beliefs: Belief[] = [
     {
       id: 1,
-      title: "Full-stack agencies are generalists.",
+      title: "Full-stack SaaS apps are generalists.",
       belief: "If you do everything, you're mediocre at each.",
       flip: "We unify the funnel so nothing leaks between marketing → SDR → closer → CRM.",
       proof: "One KPI chain with weekly reporting; role-specific specialists."
@@ -29,7 +29,7 @@ const LimitingBeliefs = ({ scrollProgress }: { scrollProgress: number }) => {
     {
       id: 2,
       title: "Our offer is unique—you won't get our niche.",
-      belief: "Agencies don't understand our buying cycle.",
+      belief: "SaaS apps don't understand our buying cycle.",
       flip: "We map your buyer's journey into our pipeline template in week 1.",
       proof: "Mini case studies from adjacent niches; tailored creative samples."
     },
@@ -42,7 +42,7 @@ const LimitingBeliefs = ({ scrollProgress }: { scrollProgress: number }) => {
     },
     {
       id: 4,
-      title: "Agencies overpromise, then disappear.",
+      title: "SaaS apps overpromise, then disappear.",
       belief: "We've been burned before.",
       flip: "Short pilot, transparent numbers, and an exit ramp.",
       proof: "30-day pilot with milestone gates; weekly scorecard."

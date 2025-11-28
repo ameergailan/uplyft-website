@@ -51,21 +51,29 @@ body.custom-cursor-active {
   .throb-layer-1 {
     background: linear-gradient(135deg, #1f2937 0%, #000000 50%, #374151 100%);
     animation: throbPhase1 12s ease-in-out infinite;
+    will-change: opacity;
+    transform: translateZ(0);
   }
   
   .throb-layer-2 {
     background: linear-gradient(135deg, #6b7280 0%, #4b5563 20%, #1f2937 50%, #111827 80%, #6b7280 100%);
     animation: throbPhase2 12s ease-in-out infinite;
+    will-change: opacity;
+    transform: translateZ(0);
   }
   
   .throb-layer-3 {
     background: linear-gradient(135deg, #4b5563 0%, #6b7280 20%, #374151 50%, #1f2937 80%, #4b5563 100%);
     animation: throbPhase3 12s ease-in-out infinite;
+    will-change: opacity;
+    transform: translateZ(0);
   }
   
   .throb-overlay {
     background: radial-gradient(circle at 50% 50%, rgba(107, 114, 128, 0.6) 0%, transparent 70%);
     animation: overlayThrob 8s ease-in-out infinite;
+    will-change: opacity, transform;
+    transform: translateZ(0);
   }
 }
 
