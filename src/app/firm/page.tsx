@@ -74,7 +74,7 @@ export default function FirmPage() {
             Meet Our Leadership Team
           </h1>
 
-          <div className="mx-auto mt-14 grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-14 grid max-w-3xl gap-8 sm:grid-cols-2">
             {leadership.map((person) => (
               <div key={person.name} className="text-left">
                 <div className="relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-2xl border border-black/10 bg-gradient-to-br from-[#e4e3df] to-[#cfceca]">
