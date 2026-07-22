@@ -91,7 +91,7 @@ export default function HomePage() {
           <div className="mt-12 divide-y divide-black/10 border-y border-black/10">
             {faqs.map((faq) => (
               <details key={faq.q} className="group py-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-lg font-semibold">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-lg font-extrabold text-[var(--ink)] sm:text-xl">
                   {faq.q}
                   <ChevronDown className="h-5 w-5 shrink-0 text-[var(--muted)] transition-transform duration-200 group-open:rotate-180" />
                 </summary>

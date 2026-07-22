@@ -128,12 +128,6 @@ export default function WorkshopsPage() {
             </div>
           </div>
 
-          <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-            An interactive workshop where you get personalized,{' '}
-            <strong className="font-semibold text-[var(--ink)]">actionable insights</strong> from
-            the team that scales SaaS through paid acquisition.
-          </p>
-
           <div className="mt-8">
             <Link
               href="/partner"
@@ -142,6 +136,12 @@ export default function WorkshopsPage() {
               I&apos;m Ready to Scale
             </Link>
           </div>
+
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-[var(--muted)]">
+            An interactive workshop where you get personalized,{' '}
+            <strong className="font-semibold text-[var(--ink)]">actionable insights</strong> from
+            the team that scales SaaS through paid acquisition.
+          </p>
         </div>
       </section>
 

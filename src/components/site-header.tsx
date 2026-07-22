@@ -20,14 +20,14 @@ export function SiteHeader() {
   return (
     <>
       {/* Announcement bar */}
-      <div className="bg-[var(--dark)]">
+      <div className="bg-[#d4af37]">
         <div className="container-page flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2.5 text-center text-xs sm:text-sm">
-          <span className="rounded-sm bg-[#d4af37] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-black">
+          <span className="rounded-sm bg-[#c1121f] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
             New
           </span>
-          <span className="font-semibold text-white">
+          <span className="font-semibold text-[var(--ink)]">
             Lyfted 2026: Free live workshop for SaaS founders:{' '}
-            <Link href="/#roadmap" className="font-normal text-white/70 hover:text-white">
+            <Link href="/workshops" className="font-normal text-[var(--ink)]/70 hover:text-[var(--ink)]">
               find out if you&apos;re a fit &nbsp;&rarr;
             </Link>
           </span>
