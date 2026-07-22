@@ -1,17 +1,8 @@
-import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
 import { CTASection } from '@/components/ui/hero-dithering-card'
 import { DitheringBackground } from '@/components/ui/dithering-bg'
-
-const navLinks: { label: string; caret?: boolean }[] = [
-  { label: 'Workshops' },
-  { label: 'Courses', caret: true },
-  { label: 'Books' },
-  { label: 'Media', caret: true },
-  { label: 'Partner With Us' },
-  { label: 'About the Firm' },
-  { label: 'Careers' },
-]
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
 
 const faqs = [
   {
@@ -35,45 +26,7 @@ const faqs = [
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      {/* Announcement bar */}
-      <div className="bg-[var(--dark)]">
-        <div className="container-page flex items-center justify-center gap-2 py-2.5 text-center text-xs sm:text-sm">
-          <span className="rounded-sm bg-[#d4af37] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-black">
-            New
-          </span>
-          <span className="font-semibold text-white">
-            2026 Scaling Workshop Dates Announced:{' '}
-            <a href="#roadmap" className="font-normal text-white/70 hover:text-white">
-              Find out if you are a fit &nbsp;&rarr;
-            </a>
-          </span>
-        </div>
-      </div>
-
-      {/* Nav */}
-      <header className="bg-[var(--dark)]">
-        <nav className="container-page flex items-center justify-between py-4">
-          <a href="#" className="flex items-center">
-            <Image src="/UPLYFTLOGO.png" alt="UpLyft" width={130} height={34} className="h-8 w-auto" priority />
-          </a>
-          <ul className="hidden items-center gap-6 lg:flex">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href="#"
-                  className="flex items-center gap-1 text-[13px] font-medium text-white/85 transition-colors hover:text-white"
-                >
-                  {link.label}
-                  {link.caret && <ChevronDown className="h-3.5 w-3.5" />}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a href="#roadmap" className="hidden rounded-full bg-white/10 px-5 py-2 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:bg-white/20 sm:inline-flex">
-            Get Started
-          </a>
-        </nav>
-      </header>
+      <SiteHeader />
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -171,28 +124,7 @@ export default function HomePage() {
       {/* Dithering CTA card */}
       <CTASection />
 
-      {/* Footer */}
-      <footer className="border-t border-black/10 bg-[var(--dark)] py-12 text-white">
-        <div className="container-page flex flex-col gap-8">
-          <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-            <Image src="/UPLYFTLOGO.png" alt="UpLyft" width={120} height={30} className="h-7 w-auto" />
-            <ul className="flex flex-wrap gap-x-6 gap-y-2">
-              {['Workshops', 'Courses', 'Books', 'Careers', 'Privacy', 'Terms'].map((l) => (
-                <li key={l}>
-                  <a href="#" className="text-[13px] text-white/70 transition-colors hover:text-white">
-                    {l}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <p className="max-w-4xl text-xs leading-relaxed text-white/40">
-            Results are not typical and are not a guarantee of success. Your results will
-            vary depending on education, effort, application, experience, and background.
-            © {new Date().getFullYear()} UpLyft. All Rights Reserved.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   )
 }
