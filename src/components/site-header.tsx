@@ -8,7 +8,7 @@ import { ChevronDown, Menu, X } from 'lucide-react'
 const navLinks: { label: string; href: string; caret?: boolean }[] = [
   { label: 'Workshops', href: '/workshops' },
   { label: 'Courses', href: '#', caret: true },
-  { label: 'Media', href: '#', caret: true },
+  { label: 'Media', href: '/media' },
   { label: 'Partner With Us', href: '/partner' },
   { label: 'About the Firm', href: '/firm' },
   { label: 'Careers', href: '#' },
@@ -26,7 +26,7 @@ export function SiteHeader() {
             New
           </span>
           <span className="font-semibold text-[var(--ink)]">
-            Lyfted 2026: Free live workshop for SaaS founders:{' '}
+            Free live workshop for SaaS founders looking to launch paid ads:{' '}
             <Link href="/workshops" className="font-normal text-[var(--ink)]/70 hover:text-[var(--ink)]">
               find out if you&apos;re a fit &nbsp;&rarr;
             </Link>

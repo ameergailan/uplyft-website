@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronDown } from 'lucide-react'
 import { CTASection } from '@/components/ui/hero-dithering-card'
 import { DitheringBackground } from '@/components/ui/dithering-bg'
@@ -107,9 +108,18 @@ export default function HomePage() {
       {/* About Our Founders */}
       <section className="border-t border-black/10 py-20 lg:py-28">
         <div className="container-page grid items-center gap-12 lg:grid-cols-2">
-          <div className="relative order-2 mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border border-black/10 bg-gradient-to-br from-[#e4e3df] to-[#cfceca] lg:order-1">
-            <div className="absolute bottom-5 left-0 right-0 text-center text-xs uppercase tracking-[0.25em] text-[var(--muted)]">
-              Ameer &amp; Abed
+          <div className="relative order-2 mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl border border-black/10 bg-gradient-to-br from-[#e4e3df] to-[#cfceca] sm:max-w-lg lg:order-1 lg:max-w-xl">
+            <Image
+              src="/team/abed-ameer.png"
+              alt="Abed and Ameer, co-founders of UpLyft"
+              fill
+              className="object-cover"
+              style={{ objectPosition: 'center 38%' }}
+              sizes="(max-width: 640px) 448px, (max-width: 1024px) 512px, 576px"
+              priority
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent px-4 pb-5 pt-12 text-center text-xs uppercase tracking-[0.25em] text-white/90">
+              Abed &amp; Ameer
             </div>
           </div>
           <div className="order-1 lg:order-2">
@@ -117,18 +127,20 @@ export default function HomePage() {
               About Our Founders
             </p>
             <h2 className="mt-3 text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">
-              Ameer &amp; Abed
+              Abed &amp; Ameer
             </h2>
             <div className="mt-6 space-y-4 leading-relaxed text-[var(--muted)]">
               <p>
-                Ameer and Abed are the co-founders of UpLyft. They built the company around
-                a simple idea: give founders the exact systems, processes, and playbooks
-                needed to scale a business without guesswork.
+                Abed and Ameer are the co-founders of UpLyft. In 2024 they bootstrapped
+                their own SaaS from zero and scaled it through paid ads, testing offers,
+                creative, funnels, and tracking until they had a repeatable way to grow
+                profitably.
               </p>
               <p>
-                Their mission is to make real business education accessible to everyone,
-                from first user to sustainable, profitable scale. Every framework UpLyft
-                teaches is one they use inside their own portfolio.
+                Once those systems worked inside their own product, they built UpLyft to
+                give other SaaS founders the same playbooks: the exact processes they use
+                to turn ad spend into sustainable, profitable scale. Every framework UpLyft
+                teaches is one they run in their own stack first.
               </p>
             </div>
           </div>

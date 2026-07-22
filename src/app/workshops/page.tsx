@@ -108,8 +108,8 @@ export default function WorkshopsPage() {
             Still guessing your way through paid ads?
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-[var(--muted)] sm:text-xl">
-            Join the UpLyft Scaling Workshop: the exact frameworks we use to launch and scale
-            SaaS.
+            Join the UpLyft Scaling Workshop: the exact paid ads frameworks we use to launch and
+            scale SaaS.
           </p>
 
           {/* VSL placeholder: clean, no grid overlay */}

@@ -21,6 +21,8 @@ const leadership: {
   /** CSS scale for object-cover crop (1 = default). */
   zoom?: number
   objectPosition?: string
+  /** Horizontal pan after zoom (%). Negative shifts subject right in frame. */
+  panX?: number
 }[] = [
   {
     name: 'Abed',
@@ -51,8 +53,9 @@ const leadership: {
     title: 'Chief Strategy Officer',
     initials: 'A',
     image: '/team/abdullah.png',
-    zoom: 1.65,
+    zoom: 1.98,
     objectPosition: 'center 18%',
+    panX: 6,
   },
 ]
 
@@ -129,7 +132,9 @@ export default function FirmPage() {
                         className="object-cover"
                         style={{
                           objectPosition: person.objectPosition ?? 'center 20%',
-                          transform: person.zoom ? `scale(${person.zoom})` : undefined,
+                          transform: person.zoom
+                            ? `scale(${person.zoom})${person.panX ? ` translateX(${person.panX}%)` : ''}`
+                            : undefined,
                         }}
                         sizes="(max-width: 640px) 150px, 50vw"
                       />
