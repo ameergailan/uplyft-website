@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://uplyftdigital.co'),
   title: 'UpLyft — Scale Your SaaS Beyond Limits',
   description:
-    'Learn from the team that has scaled a SaaS to over 7 figures in annual revenue through paid ads.',
+    'Learn from the team that has scaled software to over 7 figures in annual revenue through paid ads.',
 }
 
 export default function RootLayout({

@@ -49,7 +49,7 @@ export default function HomePage() {
             Do You Want to Scale Your SaaS?
           </h1>
           <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-            Learn from the team that has scaled a SaaS to over{' '}
+            Learn from the team that has scaled software to over{' '}
             <span className="font-semibold text-[var(--ink)]">7 figures</span> in annual
             revenue through paid ads.
           </p>
