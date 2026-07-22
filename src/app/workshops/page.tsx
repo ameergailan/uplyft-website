@@ -98,11 +98,10 @@ export default function WorkshopsPage() {
         />
 
         <div className="container-page relative py-16 text-center lg:py-24">
-          <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em]">
-            <span className="rounded-sm bg-[#c1121f] px-2 py-1 text-white">
+          <p className="flex justify-center">
+            <span className="rounded-sm bg-[#c1121f] px-2 py-1 text-xs font-bold uppercase tracking-[0.2em] text-white">
               Lyfted
             </span>
-            <span className="text-[var(--ink)]">Scaling Workshop</span>
           </p>
 
           <h1 className="mx-auto mt-6 max-w-4xl text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
