@@ -83,12 +83,12 @@ export function PaperDesignBackground({
 
     return {
       back: '#00000000',
-      front: mix('#8B6914', '#D4AF37', t * 0.35),
+      front: mix('#D4AF37', '#EDE4C4', t * 0.22),
       bg: '#ececea',
       speed: 0.22 + t * 0.28,
       px: Math.round(2 + t * 2),
       scale: 1.03 + t * 0.12,
-      glow: 'radial-gradient(60% 40% at 50% 40%, rgba(212,175,55,0.12), transparent 70%)',
+      glow: 'radial-gradient(60% 40% at 50% 40%, rgba(224,190,76,0.07), transparent 70%)',
     }
   }, [isDark, intensity])
 

@@ -12,7 +12,7 @@ export function SiteFooter() {
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {[
               { label: 'Workshops', href: '/workshops' },
-              { label: 'Courses', href: '#' },
+              { label: 'Our Systems', href: '#' },
               { label: 'Careers', href: '#' },
               { label: 'Privacy', href: '/privacy' },
               { label: 'Terms', href: '/terms' },

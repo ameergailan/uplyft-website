@@ -113,7 +113,7 @@ function SocialCard({
 export function MediaPageContent() {
   return (
     <div className="relative min-h-screen">
-      <PaperDesignBackground themeMode="light" intensity={0.85} parallax />
+      <PaperDesignBackground themeMode="light" intensity={0.72} parallax />
 
       <div className="relative z-10">
         <SiteHeader />

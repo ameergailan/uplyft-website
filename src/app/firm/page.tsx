@@ -50,7 +50,7 @@ const leadership: {
   },
   {
     name: 'Abdullah',
-    title: 'Chief Strategy Officer',
+    title: 'Chief Growth Officer',
     initials: 'A',
     image: '/team/abdullah.png',
     zoom: 1.98,
@@ -59,21 +59,32 @@ const leadership: {
   },
 ]
 
-const timeline = [
+const timeline: {
+  period: string
+  heading: string
+  body: string
+  image?: string
+  caption?: string
+  imageFit?: 'cover' | 'contain'
+}[] = [
   {
-    period: '2019 - Present',
-    heading: 'The First Systems',
-    body: "Ameer and Abed started by running paid acquisition for a handful of early-stage SaaS companies. After dozens of campaigns across search and social, they realized the winners weren't the ones with the biggest budgets. They were the ones with the tightest systems. They began documenting every framework: offer, creative, funnel, and follow-up.",
+    period: '2024 - 2025',
+    heading: 'The First Build',
+    image: '/firm/first-build.png',
+    caption: '(ameer fixing a bug during an exam)',
+    body: 'Ameer and Abed started by scaling a SaaS application of their own through paid acquisition. While they were in college for engineering, they spent thousands of dollars of their own money, nearly going broke, learning the craft. This is where they learned to run paid ads for real, testing offers, creative, and funnels across live campaigns until they understood what actually moved growth. Every lesson got documented into a framework they could repeat.',
   },
   {
-    period: '2021 - Present',
-    heading: 'The Acquisition Engine',
-    body: 'Rather than sell one-off services, they packaged their playbooks into a repeatable acquisition engine: the same structure for tracking, creative testing, and payback windows that they use across every account. The model let SaaS founders realize predictable growth without rebuilding their marketing from scratch.',
+    period: '2025 - 2026',
+    heading: 'The First Channels',
+    image: '/firm/first-channels.png',
+    body: "Next, they partnered with a SaaS company doing six figures in ARR that had never run a single paid ad. Over eight months, UpLyft launched their first-ever paid acquisition channels from scratch: Meta, Google, and TikTok, building the tracking, creative, and funnel structure behind each one. The company went on to hit 7 figures in ARR. It proved the systems worked on someone else's business, not just their own.",
   },
   {
-    period: '2023 - Present',
+    period: '2025 - Present',
     heading: 'A Portfolio of Scale',
-    body: 'Today UpLyft operates like a firm, not an agency. The team partners with SaaS companies to install the exact systems, processes, and playbooks needed to scale to 7 figures in annual revenue, sharing in the upside and treating every partner like a portfolio company.',
+    image: '/firm/portfolio-scale.png',
+    body: "That brings us to now: a portfolio of SaaS companies UpLyft works with to install the exact systems, processes, and playbooks needed to scale through paid acquisition. The team operates like a firm, not a one-off agency, partnering closely with each company and treating every account like it's our own.",
   },
 ]
 
@@ -170,14 +181,27 @@ export default function FirmPage() {
                 key={item.period}
                 className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
               >
-                <div
-                  className={`relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#1c1e24] to-[#0e1014] ${
-                    i % 2 === 1 ? 'lg:order-2' : ''
-                  }`}
-                >
-                  <span className="absolute inset-0 flex items-center justify-center select-none text-6xl font-extrabold text-white/5 sm:text-7xl">
-                    UpLyft
-                  </span>
+                <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#1c1e24] to-[#0e1014]">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.caption ?? item.heading}
+                        fill
+                        className={item.imageFit === 'contain' ? 'object-contain p-8' : 'object-cover'}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    ) : (
+                      <span className="absolute inset-0 flex items-center justify-center select-none text-6xl font-extrabold text-white/5 sm:text-7xl">
+                        UpLyft
+                      </span>
+                    )}
+                  </div>
+                  {item.caption && (
+                    <p className="mt-3 text-center text-xs italic text-white/40 sm:text-left">
+                      {item.caption}
+                    </p>
+                  )}
                 </div>
                 <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
                   <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#d4af37]">

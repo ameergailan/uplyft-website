@@ -114,7 +114,7 @@ export default function HomePage() {
               alt="Abed and Ameer, co-founders of UpLyft"
               fill
               className="object-cover"
-              style={{ objectPosition: 'center 38%' }}
+              style={{ objectPosition: 'center 42%' }}
               sizes="(max-width: 640px) 448px, (max-width: 1024px) 512px, 576px"
               priority
             />
