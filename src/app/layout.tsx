@@ -1,49 +1,14 @@
-/**
- * Root layout component for the DSGNLAB website recreation
- * Provides the base HTML structure and global styling
- */
-
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import CustomCursor from '@/components/custom-cursor'
-import { GoogleAnalytics } from '@next/third-parties/google'
-import Script from 'next/script'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://uplyftinc.com'),
-  title: 'UpLyft - Scale Your SaaS App Beyond Limits',
-  description: 'Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability. From user acquisition to team management, we help SaaS apps achieve sustainable scale.',
-  keywords: 'SaaS growth, SaaS scaling, business consulting, SaaS operations, revenue growth, team management, user retention',
-  authors: [{ name: 'UpLyft' }],
-  icons: {
-    icon: '/LLogoo.png',
-    shortcut: '/LLogoo.png',
-    apple: '/LLogoo.png',
-  },
-  openGraph: {
-    title: 'UpLyft - Scale Your SaaS App Beyond Limits',
-    description: 'Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability.',
-    type: 'website',
-    locale: 'en_US',
-    images: [
-      {
-        url: '/LLogoo.png',
-        width: 1200,
-        height: 630,
-        alt: 'UpLyft Logo',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'UpLyft - Scale Your SaaS App Beyond Limits',
-    description: 'Transform your SaaS app with proven systems, processes, and strategies that drive consistent growth and profitability.',
-    images: ['/LLogoo.png'],
-  },
-  robots: 'index, follow',
+  metadataBase: new URL('https://uplyftdigital.co'),
+  title: 'UpLyft — Scale Your SaaS Beyond Limits',
+  description:
+    'Learn from the team that has scaled a SaaS to over 7 figures in annual revenue through paid ads.',
 }
 
 export default function RootLayout({
@@ -52,49 +17,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        {/* Favicon */}
-        <link rel="icon" href="/LLogoo.png" type="image/png" />
-        <link rel="shortcut icon" href="/LLogoo.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/LLogoo.png" />
-        
-        {/* Meta Pixel Code */}
-        <Script
-          id="meta-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '2113688009157991');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
-        <noscript>
-          <img 
-            height="1" 
-            width="1" 
-            style={{display: 'none'}}
-            src="https://www.facebook.com/tr?id=2113688009157991&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
-      </head>
-      <body className={`${inter.className} antialiased`}>
-        <div className="min-h-screen bg-white">
-          <CustomCursor />
-          {children}
-        </div>
-        <GoogleAnalytics gaId="G-WSWP8K1C9V" />
-      </body>
+    <html lang="en">
+      <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   )
 }

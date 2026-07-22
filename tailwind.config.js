@@ -13,6 +13,19 @@ module.exports = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        border: 'var(--border)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+        muted: {
+          DEFAULT: '#e5e5e0',
+          foreground: 'var(--muted-foreground)',
+        },
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out',
