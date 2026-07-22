@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { LiquidMetalBackground } from '@/components/ui/liquid-metal-bg'
+import { GradientBackground } from '@/components/ui/noisy-gradient-backgrounds'
+// AuroraBackground kept at @/components/ui/aurora-background for later reuse
 
 export const metadata: Metadata = {
   title: 'About the Firm | UpLyft',
@@ -25,6 +27,7 @@ const leadership: {
     title: 'Managing Partner, Founder',
     initials: 'A',
     image: '/team/abed.png',
+    zoom: 1.2,
     objectPosition: 'center 18%',
   },
   {
@@ -48,7 +51,7 @@ const leadership: {
     title: 'Chief Strategy Officer',
     initials: 'A',
     image: '/team/abdullah.png',
-    zoom: 1.5,
+    zoom: 1.65,
     objectPosition: 'center 18%',
   },
 ]
@@ -77,50 +80,70 @@ export default function FirmPage() {
       <SiteHeader />
 
       {/* Leadership */}
-      <section className="relative overflow-hidden py-20 lg:py-28">
-        {/* Gold dotted background */}
+      <section className="relative isolate overflow-hidden border-b border-black/10 py-16 sm:py-20 lg:py-28">
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <GradientBackground
+            gradientOrigin="bottom-middle"
+            colors={[
+              { color: 'rgba(212,175,55,1)', stop: '0%' },
+              { color: 'rgba(224,190,90,1)', stop: '25%' },
+              { color: 'rgba(232,210,140,1)', stop: '50%' },
+              { color: 'rgba(240,230,200,1)', stop: '75%' },
+              { color: 'rgba(236,236,234,1)', stop: '100%' },
+            ]}
+            noiseIntensity={1.0}
+            noisePatternSize={90}
+            noisePatternRefreshInterval={2}
+            noisePatternAlpha={40}
+          />
+        </div>
+        {/* Soft veil so dark type stays readable on the noisy gradient */}
         <div
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 -z-10"
           style={{
-            backgroundImage: 'radial-gradient(#d4af37 1.1px, transparent 1.2px)',
-            backgroundSize: '22px 22px',
+            background:
+              'radial-gradient(ellipse 70% 60% at 50% 35%, rgba(236,236,234,0.55) 0%, rgba(236,236,234,0.2) 55%, transparent 100%)',
           }}
         />
 
-        <div className="container-page relative z-10 text-center">
+        <div className="container-page relative text-center">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#d4af37]">
             About the Firm
           </p>
-          <h1 className="mx-auto mt-4 max-w-3xl text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
+          <h1 className="mx-auto mt-4 max-w-3xl text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
             Meet Our Leadership Team
           </h1>
 
-          <div className="mx-auto mt-14 grid max-w-3xl gap-8 sm:grid-cols-2">
+          <div className="mx-auto mt-12 grid max-w-3xl grid-cols-2 gap-5 sm:mt-14 sm:gap-8">
             {leadership.map((person) => (
-              <div key={person.name} className="text-left">
-                <div className="relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-2xl border border-black/10 bg-gradient-to-br from-[#e4e3df] to-[#cfceca]">
-                  {person.image ? (
-                    <Image
-                      src={person.image}
-                      alt={person.name}
-                      fill
-                      className="object-cover"
-                      style={{
-                        objectPosition: person.objectPosition ?? 'center 20%',
-                        transform: person.zoom ? `scale(${person.zoom})` : undefined,
-                      }}
-                      sizes="(max-width: 640px) 100vw, 50vw"
-                    />
-                  ) : (
-                    <span className="mb-0 select-none text-[9rem] font-extrabold leading-none text-black/5">
-                      {person.initials}
-                    </span>
-                  )}
+              <div key={person.name} className="mx-auto w-full max-w-[150px] text-center sm:max-w-none sm:text-left">
+                {/* Frame: thick dark border + gold accent bar peeking at the bottom */}
+                <div className="relative mx-auto w-full max-w-[150px] sm:max-w-none">
+                  <div className="absolute -bottom-1.5 left-1 right-1 h-3 rounded-sm bg-[#d4af37] sm:-bottom-2 sm:h-4" />
+                  <div className="relative aspect-square overflow-hidden border-[5px] border-[#14161d] bg-gradient-to-br from-[#e4e3df] to-[#cfceca] sm:aspect-[4/5] sm:border-[6px]">
+                    {person.image ? (
+                      <Image
+                        src={person.image}
+                        alt={person.name}
+                        fill
+                        className="object-cover"
+                        style={{
+                          objectPosition: person.objectPosition ?? 'center 20%',
+                          transform: person.zoom ? `scale(${person.zoom})` : undefined,
+                        }}
+                        sizes="(max-width: 640px) 150px, 50vw"
+                      />
+                    ) : (
+                      <span className="absolute inset-0 flex items-center justify-center select-none text-6xl font-extrabold leading-none text-black/5 sm:text-[9rem]">
+                        {person.initials}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <h3 className="mt-5 text-xl font-extrabold uppercase tracking-tight text-[var(--ink)]">
+                <h3 className="mt-5 text-sm font-extrabold uppercase tracking-tight text-[var(--ink)] sm:mt-6 sm:text-xl">
                   {person.name}
                 </h3>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--muted)]">
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--ink)] sm:text-xs sm:tracking-[0.15em]">
                   {person.title}
                 </p>
               </div>

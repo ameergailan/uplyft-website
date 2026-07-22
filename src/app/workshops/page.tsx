@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ChevronDown, Play } from 'lucide-react'
 import { SiteFooter } from '@/components/site-footer'
 import { FlickeringGrid } from '@/components/ui/flickering-grid'
+import { ShaderAnimation } from '@/components/ui/shader-animation'
 
 export const metadata: Metadata = {
   title: 'Scaling Workshop | UpLyft',
@@ -97,8 +98,11 @@ export default function WorkshopsPage() {
         />
 
         <div className="container-page relative py-16 text-center lg:py-24">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d4af37]">
-            Lyfted: Scaling Workshop
+          <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em]">
+            <span className="rounded-sm bg-[#c1121f] px-2 py-1 text-white">
+              Lyfted
+            </span>
+            <span className="text-[var(--ink)]">Scaling Workshop</span>
           </p>
 
           <h1 className="mx-auto mt-6 max-w-4xl text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
@@ -175,26 +179,31 @@ export default function WorkshopsPage() {
       </section>
 
       {/* Details / FAQ accordion */}
-      <section className="relative overflow-hidden border-t border-black/10 py-20 lg:py-28">
+      <section className="relative isolate overflow-hidden border-t border-black/10 bg-black py-20 lg:py-28">
+        <div className="pointer-events-none absolute inset-0 -z-10 opacity-70">
+          <ShaderAnimation />
+        </div>
+        {/* Soft veil so FAQ text stays readable */}
         <div
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 -z-10"
           style={{
-            backgroundImage: 'radial-gradient(#d4af37 1.1px, transparent 1.2px)',
-            backgroundSize: '22px 22px',
+            background:
+              'radial-gradient(ellipse 75% 65% at 50% 40%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0.15) 100%)',
           }}
         />
-        <div className="container-page relative z-10 max-w-3xl">
-          <h2 className="text-center text-3xl font-extrabold uppercase tracking-tight sm:text-4xl">
+
+        <div className="container-page relative max-w-3xl">
+          <h2 className="text-center text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">
             Workshop details
           </h2>
-          <div className="mt-12 divide-y divide-black/10 border-y border-black/10">
+          <div className="mt-12 divide-y divide-white/15 border-y border-white/15">
             {details.map((item) => (
               <details key={item.q} className="group py-5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-lg font-semibold">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-lg font-semibold text-white">
                   {item.q}
-                  <ChevronDown className="h-5 w-5 shrink-0 text-[var(--muted)] transition-transform duration-200 group-open:rotate-180" />
+                  <ChevronDown className="h-5 w-5 shrink-0 text-white/50 transition-transform duration-200 group-open:rotate-180" />
                 </summary>
-                <p className="relative mt-4 bg-[var(--bg)] leading-relaxed text-[var(--muted)]">
+                <p className="relative mt-4 rounded-md bg-black/70 px-3 py-2 leading-relaxed text-white/70 backdrop-blur-sm">
                   {item.a}
                 </p>
               </details>
