@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { CTASection } from '@/components/ui/hero-dithering-card'
 import { DitheringBackground } from '@/components/ui/dithering-bg'
@@ -7,19 +8,27 @@ import { SiteFooter } from '@/components/site-footer'
 const faqs = [
   {
     q: 'What is the UpLyft Scaling Workshop?',
-    a: "It's not an event — it's a workshop. Expect zero motivational talks; we get tactical. On day one, we break down how we fast-track growth, recruit top talent, and the frameworks we use for high-return decision making. On day two, we get hands-on in small groups, meeting with our team across marketing, sales, people, and profit to get personalized help.",
+    a: "It's not a motivational event, it's a working session. We get tactical. We break down exactly how we launch and scale SaaS campaigns through paid acquisition: the ad frameworks, funnel structure, and tracking we use to turn spend into profitable growth. You leave with the actual playbook, not a highlight reel.",
   },
   {
-    q: 'How do I register for a workshop?',
-    a: 'To register for the UpLyft Scaling Workshop, we require you to meet a few minimum requirements. Book a call with our team and we will walk you through them.',
+    q: 'How do I register?',
+    a: "Registration is by application only. Fill out the application and our team will reach out if you're a fit. Not everyone who applies gets in. The room is kept small on purpose.",
   },
   {
-    q: 'Who is the right fit for a workshop?',
-    a: 'Book a call to speak with our concierge team. We require you to meet some minimum entry requirements to be in the room — including being active in business, meeting a revenue threshold, and operating in an industry where we are confident we can provide value.',
+    q: 'Who is the right fit?',
+    a: "Founders with a real software product already built or in market. You don't need to be at a specific revenue number, but this isn't for idea-stage or pre-product founders. If you've got live software and you're serious about scaling it through paid acquisition, apply. We keep the room tight so every seat goes to someone we can actually move the needle for.",
   },
   {
-    q: 'Who are the main speakers?',
-    a: 'You will be introduced to the team that actively runs our portfolio, plus breakout sessions with UpLyft subject-matter experts so no question is left unanswered by the time you leave.',
+    q: 'Who runs it?',
+    a: (
+      <>
+        You&apos;ll work directly with the{' '}
+        <Link href="/firm" className="font-semibold text-[var(--ink)] underline underline-offset-2 hover:text-[#d4af37]">
+          UpLyft team
+        </Link>{' '}
+        that runs paid acquisition for our clients, plus focused breakouts on creative, funnels, and tracking, so you leave with your specific questions answered.
+      </>
+    ),
   },
 ]
 
@@ -29,23 +38,23 @@ export default function HomePage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative isolate overflow-hidden">
         {/* Animated dithering background (light background instead of black) */}
-        <div className="pointer-events-none absolute inset-0 z-0">
+        <div className="pointer-events-none absolute inset-0 -z-10">
           <DitheringBackground />
         </div>
 
         {/* Soften the effect behind the text */}
         <div
-          className="pointer-events-none absolute inset-0 z-[1]"
+          className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
               'radial-gradient(ellipse 58% 52% at 50% 44%, var(--bg) 0%, rgba(236,236,234,0.78) 38%, rgba(236,236,234,0.35) 60%, transparent 78%)',
           }}
         />
 
-        <div className="container-page relative z-10 py-24 text-center lg:py-32">
-          <h1 className="mx-auto max-w-4xl text-4xl font-extrabold uppercase leading-[1.02] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-7xl">
+        <div className="container-page relative py-24 text-center lg:py-32">
+          <h1 className="mx-auto max-w-4xl text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-7xl">
             Do You Want to Scale Your SaaS?
           </h1>
           <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
@@ -54,7 +63,10 @@ export default function HomePage() {
             revenue through paid ads.
           </p>
           <div className="mt-10">
-            <a href="#roadmap" className="btn-gold border-2 border-black px-12 py-5 text-lg sm:text-xl">
+            <a
+              href="#roadmap"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border-2 border-black bg-primary px-12 py-5 text-lg font-bold uppercase tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:scale-105 active:scale-95 hover:ring-4 hover:ring-primary/20 sm:text-xl"
+            >
               I&apos;m Ready to Scale
             </a>
           </div>
@@ -67,7 +79,7 @@ export default function HomePage() {
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            backgroundImage: 'radial-gradient(#c4c4be 1.1px, transparent 1.2px)',
+            backgroundImage: 'radial-gradient(#d4af37 1.1px, transparent 1.2px)',
             backgroundSize: '22px 22px',
           }}
         />
@@ -83,7 +95,9 @@ export default function HomePage() {
                   {faq.q}
                   <ChevronDown className="h-5 w-5 shrink-0 text-[var(--muted)] transition-transform duration-200 group-open:rotate-180" />
                 </summary>
-                <p className="mt-4 leading-relaxed text-[var(--muted)]">{faq.a}</p>
+                <p className="relative mt-4 bg-[var(--bg)] leading-relaxed text-[var(--muted)]">
+                  {faq.a}
+                </p>
               </details>
             ))}
           </div>
@@ -112,7 +126,7 @@ export default function HomePage() {
                 needed to scale a business without guesswork.
               </p>
               <p>
-                Their mission is to make real business education accessible to everyone —
+                Their mission is to make real business education accessible to everyone,
                 from first user to sustainable, profitable scale. Every framework UpLyft
                 teaches is one they use inside their own portfolio.
               </p>

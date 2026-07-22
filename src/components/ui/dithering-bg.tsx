@@ -7,7 +7,7 @@ const Dithering = lazy(() =>
 )
 
 type DitheringBackgroundProps = {
-  /** Empty/background color — defaults to the site's light background (replaces the black from the reference). */
+  /** Empty/background color: defaults to the site's light background (replaces the black from the reference). */
   colorBack?: string
   /** Dot/ink color. */
   colorFront?: string
@@ -24,17 +24,19 @@ export function DitheringBackground({
   className,
 }: DitheringBackgroundProps) {
   return (
-    <Suspense fallback={null}>
-      <Dithering
-        colorBack={colorBack}
-        colorFront={colorFront}
-        shape="warp"
-        type="4x4"
-        speed={speed}
-        scale={scale}
-        className={className ?? 'size-full'}
-        minPixelRatio={1}
-      />
-    </Suspense>
+    <div className="absolute inset-0 overflow-hidden">
+      <Suspense fallback={null}>
+        <Dithering
+          colorBack={colorBack}
+          colorFront={colorFront}
+          shape="warp"
+          type="4x4"
+          speed={speed}
+          scale={scale}
+          className={className ?? 'size-full'}
+          minPixelRatio={1}
+        />
+      </Suspense>
+    </div>
   )
 }

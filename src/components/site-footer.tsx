@@ -10,11 +10,17 @@ export function SiteFooter() {
             <Image src="/UPLYFTLOGO.png" alt="UpLyft" width={120} height={30} className="h-7 w-auto" />
           </Link>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {['Workshops', 'Courses', 'Books', 'Careers', 'Privacy', 'Terms'].map((l) => (
-              <li key={l}>
-                <a href="#" className="text-[13px] text-white/70 transition-colors hover:text-white">
-                  {l}
-                </a>
+            {[
+              { label: 'Workshops', href: '/workshops' },
+              { label: 'Courses', href: '#' },
+              { label: 'Careers', href: '#' },
+              { label: 'Privacy', href: '/privacy' },
+              { label: 'Terms', href: '/terms' },
+            ].map((l) => (
+              <li key={l.label}>
+                <Link href={l.href} className="text-[13px] text-white/70 transition-colors hover:text-white">
+                  {l.label}
+                </Link>
               </li>
             ))}
           </ul>

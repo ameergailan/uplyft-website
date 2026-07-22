@@ -43,7 +43,7 @@ export function CTASection() {
             </div>
 
             {/* Headline */}
-            <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-foreground mb-8 leading-[1.05]">
+            <h2 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight text-foreground mb-8 leading-[1.05]">
               Scaling <br />
               <span className="text-foreground/80">Roadmap</span>
             </h2>
