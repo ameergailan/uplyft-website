@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SiteFooter } from '@/components/site-footer'
+import { PartnerPageBackground } from '@/components/partner-page-background'
 
 export const metadata: Metadata = {
   title: 'Partner With Us | UpLyft',
@@ -22,21 +23,7 @@ export default function PartnerPage() {
       </div>
 
       <section className="relative overflow-hidden border-b border-black/10">
-        {/* Soft dotted atmosphere: kept light so the form area stays clean */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: 'radial-gradient(#d4af37 1.1px, transparent 1.2px)',
-            backgroundSize: '22px 22px',
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 70% 60% at 50% 30%, var(--bg) 0%, rgba(236,236,234,0.85) 45%, transparent 75%)',
-          }}
-        />
+        <PartnerPageBackground />
 
         <div className="container-page relative z-10 mx-auto max-w-2xl py-16 text-center lg:py-24">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d4af37]">
@@ -69,17 +56,17 @@ export default function PartnerPage() {
             </div>
           </div>
 
-          <p className="mt-5 text-left text-[11px] leading-relaxed text-[var(--muted)]">
+          <p className="mt-5 text-left text-[11px] leading-relaxed text-white">
             By providing your information today, you are giving consent for us or our partners
             to contact you by mail, phone, text, or email using the data provided. We do not sell
             your personal information to other companies, and you can withdraw consent at any
             time. Consent is not a condition of any purchase. By submitting this form, you agree
             to our{' '}
-            <Link href="/privacy" className="underline underline-offset-2 hover:text-[var(--ink)]">
+            <Link href="/privacy" className="text-white/90 underline underline-offset-2 hover:text-white">
               Privacy Policy
             </Link>{' '}
             and{' '}
-            <Link href="/terms" className="underline underline-offset-2 hover:text-[var(--ink)]">
+            <Link href="/terms" className="text-white/90 underline underline-offset-2 hover:text-white">
               Terms of Service
             </Link>
             .

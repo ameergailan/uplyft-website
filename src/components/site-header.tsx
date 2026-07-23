@@ -7,7 +7,7 @@ import { ChevronDown, Menu, X } from 'lucide-react'
 
 const navLinks: { label: string; href: string; caret?: boolean }[] = [
   { label: 'Workshops', href: '/workshops' },
-  { label: 'Our Systems', href: '#', caret: true },
+  { label: 'Our Systems', href: '/systems' },
   { label: 'Media', href: '/media' },
   { label: 'Partner With Us', href: '/partner' },
   { label: 'About the Firm', href: '/firm' },

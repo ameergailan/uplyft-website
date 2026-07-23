@@ -66,6 +66,7 @@ const timeline: {
   image?: string
   caption?: string
   imageFit?: 'cover' | 'contain' | 'natural'
+  imageBackground?: string
 }[] = [
   {
     period: '2024 - 2025',
@@ -79,6 +80,7 @@ const timeline: {
     heading: 'The First Channels',
     image: '/firm/first-channels.png',
     imageFit: 'natural',
+    imageBackground: 'linear-gradient(to bottom, #ffffff 0%, #d4af37 100%)',
     body: "Next, they partnered with a SaaS company doing six figures in ARR that had never run a single paid ad. Over eight months, UpLyft launched their first-ever paid acquisition channels from scratch: Meta, Google, and TikTok, building the tracking, creative, and funnel structure behind each one. The company went on to hit 7 figures in ARR. It proved the systems worked on someone else's business, not just their own.",
   },
   {
@@ -183,13 +185,23 @@ export default function FirmPage() {
                 className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
               >
                 <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div
-                    className={`relative overflow-hidden rounded-2xl border border-white/10 ${
-                      item.imageFit === 'natural'
-                        ? 'bg-white'
-                        : 'aspect-[16/10] bg-gradient-to-br from-[#1c1e24] to-[#0e1014]'
-                    }`}
-                  >
+                  <div className="relative overflow-hidden rounded-2xl border border-white/10">
+                    {item.imageBackground && (
+                      <div
+                        className="absolute inset-0"
+                        style={{ background: item.imageBackground }}
+                        aria-hidden="true"
+                      />
+                    )}
+                    <div
+                      className={`relative px-4 py-8 ${
+                        item.imageFit === 'natural'
+                          ? item.imageBackground
+                            ? ''
+                            : 'bg-white'
+                          : 'aspect-[16/10] bg-gradient-to-br from-[#1c1e24] to-[#0e1014]'
+                      }`}
+                    >
                     {item.image ? (
                       item.imageFit === 'natural' ? (
                         <Image
@@ -197,7 +209,7 @@ export default function FirmPage() {
                           alt={item.caption ?? item.heading}
                           width={721}
                           height={255}
-                          className="h-auto w-full"
+                          className="relative z-10 h-auto w-full"
                           sizes="(max-width: 1024px) 100vw, 50vw"
                         />
                       ) : (
@@ -216,6 +228,7 @@ export default function FirmPage() {
                         UpLyft
                       </span>
                     )}
+                    </div>
                   </div>
                   {item.caption && (
                     <p className="mt-3 text-center text-xs italic text-white/40 sm:text-left">
