@@ -65,7 +65,7 @@ const timeline: {
   body: string
   image?: string
   caption?: string
-  imageFit?: 'cover' | 'contain'
+  imageFit?: 'cover' | 'contain' | 'natural'
 }[] = [
   {
     period: '2024 - 2025',
@@ -78,6 +78,7 @@ const timeline: {
     period: '2025 - 2026',
     heading: 'The First Channels',
     image: '/firm/first-channels.png',
+    imageFit: 'natural',
     body: "Next, they partnered with a SaaS company doing six figures in ARR that had never run a single paid ad. Over eight months, UpLyft launched their first-ever paid acquisition channels from scratch: Meta, Google, and TikTok, building the tracking, creative, and funnel structure behind each one. The company went on to hit 7 figures in ARR. It proved the systems worked on someone else's business, not just their own.",
   },
   {
@@ -182,15 +183,34 @@ export default function FirmPage() {
                 className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
               >
                 <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#1c1e24] to-[#0e1014]">
+                  <div
+                    className={`relative overflow-hidden rounded-2xl border border-white/10 ${
+                      item.imageFit === 'natural'
+                        ? 'bg-white'
+                        : 'aspect-[16/10] bg-gradient-to-br from-[#1c1e24] to-[#0e1014]'
+                    }`}
+                  >
                     {item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.caption ?? item.heading}
-                        fill
-                        className={item.imageFit === 'contain' ? 'object-contain p-8' : 'object-cover'}
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
+                      item.imageFit === 'natural' ? (
+                        <Image
+                          src={item.image}
+                          alt={item.caption ?? item.heading}
+                          width={721}
+                          height={255}
+                          className="h-auto w-full"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                      ) : (
+                        <Image
+                          src={item.image}
+                          alt={item.caption ?? item.heading}
+                          fill
+                          className={
+                            item.imageFit === 'contain' ? 'object-contain p-8' : 'object-cover'
+                          }
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                      )
                     ) : (
                       <span className="absolute inset-0 flex items-center justify-center select-none text-6xl font-extrabold text-white/5 sm:text-7xl">
                         UpLyft
