@@ -56,17 +56,17 @@ export default function PartnerPage() {
             </div>
           </div>
 
-          <p className="mt-5 text-left text-[11px] leading-relaxed text-white">
+          <p className="mt-5 text-left text-[11px] leading-relaxed text-[var(--muted)]">
             By providing your information today, you are giving consent for us or our partners
             to contact you by mail, phone, text, or email using the data provided. We do not sell
             your personal information to other companies, and you can withdraw consent at any
             time. Consent is not a condition of any purchase. By submitting this form, you agree
             to our{' '}
-            <Link href="/privacy" className="text-white/90 underline underline-offset-2 hover:text-white">
+            <Link href="/privacy" className="underline underline-offset-2 hover:text-[var(--ink)]">
               Privacy Policy
             </Link>{' '}
             and{' '}
-            <Link href="/terms" className="text-white/90 underline underline-offset-2 hover:text-white">
+            <Link href="/terms" className="underline underline-offset-2 hover:text-[var(--ink)]">
               Terms of Service
             </Link>
             .

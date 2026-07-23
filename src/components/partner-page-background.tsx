@@ -1,28 +1,18 @@
-'use client'
-
-import { DiaGradient, UPLYFT_GOLD_STOPS } from '@/components/ui/dia-gradient'
-
 export function PartnerPageBackground() {
   return (
-    <>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 top-[20%]">
-        <DiaGradient
-          stops={UPLYFT_GOLD_STOPS}
-          bars={11}
-          blur={18}
-          peak={0.95}
-          valley={0.5}
-          riseMs={1200}
-          animateBars
-        />
-      </div>
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, var(--bg) 0%, rgba(236,236,234,0.5) 30%, rgba(236,236,234,0.08) 65%, transparent 100%)',
-        }}
-      />
-    </>
+    <div
+      className="pointer-events-none absolute inset-0"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(212, 175, 55, 0.42) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(212, 175, 55, 0.42) 1px, transparent 1px)
+        `,
+        backgroundSize: '44px 44px',
+        WebkitMaskImage:
+          'radial-gradient(ellipse 70% 65% at 50% 36%, transparent 18%, rgba(0,0,0,0.35) 42%, black 78%)',
+        maskImage:
+          'radial-gradient(ellipse 70% 65% at 50% 36%, transparent 18%, rgba(0,0,0,0.35) 42%, black 78%)',
+      }}
+    />
   )
 }

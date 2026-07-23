@@ -46,6 +46,38 @@ function bellHeights(n: number, peak: number, valley: number): number[] {
   return out
 }
 
+function waveBarKeyframes(i: number, barCount: number, h: number) {
+  const spread = 0.32
+  const pulse = 0.045
+  const denom = Math.max(barCount - 1, 1)
+  const ltrT = 0.06 + (i / denom) * spread
+  const rtlT = 0.54 + ((barCount - 1 - i) / denom) * spread
+  const times = [
+    0,
+    Math.max(0, ltrT - pulse),
+    ltrT,
+    Math.min(0.49, ltrT + pulse),
+    0.5,
+    Math.max(0.51, rtlT - pulse),
+    rtlT,
+    Math.min(1, rtlT + pulse),
+    1,
+  ]
+
+  for (let j = 1; j < times.length; j++) {
+    if (times[j] <= times[j - 1]) times[j] = times[j - 1] + 0.001
+  }
+
+  const baseY = VBH - h
+  const peakY = VBH - h * 1.06
+
+  return {
+    times,
+    y: [baseY, baseY, peakY, baseY, baseY, baseY, peakY, baseY, baseY],
+    height: [h, h, h * 1.06, h, h, h, h * 1.06, h, h],
+  }
+}
+
 export function DiaGradient({
   bars = 9,
   blur = 15,
@@ -54,6 +86,7 @@ export function DiaGradient({
   stops = DIA_STOPS,
   riseMs = 1100,
   animateBars = false,
+  waveBars = false,
 }: {
   bars?: number
   blur?: number
@@ -63,6 +96,8 @@ export function DiaGradient({
   riseMs?: number
   /** Each bar oscillates height independently */
   animateBars?: boolean
+  /** Slow left-to-right wave pulse across all bars */
+  waveBars?: boolean
 }) {
   const uid = useId()
   const [shown, setShown] = useState(false)
@@ -105,9 +140,26 @@ export function DiaGradient({
             <feGaussianBlur stdDeviation={blur} />
           </filter>
         </defs>
-        {heights.map((h, i) => (
+        {heights.map((h, i) => {
+          const wave = waveBars ? waveBarKeyframes(i, bars, h) : null
+
+          return (
           <g key={i} filter={`url(#${blurId})`}>
-            {animateBars ? (
+            {wave ? (
+              <motion.rect
+                x={i * colW}
+                width={colW * 1.23}
+                fill={`url(#${gradId})`}
+                initial={{ y: VBH - h, height: h }}
+                animate={{ y: wave.y, height: wave.height }}
+                transition={{
+                  duration: 8,
+                  times: wave.times,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: 'easeInOut',
+                }}
+              />
+            ) : animateBars ? (
               <motion.rect
                 x={i * colW}
                 width={colW * 1.23}
@@ -134,7 +186,8 @@ export function DiaGradient({
               <rect x={i * colW} y={VBH - h} width={colW * 1.23} height={h} fill={`url(#${gradId})`} />
             )}
           </g>
-        ))}
+          )
+        })}
       </svg>
     </div>
   )
