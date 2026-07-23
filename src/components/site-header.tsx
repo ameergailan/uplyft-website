@@ -11,7 +11,7 @@ const navLinks: { label: string; href: string; caret?: boolean }[] = [
   { label: 'Media', href: '/media' },
   { label: 'Partner With Us', href: '/partner' },
   { label: 'About the Firm', href: '/firm' },
-  { label: 'Careers', href: '#' },
+  { label: 'Careers', href: '/careers' },
 ]
 
 export function SiteHeader() {
@@ -21,11 +21,11 @@ export function SiteHeader() {
     <>
       {/* Announcement bar */}
       <div className="bg-[#d4af37]">
-        <div className="container-page flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2.5 text-center text-xs sm:text-sm">
-          <span className="rounded-sm bg-[#c1121f] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+        <div className="container-page flex flex-wrap items-center justify-center gap-x-3 gap-y-2 py-3.5 text-center sm:py-4">
+          <span className="rounded-sm bg-[#c1121f] px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white sm:px-3 sm:py-1.5 sm:text-sm">
             New
           </span>
-          <span className="font-semibold text-[var(--ink)]">
+          <span className="text-sm font-semibold text-[var(--ink)] sm:text-base">
             Free live workshop for SaaS founders looking to launch paid ads:{' '}
             <Link href="/workshops" className="font-normal text-[var(--ink)]/70 hover:text-[var(--ink)]">
               find out if you&apos;re a fit &nbsp;&rarr;

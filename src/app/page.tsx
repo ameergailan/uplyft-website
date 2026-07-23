@@ -55,10 +55,10 @@ export default function HomePage() {
         />
 
         <div className="container-page relative py-24 text-center lg:py-32">
-          <h1 className="mx-auto max-w-4xl text-3xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-7xl">
+          <h1 className="mx-auto max-w-4xl text-4xl font-extrabold uppercase leading-[1.05] tracking-tight text-[var(--ink)] sm:text-6xl lg:text-7xl">
             Do You Want to Scale Your SaaS?
           </h1>
-          <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-[var(--muted)] sm:mt-7 sm:text-lg">
             Learn from the team that has scaled software to over{' '}
             <span className="font-semibold text-[var(--ink)]">7 figures</span> in annual
             revenue through paid ads.
@@ -137,10 +137,16 @@ export default function HomePage() {
                 profitably.
               </p>
               <p>
-                Once those systems worked inside their own product, they built UpLyft to
-                give other SaaS founders the same playbooks: the exact processes they use
-                to turn ad spend into sustainable, profitable scale. Every framework UpLyft
-                teaches is one they run in their own stack first.
+                From there, they partnered with a SaaS company doing six figures in ARR
+                that had never run a single paid ad. Over eight months, they launched Meta,
+                Google, and TikTok from scratch and built the tracking, creative, and funnel
+                structure behind each channel. The company went on to hit 7 figures in ARR.
+              </p>
+              <p>
+                With those systems proven on their own product and a client&apos;s business,
+                they built UpLyft to give other SaaS founders the same playbooks: the exact
+                processes they use to turn ad spend into sustainable, profitable scale.
+                Every framework UpLyft teaches is one they run in their own stack first.
               </p>
             </div>
           </div>

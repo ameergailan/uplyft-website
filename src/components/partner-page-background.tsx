@@ -9,9 +9,9 @@ export function PartnerPageBackground() {
         `,
         backgroundSize: '44px 44px',
         WebkitMaskImage:
-          'radial-gradient(ellipse 70% 65% at 50% 36%, transparent 18%, rgba(0,0,0,0.35) 42%, black 78%)',
+          'radial-gradient(ellipse 72% 92% at 50% 50%, transparent 14%, rgba(0,0,0,0.34) 40%, black 76%)',
         maskImage:
-          'radial-gradient(ellipse 70% 65% at 50% 36%, transparent 18%, rgba(0,0,0,0.35) 42%, black 78%)',
+          'radial-gradient(ellipse 72% 92% at 50% 50%, transparent 14%, rgba(0,0,0,0.34) 40%, black 76%)',
       }}
     />
   )

@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { SystemsHero } from '@/components/systems-hero'
 import { GoldGradientBackground } from '@/components/ui/gold-gradient-background'
-import { LiquidRetinaBox } from '@/components/ui/liquid-retina-box'
 
 export const metadata: Metadata = {
   title: 'Our Systems | UpLyft',
@@ -15,8 +13,8 @@ export const metadata: Metadata = {
 
 const systems = [
   {
-    id: 'getting-started',
-    title: 'Getting Started',
+    id: 'launch',
+    title: 'LAUNCH',
     tagline: 'Launch your first paid channel the right way.',
     description:
       'Offer structure, tracking setup, and your first creative tests. Everything you need before you spend a dollar on ads.',
@@ -87,49 +85,8 @@ export default function SystemsPage() {
         </div>
       </section>
 
-      {/* About copy with gold gradient animation behind full section */}
-      <section className="relative overflow-hidden py-16 sm:py-20 lg:py-28">
+      <section className="relative min-h-[280px] overflow-hidden sm:min-h-[340px] lg:min-h-[400px]">
         <GoldGradientBackground />
-        <div className="container-page relative z-10">
-          <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="relative aspect-square overflow-hidden rounded-2xl border border-black/10 bg-[var(--dark)]">
-              <Image
-                src="/systems/uplyft-about.png"
-                alt="UpLyft"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-
-            <LiquidRetinaBox className="px-8 py-10 sm:px-10 sm:py-12">
-              <h2 className="text-3xl font-extrabold uppercase tracking-tight text-[var(--ink)] sm:text-4xl">
-                UpLyft
-              </h2>
-              <div className="mt-6 space-y-4 text-lg leading-relaxed text-[var(--ink)]/90">
-                <p>
-                  is a growth firm built around paid acquisition for SaaS. The team scaled
-                  their own product through ads first, then installed those same systems inside
-                  client companies doing{' '}
-                  <strong className="font-bold text-[var(--ink)]">six and seven figures in ARR</strong>.
-                </p>
-                <p>
-                  Every system on this page is one UpLyft runs internally:{' '}
-                  <strong className="font-bold text-[var(--ink)]">Getting Started</strong>{' '}
-                  for your first channel,{' '}
-                  <strong className="font-bold text-[var(--ink)]">Scaling Spend</strong>{' '}
-                  when you have winners to push, and{' '}
-                  <strong className="font-bold text-[var(--ink)]">Iteration</strong>{' '}
-                  to keep compounding results over time.
-                </p>
-                <p>
-                  These are not theory decks. They are the exact playbooks, processes, and
-                  frameworks the team uses across every account in the portfolio.
-                </p>
-              </div>
-            </LiquidRetinaBox>
-          </div>
-        </div>
       </section>
 
       <SiteFooter />

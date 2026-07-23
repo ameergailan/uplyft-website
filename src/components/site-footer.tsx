@@ -13,7 +13,7 @@ export function SiteFooter() {
             {[
               { label: 'Workshops', href: '/workshops' },
               { label: 'Our Systems', href: '/systems' },
-              { label: 'Careers', href: '#' },
+              { label: 'Careers', href: '/careers' },
               { label: 'Privacy', href: '/privacy' },
               { label: 'Terms', href: '/terms' },
             ].map((l) => (
